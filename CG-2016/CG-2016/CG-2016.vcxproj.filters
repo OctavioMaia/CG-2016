@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{86e478dc-c98b-4d6a-8671-74f4887c8bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Generater">
+      <UniqueIdentifier>{4a76dd0f-c4db-4feb-a969-f28175517500}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="jms.cpp">
