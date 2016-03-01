@@ -21,11 +21,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jms.cpp">
+    <ClCompile Include="fase1_2.cpp">
+      <Filter>Source Files\Generater</Filter>
+    </ClCompile>
+    <ClCompile Include="teste.cpp">
+      <Filter>Source Files\Generater</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinystr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinyxml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinyxmlerror.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinyxmlparser.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -37,19 +37,23 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0, 0.0, 5.0,
+	gluLookAt(0.0, 6.0, 1.0,
 		0.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
 	glTranslatef(x, y, z);
-	glRotatef(angle, x, y, z);
+	glRotatef(angle, 0, 1, 0);
 
 	// put drawing instructions here
 	glBegin(GL_TRIANGLES);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 1.0f, 0.0f);
-	glVertex3f(1.0f, 0.0f, 0.0f);
+
+	//base
+	glVertex3f(-1.0f, 0.0f, 1.0f);
+	glVertex3f(-1.0f, 0.0f, -1.0f);
+	glVertex3f(1.0f, 0.0f, -1.0f);
+
+	
 	glEnd();
 
 	// End of frame
@@ -60,7 +64,24 @@ void renderScene(void) {
 
 // write function to process keyboard events
 
+void responseKeyboard(unsigned char key, int x, int y) {
+}
 
+void responseKeyboardSpecial(int key_code, int x1, int y1) {
+
+	switch (key_code)
+	{
+	case GLUT_KEY_UP: y++; break;
+	case GLUT_KEY_DOWN: y--; break;
+	case GLUT_KEY_LEFT: x--; break;
+	case GLUT_KEY_RIGHT: x++; break;
+	case GLUT_KEY_F1: angle++; break;
+	case GLUT_KEY_F2: angle--; break;
+	default:
+		break;
+	}
+	glutPostRedisplay();
+}
 
 // write function to process menu events
 
@@ -83,8 +104,8 @@ int main(int argc, char **argv) {
 
 	// put here the registration of the keyboard and menu callbacks
 
-
-
+	glutKeyboardFunc(responseKeyboard);
+	glutSpecialFunc(responseKeyboardSpecial);
 
 	// put here the definition of the menu 
 
