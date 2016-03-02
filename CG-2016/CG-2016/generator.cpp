@@ -61,10 +61,6 @@ void printTriangulo(ofstream& file, Ponto p1, Ponto p2, Ponto p3) {
 	p3.printFile(file, ";", true);
 }
 
-void desenhaRetangulo(ofstream& file, Ponto p1, Ponto p2, Ponto p3, Ponto p4) {
-	printTriangulo(file, p1, p2, p3);
-	printTriangulo(file, p3, p4, p1);
-}
 
 
 
@@ -87,7 +83,8 @@ void retangulo(ofstream& file, double xl, double y, double zl) {
 	p3 = Ponto::Ponto(p3x, y, p3z);
 	p4 = Ponto::Ponto(p4x, y, p4z);
 
-	desenhaRetangulo(file, p1, p2, p3, p4);
+	printTriangulo(file, p1, p2, p3);
+	printTriangulo(file, p3, p4, p1);
 }
 
 void plano(double leng, string nome) {
