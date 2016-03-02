@@ -166,7 +166,6 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ClCompile Include="..\..\..\..\..\Desktop\gerador\gerador.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -189,10 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\gerador\Makefile" />
-=======
-    <ClCompile Include="jms.cpp" />
-    <ClCompile Include="jms2.cpp" />
->>>>>>> 51a31dd45fa69d6be44a40b0fe9046c7a409d0c7
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
