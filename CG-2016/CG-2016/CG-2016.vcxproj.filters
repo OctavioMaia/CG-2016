@@ -46,7 +46,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="XMLFile.xml">
+    <Xml Include="teste.xml">
       <Filter>Source Files</Filter>
     </Xml>
   </ItemGroup>

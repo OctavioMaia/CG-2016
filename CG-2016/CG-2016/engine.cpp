@@ -193,16 +193,18 @@ int readFile3d(string filemodelo, char delem) {
 
 int main(int argc, char **argv) {
 
-	char* pFilename = "teste.xml"; 
+	char* pFilename = "teste.xml";
 	TiXmlDocument doc;
 
 	if (doc.LoadFile(pFilename))
 	{
 		try
 		{
-			for (TiXmlElement* elem = doc.FirstChildElement("scene"); elem != NULL; elem = elem->NextSiblingElement()) {
+			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("model"); elem != NULL; elem = elem->NextSiblingElement()) {
 
-				const char* file = elem->FirstChildElement("model")->Attribute("file");
+				const char* file = elem->Attribute("file");
+
+				cout << "estou no ciclo";
 
 				readFile3d(file, ';');
 			}
