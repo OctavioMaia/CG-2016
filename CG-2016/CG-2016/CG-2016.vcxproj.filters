@@ -21,9 +21,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\gerador\gerador.cpp">
-      <Filter>Source Files\Generater</Filter>
-    </ClCompile>
     <ClCompile Include="engine.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -38,6 +35,9 @@
     </ClCompile>
     <ClCompile Include="tinyxmlerror.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="generator.cpp">
+      <Filter>Source Files\Generater</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
