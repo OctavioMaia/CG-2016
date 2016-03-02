@@ -268,11 +268,24 @@ void updateXML(char* xmlName, char* modeloName) {
 		TiXmlElement* modelo;
 		TiXmlElement* element = doc.FirstChildElement("scene");
 
-		modelo = new TiXmlElement("model");
-		modelo->SetAttribute("file", modeloName);
+		const char* file;
+		bool same = false;
 
-		element->LinkEndChild(modelo);
-		doc.SaveFile(xmlName);
+		for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("model"); elem != NULL; elem = elem->NextSiblingElement()) {
+
+			file = elem->Attribute("file");
+
+			if (!strcmp(modeloName, file)) {
+				same = true;
+			}
+		}
+		if (!same) {
+			modelo = new TiXmlElement("model");
+			modelo->SetAttribute("file", modeloName);
+
+			element->LinkEndChild(modelo);
+			doc.SaveFile(xmlName);
+		}
 	}
 	else
 	{

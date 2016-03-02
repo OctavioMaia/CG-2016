@@ -58,8 +58,6 @@ void changeSize(int w, int h) {
 
 void drawFromFile() {
 
-	double r, g, b;
-
 	for (int i = 0,j=0; i <= tam; i=i+3,j++)
 	{
 		
@@ -108,8 +106,9 @@ void renderScene(void) {
 void responseKeyboard(unsigned char key, int x, int y) {
 	switch (key)
 	{
-	case 'q': axis=1; glutPostRedisplay(); break;
-	case 'w': axis=0; glutPostRedisplay(); break;
+	case 'x': axis = 0; glutPostRedisplay(); break;
+	case 'y': axis = 1; glutPostRedisplay(); break;
+	case 'z': axis = 2; glutPostRedisplay(); break;
 	default:
 		break;
 	}
@@ -165,7 +164,6 @@ unsigned int split(const std::string &txt, std::vector<std::string> &strs, char 
 
 		pos = txt.find(ch, initialPos);
 	}
-
 	// Add the last one
 	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
 
@@ -182,13 +180,6 @@ int readFile3d(string filemodelo, char delem) {
 
 	getline(myfile, line);
 	nVertices = stold(line);
-	tam = nVertices;
-
-	//limpar o aray pois tens os vertices do ultimo ficheiro
-	//tam = 0;
-	//xs.clear();
-	//ys.clear();
-	//zs.clear();
 
 	//é necessario testar se o ficehiro nao foi aberto usar exceptions pois o open nao retorna bool
 
@@ -223,22 +214,29 @@ int main(int argc, char **argv) {
 
 	char* pFilename = "teste.xml";
 	TiXmlDocument doc;
-
+	const char* file;
 	if (doc.LoadFile(pFilename))
 	{
 		try
 		{
 			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("model"); elem != NULL; elem = elem->NextSiblingElement()) {
 
-				const char* file = elem->Attribute("file");
+				cout << "ola";
+
+				file = elem->Attribute("file");
+
+				cout << file << "\n";
 
 				cout << "estou no ciclo";
 
-				readFile3d(file, ';');
+				tam+=readFile3d(file, ';');
+				cout << tam << "\n";
+				cout << "ola2";
 			}
 		}
 		catch (const std::exception&)
 		{
+			cout << file << "\n";
 			printf("Failed to load file \"%s\"\n", pFilename);
 		}
 		
