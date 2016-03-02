@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinystr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\..\..\..\..\Desktop\tinyxml_2_6_2 (2)\tinyxml\tinyxml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -49,5 +50,10 @@
     <None Include="..\..\..\..\..\Desktop\gerador\Makefile">
       <Filter>Source Files\Generater</Filter>
     </None>
+=======
+    <ClCompile Include="jms2.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+>>>>>>> 51a31dd45fa69d6be44a40b0fe9046c7a409d0c7
   </ItemGroup>
 </Project>
