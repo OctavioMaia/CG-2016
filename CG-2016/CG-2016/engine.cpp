@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("CG@DI-UM");
 
-
+	//ola
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
