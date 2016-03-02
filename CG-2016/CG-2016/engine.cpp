@@ -23,6 +23,10 @@ vector<double> xs;
 vector<double> ys;
 vector<double> zs;
 
+vector<double> rs;
+vector<double> gs;
+vector<double> bs;
+
 int tam = 0;
 
 void changeSize(int w, int h) {
@@ -56,14 +60,12 @@ void drawFromFile() {
 
 	double r, g, b;
 
-	for (int i = 0; i <= tam; i=i+3)
+	for (int i = 0,j=0; i <= tam; i=i+3,j++)
 	{
-		r = ((double)rand() / (RAND_MAX));
-		g = ((double)rand() / (RAND_MAX));
-		b = ((double)rand() / (RAND_MAX));
+		
 
 		glBegin(GL_TRIANGLES);
-			glColor3d(r, g, b);
+			glColor3d(rs[j], gs[j], bs[j]);
 			glVertex3d(xs[i], ys[i], zs[i]);
 			glVertex3d(xs[i+1], ys[i+1], zs[i+1]);
 			glVertex3d(xs[i+2], ys[i+2], zs[i+2]);
@@ -78,7 +80,7 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0, 0.0, 10.0,
+	gluLookAt(-5.0, 5.0, 20.0,
 		0.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
@@ -106,32 +108,47 @@ void renderScene(void) {
 void responseKeyboard(unsigned char key, int x, int y) {
 	switch (key)
 	{
-	case 'q': axis=1; break;
-	case 'w': axis=0; break;
+	case 'q': axis=1; glutPostRedisplay(); break;
+	case 'w': axis=0; glutPostRedisplay(); break;
 	default:
 		break;
 	}
-	glutPostRedisplay();
 }
 
 void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
 	switch (key_code)
 	{
-	case GLUT_KEY_UP: Z++; break;
-	case GLUT_KEY_DOWN: Z--; break;
-	case GLUT_KEY_LEFT: X--; break;
-	case GLUT_KEY_RIGHT: X++; break;
-	case GLUT_KEY_F1: angle++; break;
-	case GLUT_KEY_F2: angle--; break;
+	case GLUT_KEY_UP: Z++; glutPostRedisplay(); break;
+	case GLUT_KEY_DOWN: Z--; glutPostRedisplay(); break;
+	case GLUT_KEY_LEFT: X--; glutPostRedisplay(); break;
+	case GLUT_KEY_RIGHT: X++; glutPostRedisplay(); break;
+	case GLUT_KEY_F1: angle++; glutPostRedisplay(); break;
+	case GLUT_KEY_F2: angle--; glutPostRedisplay(); break;
 	default:
 		break;
 	}
-	glutPostRedisplay();
+	
 }
 
 // write function to process menu events
 
+void menuCreate(int id_op) {
+	switch (id_op)
+	{
+		//
+	case 1: glPolygonMode(GL_FRONT, GL_LINE); glutPostRedisplay(); break;
+		//
+	case 2: glPolygonMode(GL_FRONT, GL_FILL); glutPostRedisplay(); break;
+		//
+	case 3: glPolygonMode(GL_FRONT, GL_POINT); glutPostRedisplay(); break;
+		//
+	case 4: glPolygonMode(GL_FRONT, GL_LINE); glutPostRedisplay(); break;
+	default:
+		break;
+	}
+
+}
 
 
 
@@ -165,6 +182,7 @@ int readFile3d(string filemodelo, char delem) {
 
 	getline(myfile, line);
 	nVertices = stold(line);
+	tam = nVertices;
 
 	//limpar o aray pois tens os vertices do ultimo ficheiro
 	//tam = 0;
@@ -174,19 +192,29 @@ int readFile3d(string filemodelo, char delem) {
 
 	//é necessario testar se o ficehiro nao foi aberto usar exceptions pois o open nao retorna bool
 
-	while (getline(myfile, line))
+	cout << nVertices;
+
+	for (int i = 0; i <= nVertices; i++)
 	{
+		getline(myfile, line);
 		aux.clear();
 		int lid = split(line, aux, delem);
-		tam++;
+
 		string x = aux[0];
 		string y = aux[1];
 		string z = aux[2];
-		
+
+		if (i % 3 == 0){
+			rs.push_back((double)rand() / (RAND_MAX));
+			gs.push_back((double)rand() / (RAND_MAX));
+			bs.push_back((double)rand() / (RAND_MAX));
+		}
+
 		xs.push_back(stold(x));
 		ys.push_back(stold(y));
 		zs.push_back(stold(z));
 	}
+
 	myfile.close();
 	return nVertices;
 }
@@ -228,8 +256,7 @@ int main(int argc, char **argv) {
 	glutCreateWindow("CG@DI-UM");
 
 	glPolygonMode(GL_FRONT, GL_LINE);
-	
-	//ola
+
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
@@ -240,6 +267,13 @@ int main(int argc, char **argv) {
 	glutSpecialFunc(responseKeyboardSpecial);
 
 	// put here the definition of the menu 
+
+	glutCreateMenu(menuCreate);
+	glutAddMenuEntry("Wire", 1);
+	glutAddMenuEntry("Fill", 2);
+	glutAddMenuEntry("Point", 3);
+	glutAddMenuEntry("Change Colors", 4);
+	glutAttachMenu(GLUT_LEFT_BUTTON);
 
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);

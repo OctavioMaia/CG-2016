@@ -10,7 +10,7 @@
 using namespace std;
 
 /*XML
-asdasdasd asd asdss
+
 */
 #include "tinyxml.h"
 #include "tinystr.h"
@@ -114,20 +114,30 @@ void box(double x, double y, double z, string nome) {
 	pi3 = Ponto::Ponto(-x / 2, -y / 2, -z / 2);
 	pi4 = Ponto::Ponto(-x / 2, -y / 2, z / 2);
 
-	//Plano superior
-	desenhaRetangulo(opfile, ps1, ps2, ps3, ps4);
-	//Plano inferior
-	desenhaRetangulo(opfile, pi4, pi3, pi2, pi1);
+	//Plano superior X
+	printTriangulo(opfile, ps1, ps2, ps3);
+	printTriangulo(opfile, ps3, ps4, ps1);
 
-	//Plano lateral dir
-	desenhaRetangulo(opfile, pi1, pi2, ps2, ps1);
-	//Plano lat esq
-	desenhaRetangulo(opfile, ps1, ps2, pi2, pi1);
+	//Plano inferior X
+	printTriangulo(opfile, pi1, pi3, pi2);
+	printTriangulo(opfile, pi1, pi4, pi3);
 
-	//Plano frontal
-	desenhaRetangulo(opfile, pi1, ps1, ps4, pi4);
+	//Plano lateral dir X
+	printTriangulo(opfile, ps2, ps1, pi1);
+	printTriangulo(opfile, pi1, pi2, ps2);
+
+	//Plano lat esq X
+	printTriangulo(opfile, ps4, ps3, pi4);
+	printTriangulo(opfile, ps3, pi3, pi4);
+
+	//Plano frontal X
+	printTriangulo(opfile, ps4, pi4, ps1);
+	printTriangulo(opfile, ps1, pi4, pi1);
+
 	//Plano traseiro
-	desenhaRetangulo(opfile, pi2, pi3, ps3, ps2);
+	printTriangulo(opfile, ps2, pi3, ps3);
+	printTriangulo(opfile, pi3, ps2, pi2);
+
 
 	opfile.close();
 }
@@ -210,10 +220,10 @@ void esfera(double raio, int fatias, int stacks, string nome) {
 	opfile << totpont << endl;
 	//angle da st esta a 90 stack do topo 
 	for (int fat = 0; fat <= fatias; fat++) { //contruir cada ims das fastias
-		double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC);
+		double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC); // estava x
 		double y = raio * sin(angleSt*AngC);
-		double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC);
-		p = Ponto::Ponto(x, z, y);
+		double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
+		p = Ponto::Ponto(x, y, z);
 		ant.push_back(p); //mete o ponto da stack anterior no ant
 		angleSl += angleStepSl; //proxima fatia
 	}
@@ -230,24 +240,17 @@ void esfera(double raio, int fatias, int stacks, string nome) {
 
 			double y = raio * sin(angleSt*AngC);
 			double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC);
-			p = Ponto::Ponto(x, z, y);
+			p = Ponto::Ponto(x, y, z);
 			actual.push_back(p);
 			angleSl += angleStepSl; //proxima fatia nesta camada
 		}
 		//ja tenho a camada atual e anterior prontas
 		//associar os pontos e mandar-los para o ficheiro
-		/*
-		for (int i = 0; i < fatias; ++i)
-		{
-		//printf("Ponto %d\n", i);
-		actual[i].printFile1(";",true);
-		}*/
 		for (int fat = 0; fat<fatias; fat++) { //contruir cada ims das fastias;
 			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % fatias]);
 			printTriangulo(opfile, ant[(fat + 1) % fatias], ant[fat], actual[(fat + 1) % fatias]);
 		}
 		//triangulos imprimidos
-
 		//meter o ant =  atual e limpar o atual
 		ant = std::move(actual);
 		actual.clear();
