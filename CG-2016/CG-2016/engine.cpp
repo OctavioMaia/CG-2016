@@ -1,33 +1,22 @@
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "windows.h" 
 #include <GL/glut.h>
 #include <chrono>
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <vector>
 
+#include "Figura.h"
 #include <tinyxml.h>
 #include <tinystr.h>
 
 using namespace std;
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 float angle = 0;
-float axis = 1;
+int axis = 1;
 int Z = 0;
 int X = 0;
 
-vector<double> xs;
-vector<double> ys;
-vector<double> zs;
-
-vector<double> rs;
-vector<double> gs;
-vector<double> bs;
-
-int tam = 0;
+vector<Figura> figuras;
+bool multiColor=false;
 
 void changeSize(int w, int h) {
 
@@ -54,20 +43,16 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-
-
 void drawFromFile() {
 
-	for (int i = 0,j=0; i <= tam; i=i+3,j++)
-	{
-		
+	
 
-		glBegin(GL_TRIANGLES);
-			glColor3d(rs[j], gs[j], bs[j]);
-			glVertex3d(xs[i], ys[i], zs[i]);
-			glVertex3d(xs[i+1], ys[i+1], zs[i+1]);
-			glVertex3d(xs[i+2], ys[i+2], zs[i+2]);
-		glEnd();
+	// for para percorrer as figuras todas
+	for (int i = 0; i < figuras.size(); i++)
+	{
+		cout << "drawFromFile " << figuras.size() << "\n";
+		Figura fg = figuras[i];
+		fg.drawFigure(multiColor);
 	}
 }
 
@@ -78,18 +63,20 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(-5.0, 5.0, 20.0,
+	gluLookAt(0.0, 0.0, 20.0,
 		0.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
 	glTranslatef(X, 0, Z);
 
-	if (axis == 1) {
-		glRotatef(angle, 0, 1, 0);
-	}
-	else {
-		glRotatef(angle, 0, 0, 1);
+	switch (axis)
+	{
+		case 0: glRotatef(angle, 1, 0, 0);
+		case 1: glRotatef(angle, 0, 1, 0);
+		case 2: glRotatef(angle, 0, 0, 1);
+	default: 
+		break;
 	}
 	
 	// put drawing instructions here
@@ -98,8 +85,6 @@ void renderScene(void) {
 	// End of frame
 	glutSwapBuffers();
 }
-
-
 
 // write function to process keyboard events
 
@@ -135,21 +120,26 @@ void responseKeyboardSpecial(int key_code, int x1, int y1) {
 void menuCreate(int id_op) {
 	switch (id_op)
 	{
-		//
-	case 1: glPolygonMode(GL_FRONT, GL_LINE); glutPostRedisplay(); break;
-		//
-	case 2: glPolygonMode(GL_FRONT, GL_FILL); glutPostRedisplay(); break;
-		//
-	case 3: glPolygonMode(GL_FRONT, GL_POINT); glutPostRedisplay(); break;
-		//
-	case 4: glPolygonMode(GL_FRONT, GL_LINE); glutPostRedisplay(); break;
-	default:
-		break;
+			// Modo Line
+		case 1: glPolygonMode(GL_FRONT, GL_LINE); glutPostRedisplay(); break;
+			// Modo FILL
+		case 2: glPolygonMode(GL_FRONT, GL_FILL); glutPostRedisplay(); break;
+			// Modo Point
+		case 3: glPolygonMode(GL_FRONT, GL_POINT); glutPostRedisplay(); break;
+			// Random Colors in all triangles
+		case 4: multiColor=true; glutPostRedisplay(); break;
+			// Single color blue 0.0 0.0 1.0
+		case 5: glColor3d(0.0, 0.0, 1.0); multiColor = false; glutPostRedisplay(); break;
+			// Single color red 1.0 0.0 0.0
+		case 6: glColor3d(1.0, 0.0, 0.0); multiColor = false; glutPostRedisplay(); break;
+			//Single Color green 0.0 1.0 0.0
+		case 7: glColor3d(0.0, 1.0, 0.0); multiColor = false; glutPostRedisplay(); break;
+
+		default:
+			break;
 	}
 
 }
-
-
 
 unsigned int split(const std::string &txt, std::vector<std::string> &strs, char ch)
 {
@@ -171,48 +161,38 @@ unsigned int split(const std::string &txt, std::vector<std::string> &strs, char 
 }
 
 int readFile3d(string filemodelo, char delem) {
-	vector<string> aux;
+	vector<string> campos;
 	string line;
-	int l = 0;
 	int nVertices;
+
 	ifstream myfile(filemodelo);
 
-
 	getline(myfile, line);
-	nVertices = stold(line);
+	nVertices =  stoi(line);
 
-	//é necessario testar se o ficehiro nao foi aberto usar exceptions pois o open nao retorna bool
+	Figura fg = Figura::Figura(filemodelo, nVertices);
 
-	cout << nVertices;
-
-	for (int i = 0; i <= nVertices; i++)
+	for (int i = 0; i < nVertices; i++)
 	{
 		getline(myfile, line);
-		aux.clear();
-		int lid = split(line, aux, delem);
+		campos.clear();
+		split(line, campos, delem);
 
-		string x = aux[0];
-		string y = aux[1];
-		string z = aux[2];
-
-		if (i % 3 == 0){
-			rs.push_back((double)rand() / (RAND_MAX));
-			gs.push_back((double)rand() / (RAND_MAX));
-			bs.push_back((double)rand() / (RAND_MAX));
-		}
-
-		xs.push_back(stold(x));
-		ys.push_back(stold(y));
-		zs.push_back(stold(z));
+		fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
 	}
 
+	fg.gerarCores();
+
+	figuras.push_back(fg);
+
 	myfile.close();
+
 	return nVertices;
 }
 
 int main(int argc, char **argv) {
 
-	char* pFilename = "teste.xml";
+	char* pFilename = argv[1];
 	TiXmlDocument doc;
 	const char* file;
 	if (doc.LoadFile(pFilename))
@@ -221,17 +201,11 @@ int main(int argc, char **argv) {
 		{
 			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("model"); elem != NULL; elem = elem->NextSiblingElement()) {
 
-				cout << "ola";
-
 				file = elem->Attribute("file");
 
-				cout << file << "\n";
+				cout << "Go read file: " << file << "\n";
 
-				cout << "estou no ciclo";
-
-				tam+=readFile3d(file, ';');
-				cout << tam << "\n";
-				cout << "ola2";
+				readFile3d(file, ';');
 			}
 		}
 		catch (const std::exception&)
@@ -239,7 +213,6 @@ int main(int argc, char **argv) {
 			cout << file << "\n";
 			printf("Failed to load file \"%s\"\n", pFilename);
 		}
-		
 	}
 	else
 	{
@@ -270,7 +243,10 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Wire", 1);
 	glutAddMenuEntry("Fill", 2);
 	glutAddMenuEntry("Point", 3);
-	glutAddMenuEntry("Change Colors", 4);
+	glutAddMenuEntry("Multiple Colores", 4);
+	glutAddMenuEntry("Single Color: Blue", 5);
+	glutAddMenuEntry("Single Color: Red", 6);
+	glutAddMenuEntry("Single Color: Green", 7);
 	glutAttachMenu(GLUT_LEFT_BUTTON);
 
 	//  OpenGL settings

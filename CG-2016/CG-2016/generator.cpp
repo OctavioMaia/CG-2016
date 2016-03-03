@@ -6,63 +6,18 @@
 #include <string>
 #include <stdio.h>
 #include <iomanip>
-#define AngC  M_PI / 180
-using namespace std;
-
-/*XML
-
-*/
 #include "tinyxml.h"
 #include "tinystr.h"
+#include "Ponto.h"
 
-class Ponto
-{
-private: double x, z, y;
-
-public:
-	Ponto() {
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-	Ponto(double xx, double yy, double zz) {
-		x = xx;
-		y = yy;
-		z = zz;
-	}
-	double getx() { return x; }
-	double getz() { return z; }
-	double gety() { return y; }
-	void printFile(ofstream& file, string sep, bool enl) {
-		if (enl) {
-			file << x << sep << y << sep << z << endl;
-		}
-		else {
-			file << x << sep << y << sep << z;
-		}
-
-	}
-	void printStdout(string sep, bool enl) {
-		if (enl) {
-			cout << x << sep << y << sep << z << endl;
-		}
-		else {
-			cout << x << sep << y << sep << z;
-		}
-
-	}
-
-};
-
+#define AngC  M_PI / 180
+using namespace std;
 
 void printTriangulo(ofstream& file, Ponto p1, Ponto p2, Ponto p3) {
 	p1.printFile(file, ";", true);
 	p2.printFile(file, ";", true);
 	p3.printFile(file, ";", true);
 }
-
-
-
 
 void retangulo(ofstream& file, double xl, double y, double zl) {
 	Ponto p1, p2, p3, p4;
@@ -135,11 +90,8 @@ void box(double x, double y, double z, string nome) {
 	printTriangulo(opfile, ps2, pi3, ps3);
 	printTriangulo(opfile, pi3, ps2, pi2);
 
-
 	opfile.close();
 }
-
-
 
 void cone(double raio, double alt, int fatias, int stacks, string nome) {
 	ofstream opfile(nome);
@@ -286,32 +238,47 @@ void updateXML(char* xmlName, char* modeloName) {
 	}
 	else
 	{
-		printf("Failed to load file \"%s\"\n", xmlName);
+		printf("Failed to load file %s , file not exists.\nCreating file teste1.xml...\n", xmlName);
+
+		TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "utf-8", "");
+		doc.LinkEndChild(decl);
+
+		TiXmlElement * scene;
+		scene = new TiXmlElement("scene");
+
+		TiXmlElement * model;
+		model = new TiXmlElement("model");
+		model->SetAttribute("file", modeloName);
+		scene->LinkEndChild(model);
+		
+		doc.LinkEndChild(scene);
+
+		doc.SaveFile(xmlName);
 	}
 }
 
 int main(int argc, char *argv[]) {
 	char* nome;
 	if (argc>1) {
-		if (!strcmp(argv[1], "plano") && argc == 4) {
+		if (!strcmp(argv[1], "plano") && argc == 5) {
 			cout << "PLANO" << endl;
 			plano(atof(argv[2]), argv[3]);
 			nome = argv[3];
 		}
 		else {
-			if (!strcmp(argv[1], "esfera") && argc == 6) {
+			if (!strcmp(argv[1], "esfera") && argc == 7) {
 				cout << "ESFERA" << endl;
 				esfera(atof(argv[2]), atoi(argv[3]), atoi(argv[4]), argv[5]);
 				nome = argv[5];
 			}
 			else {
-				if (!strcmp(argv[1], "box") && argc == 6) {
+				if (!strcmp(argv[1], "box") && argc == 7) {
 					cout << "BOX" << endl;
 					box(atof(argv[2]), atof(argv[3]), atof(argv[4]), argv[5]);
 					nome = argv[5];
 				}
 				else {
-					if (!strcmp(argv[1], "cone") && argc == 7) {
+					if (!strcmp(argv[1], "cone") && argc == 8) {
 						cout << "CONE" << endl;
 						cone(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]), argv[6]);
 						nome = argv[6];
@@ -323,7 +290,7 @@ int main(int argc, char *argv[]) {
 				}
 			}
 		}
-		updateXML("teste.xml", nome);
+		updateXML(argv[argc-1], nome);
 		return 0;
 	}
 
