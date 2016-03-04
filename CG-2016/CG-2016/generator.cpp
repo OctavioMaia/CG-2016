@@ -152,6 +152,57 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 
 }
 
+void cilindro(double h, double r, int slices, string nome) {
+	ofstream opfile(nome);
+	double startsl = 0.0;
+	double slStep = 360.0 / (double)slices;
+	Ponto topCentro;
+	Ponto downCentro;
+	Ponto topP;
+	Ponto downP;
+	vector<Ponto> top;
+	vector<Ponto> down;
+	topCentro = Ponto::Ponto(0, h / 2.0, 0);
+	downCentro = Ponto::Ponto(0, -h / 2.0, 0);
+	/*pontos da base e topo * fatias da face 2 triangulps em cada*/ 
+	int pontos = ((slices * 2) * 3) +( slices * 2 * 3);
+	opfile << pontos << endl;
+	for (int i = 0; i < slices; i++)
+	{
+		topP = Ponto::Ponto(r*cos(startsl*AngC), h / 2.0, r*sin(startsl*AngC));
+		downP = Ponto::Ponto(r*cos(startsl*AngC), -h / 2.0, r*sin(startsl*AngC));
+		top.push_back(topP);
+		down.push_back(downP);
+		startsl += slStep;
+
+	}
+	for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
+		//printTriangulo(opfile, top[fat], down[fat], down[(fat + 1) % slices]);
+		printTriangulo(opfile,down[(fat + 1) % slices], down[fat], top[fat]);
+		printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices]);
+	}
+
+
+	for (int fat = 0; fat < slices; fat++) { //contruir a base
+		printTriangulo(opfile, down[(fat + 1) % slices], downCentro,down[fat]);
+	}
+	for (int fat = 0; fat < slices; fat++) { //contruir a top
+		printTriangulo(opfile, top[fat], topCentro, top[(fat + 1) % slices]);
+	}
+	opfile.close();
+}
+/*
+void draw(Ponto p1, Ponto p2, Ponto p3, float r, float g, float b) {
+	glBegin(GL_TRIANGLES);
+	glColor3f(r, g, b);
+	glVertex3f(p3.getx(), p3.gety(), p3.getz());
+	glVertex3f(p2.getx(), p2.gety(), p2.getz());
+	glVertex3f(p1.getx(), p1.gety(), p1.getz());
+	glEnd();
+
+}*/
+
+
 void esfera(double raio, int fatias, int stacks, string nome) {
 	ofstream opfile(nome);
 	double angleSt = 90.0;
@@ -238,8 +289,7 @@ void updateXML(char* xmlName, char* modeloName) {
 	}
 	else
 	{
-		printf("Failed to load file %s , file not exists.\nCreating file teste1.xml...\n", xmlName);
-
+		cout << "Failed to load file " << xmlName << ", file not exists." << endl << "nCreating file "<< xmlName << endl;
 		TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "utf-8", "");
 		doc.LinkEndChild(decl);
 
@@ -284,8 +334,16 @@ int main(int argc, char *argv[]) {
 						nome = argv[6];
 					}
 					else {
-						printf("Desconhecido\n");
-						return 1;
+						if (!strcmp(argv[1], "cilindro") && argc == 7) {
+							cout << "CILINDRO" << endl;
+							cilindro(atof(argv[2]), atof(argv[3]), atoi(argv[4]), argv[5]);
+							//cone(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]), argv[6]);
+							nome = argv[5];
+						}
+						else {
+							cout << "Desconhecido" << endl;
+							return 1;
+						}
 					}
 				}
 			}
