@@ -93,17 +93,17 @@ void box(double x, double y, double z, string nome) {
 	opfile.close();
 }
 
-void cone(double raio, double alt, int fatias, int stacks, string nome) {
+void cone(double raio, double alt, int slices, int stacks, string nome) {
 	ofstream opfile(nome);
 	double starY = alt / 2.0;
 	double yStep = alt / float(stacks);
 	double startAngleSL = 0.0;
-	double angleSLStep = 360 / (float)fatias;
+	double angleSLStep = 360 / (float)slices;
 	Ponto p, centro;
 	centro = Ponto::Ponto(0, -alt / 2.0, 0);
 	vector<Ponto> ant;
 	vector<Ponto> actual;
-	int totpont = (stacks*(fatias * 2) + fatias) * 3; //tem fatas*flises cada uma tem 2 triangulos 
+	int totpont = (stacks*(slices * 2) + slices) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 													  //depois mais fatias para a base
 													  //cada triangulo sao 3 pontos
 	opfile << totpont << endl;
@@ -111,7 +111,7 @@ void cone(double raio, double alt, int fatias, int stacks, string nome) {
 	double triRaio = (raio*trigAlt) / alt;
 	double y = starY - trigAlt;
 	startAngleSL = 0.0;// posicionar a fatia na 1
-	for (int fatia = 0; fatia<fatias; fatia++) {
+	for (int fatia = 0; fatia<slices; fatia++) {
 		double z = triRaio*sin(startAngleSL*AngC); //estava x
 		double x = triRaio*cos(startAngleSL*AngC); // estava z
 		startAngleSL += angleSLStep;
@@ -127,7 +127,7 @@ void cone(double raio, double alt, int fatias, int stacks, string nome) {
 		triRaio = (raio*trigAlt) / alt;
 		y = starY - trigAlt; // altura dos postos desta stack é sempre a starY- altura deste triangulo
 		startAngleSL = 0.0;// posicionar a fatia na 1
-		for (int fatia = 0; fatia<fatias; fatia++) {
+		for (int fatia = 0; fatia<slices; fatia++) {
 			double z = triRaio*sin(startAngleSL*AngC); //estava x
 			double x = triRaio*cos(startAngleSL*AngC); //estava z
 			startAngleSL += angleSLStep; //proximafatia
@@ -135,9 +135,9 @@ void cone(double raio, double alt, int fatias, int stacks, string nome) {
 			actual.push_back(p);
 		}
 
-		for (int fat = 0; fat<fatias; fat++) { //contruir cada ims das fastias;
-			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % fatias]);
-			printTriangulo(opfile, ant[(fat + 1) % fatias], ant[fat], actual[(fat + 1) % fatias]);
+		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
+			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % slices]);
+			printTriangulo(opfile, ant[(fat + 1) % slices], ant[fat], actual[(fat + 1) % slices]);
 		}
 
 		ant = std::move(actual);
@@ -145,8 +145,8 @@ void cone(double raio, double alt, int fatias, int stacks, string nome) {
 
 	}
 
-	for (int fat = 0; fat<fatias; fat++) { //contruir a base
-		printTriangulo(opfile, ant[fat], centro, ant[(fat + 1) % fatias]);
+	for (int fat = 0; fat<slices; fat++) { //contruir a base
+		printTriangulo(opfile, ant[fat], centro, ant[(fat + 1) % slices]);
 	}
 	opfile.close();
 
