@@ -191,17 +191,6 @@ void cilindro(double h, double r, int slices, string nome) {
 	}
 	opfile.close();
 }
-/*
-void draw(Ponto p1, Ponto p2, Ponto p3, float r, float g, float b) {
-	glBegin(GL_TRIANGLES);
-	glColor3f(r, g, b);
-	glVertex3f(p3.getx(), p3.gety(), p3.getz());
-	glVertex3f(p2.getx(), p2.gety(), p2.getz());
-	glVertex3f(p1.getx(), p1.gety(), p1.getz());
-	glEnd();
-
-}*/
-
 
 void esfera(double raio, int fatias, int stacks, string nome) {
 	ofstream opfile(nome);
@@ -337,7 +326,6 @@ int main(int argc, char *argv[]) {
 						if (!strcmp(argv[1], "cilindro") && argc == 7) {
 							cout << "CILINDRO" << endl;
 							cilindro(atof(argv[2]), atof(argv[3]), atoi(argv[4]), argv[5]);
-							//cone(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atoi(argv[5]), argv[6]);
 							nome = argv[5];
 						}
 						else {
