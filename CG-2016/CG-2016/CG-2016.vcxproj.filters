@@ -55,11 +55,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="teste.xml">
-      <Filter>Source Files</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Ponto.h">
       <Filter>Header Files</Filter>
     </ClInclude>

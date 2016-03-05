@@ -194,9 +194,6 @@
     <None Include="..\..\..\..\..\Desktop\gerador\Makefile" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="teste.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Color.h" />
     <ClInclude Include="Figura.h" />
     <ClInclude Include="Ponto.h" />

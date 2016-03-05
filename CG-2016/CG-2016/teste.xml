@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<scene>
-  <model file="coneG.3d" />
-  <model file="plano.3d" />
-    <model file="box.3d" />
-    <model file="esfera.3d" />
-  
-</scene>

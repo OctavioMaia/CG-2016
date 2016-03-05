@@ -65,8 +65,10 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
+
+	//-rCam*cos(AngC*betaLook)*sin(AngC*alfaLook), -rCam*sin(AngC*betaLook), -rCam*cos(AngC*betaLook)*cos(AngC*alfaLook),
 	gluLookAt(rCam*cos(AngC*betaCam)*sin(AngC*alfaCam), rCam*sin(AngC*betaCam), rCam*cos(AngC*betaCam)*cos(AngC*alfaCam),
-		-rCam*cos(AngC*betaLook)*sin(AngC*alfaLook), -rCam*sin(AngC*betaLook), -rCam*cos(AngC*betaLook)*cos(AngC*alfaLook),
+		0, 0, 0,
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
@@ -88,21 +90,22 @@ void responseKeyboard(unsigned char key, int x, int y) {
 		case 's': if (betaCam > -90) { betaCam++; } glutPostRedisplay(); break;
 		case 'a': alfaCam--; glutPostRedisplay(); break;
 		case 'd': alfaCam++; glutPostRedisplay(); break;
-		case 'r': rCam++; glutPostRedisplay(); break;
-		case 't': rCam--; glutPostRedisplay(); break;
+		case 'r': rCam=rCam+0.25; glutPostRedisplay(); break;
+		case 't': rCam=rCam-0.25; glutPostRedisplay(); break;
 		default:
 			break;
 	}
 }
 
+
 void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
 	switch (key_code)
 	{
-		case GLUT_KEY_UP: if (betaLook < 90) { betaLook++; } glutPostRedisplay(); break;
-		case GLUT_KEY_DOWN: if (betaLook > -90) { betaLook--; } glutPostRedisplay(); break;
-		case GLUT_KEY_LEFT: alfaLook++; glutPostRedisplay(); break;
-		case GLUT_KEY_RIGHT: alfaLook--; glutPostRedisplay(); break;
+		//case GLUT_KEY_UP: if (betaLook < 90) { betaLook++; } glutPostRedisplay(); break;
+		//case GLUT_KEY_DOWN: if (betaLook > -90) { betaLook--; } glutPostRedisplay(); break;
+		//case GLUT_KEY_LEFT: alfaLook++; glutPostRedisplay(); break;
+		//case GLUT_KEY_RIGHT: alfaLook--; glutPostRedisplay(); break;
 		case GLUT_KEY_F1: angle++; glutPostRedisplay(); break;
 		case GLUT_KEY_F2: angle--; glutPostRedisplay(); break;
 
