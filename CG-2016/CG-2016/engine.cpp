@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Wire", 1);
 	glutAddMenuEntry("Fill", 2);
 	glutAddMenuEntry("Point", 3);
-	glutAddMenuEntry("Multiple Colores", 4);
+	glutAddMenuEntry("Multiple Colors", 4);
 	glutAddMenuEntry("Single Color: Blue", 5);
 	glutAddMenuEntry("Single Color: Red", 6);
 	glutAddMenuEntry("Single Color: Green", 7);
