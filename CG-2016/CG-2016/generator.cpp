@@ -236,8 +236,8 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		//ja tenho a camada atual e anterior prontas
 		//associar os pontos e mandar-los para o ficheiro
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
-			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % slices]);
-			printTriangulo(opfile, ant[(fat + 1) % slices], ant[fat], actual[(fat + 1) % slices]);
+			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
+			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
 		}
 		//triangulos imprimidos
 		//meter o ant =  atual e limpar o atual

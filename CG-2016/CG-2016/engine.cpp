@@ -52,7 +52,6 @@ void drawFromFile() {
 	// for para percorrer as figuras todas
 	for (int i = 0; i < (figuras.size()); i++)
 	{
-		cout << "drawFromFile " << figuras.size() << "\n";
 		Figura fg = figuras[i];
 		fg.drawFigure(multiColor);
 	}
@@ -194,7 +193,7 @@ int main(int argc, char **argv) {
 	angle = 0;
 	betaCam = 0;
 	alfaCam = 0;
-	rCam = 5;
+	rCam = 8;
 	betaLook = 0;
 	alfaLook = 0;
 
