@@ -5,8 +5,8 @@
 #include <chrono>
 
 #include "Figura.h"
-#include <tinyxml.h>
-#include <tinystr.h>
+#include "tinyxml.h"
+#include "tinystr.h"
 
 using namespace std;
 #define AngC  M_PI / 180

@@ -191,12 +191,11 @@
     <ClCompile Include="tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\gerador\Makefile" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Color.h" />
     <ClInclude Include="Figura.h" />
+    <ClInclude Include="tinystr.h" />
     <ClInclude Include="Ponto.h" />
+    <ClInclude Include="tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
