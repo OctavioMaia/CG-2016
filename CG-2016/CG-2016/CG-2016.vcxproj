@@ -177,6 +177,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Escala.cpp" />
     <ClCompile Include="Figura.cpp" />
     <ClCompile Include="generator.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -185,10 +186,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Ponto.cpp" />
+    <ClCompile Include="Referencial.cpp" />
+    <ClCompile Include="Rotacao.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="Translacao.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Desktop\gerador\Makefile" />
@@ -198,8 +202,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Escala.h" />
     <ClInclude Include="Figura.h" />
     <ClInclude Include="Ponto.h" />
+    <ClInclude Include="Referencial.h" />
+    <ClInclude Include="rotacao.h" />
+    <ClInclude Include="Translacao.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
