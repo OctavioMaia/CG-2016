@@ -136,8 +136,8 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 		}
 
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
-			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % slices]);
-			printTriangulo(opfile, ant[(fat + 1) % slices], ant[fat], actual[(fat + 1) % slices]);
+			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] );
+			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] );
 		}
 
 		ant = std::move(actual);
@@ -146,7 +146,7 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 	}
 
 	for (int fat = 0; fat<slices; fat++) { //contruir a base
-		printTriangulo(opfile, ant[fat], centro, ant[(fat + 1) % slices]);
+		printTriangulo(opfile, ant[fat], ant[(fat + 1) % slices], centro );
 	}
 	opfile.close();
 
@@ -192,23 +192,23 @@ void cilindro(double h, double r, int slices, string nome) {
 	opfile.close();
 }
 
-void esfera(double raio, int fatias, int stacks, string nome) {
+void esfera(double raio, int slices, int stacks, string nome) {
 	ofstream opfile(nome);
 	double angleSt = 90.0;
 	double angleSl;
-	double angleStepSl = 360.0 / (float)fatias;
+	double angleStepSl = 360.0 / (float)slices;
 	double angleStepSt = 180.0 / (float)stacks;
 	vector<Ponto> ant;
 	vector<Ponto> actual;
 	Ponto p;
 
 	angleSl = 0.0;
-	int totpont = (stacks*(fatias * 2)) * 3; //tem fatas*flises cada uma tem 2 triangulos 
+	int totpont = (stacks*(slices * 2)) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 											 //pode ser preciso mais uma stack
 											 //cada triangulo sao 3 pontos
 	opfile << totpont << endl;
 	//angle da st esta a 90 stack do topo 
-	for (int fat = 0; fat <= fatias; fat++) { //contruir cada ims das fastias
+	for (int fat = 0; fat <= slices; fat++) { //contruir cada ims das fastias
 		double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC); // estava x
 		double y = raio * sin(angleSt*AngC);
 		double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
@@ -224,7 +224,7 @@ void esfera(double raio, int fatias, int stacks, string nome) {
 								//char str [80];
 								//printf("Stack nuemro : %d\n angulo com XZ %f",stack, angleSt);
 								//scanf ("%79s",str); 
-		for (int fat = 0; fat<fatias; fat++) { //contruir cada ims das fastias
+		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias
 			double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC);
 
 			double y = raio * sin(angleSt*AngC);
@@ -235,9 +235,9 @@ void esfera(double raio, int fatias, int stacks, string nome) {
 		}
 		//ja tenho a camada atual e anterior prontas
 		//associar os pontos e mandar-los para o ficheiro
-		for (int fat = 0; fat<fatias; fat++) { //contruir cada ims das fastias;
-			printTriangulo(opfile, ant[fat], actual[fat], actual[(fat + 1) % fatias]);
-			printTriangulo(opfile, ant[(fat + 1) % fatias], ant[fat], actual[(fat + 1) % fatias]);
+		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
+			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
+			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
 		}
 		//triangulos imprimidos
 		//meter o ant =  atual e limpar o atual

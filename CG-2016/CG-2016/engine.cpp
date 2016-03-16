@@ -5,15 +5,17 @@
 #include <chrono>
 
 #include "Figura.h"
-#include <tinyxml.h>
-#include <tinystr.h>
+#include "tinyxml.h"
+#include "tinystr.h"
 
 using namespace std;
-
-float angle = 0;
-int axis = 1;
-int Z = 0;
-int X = 0;
+#define AngC  M_PI / 180
+float angle;
+float betaCam;
+float alfaCam;
+float rCam;
+float betaLook;
+float alfaLook;
 
 vector<Figura> figuras;
 bool multiColor=false;
@@ -48,9 +50,8 @@ void drawFromFile() {
 	
 
 	// for para percorrer as figuras todas
-	for (int i = 0; i < figuras.size(); i++)
+	for (int i = 0; i < (figuras.size()); i++)
 	{
-		cout << "drawFromFile " << figuras.size() << "\n";
 		Figura fg = figuras[i];
 		fg.drawFigure(multiColor);
 	}
@@ -63,21 +64,14 @@ void renderScene(void) {
 
 	// set the camera
 	glLoadIdentity();
-	gluLookAt(0.0, 0.0, 20.0,
-		0.0, 0.0, 0.0,
+
+	//-rCam*cos(AngC*betaLook)*sin(AngC*alfaLook), -rCam*sin(AngC*betaLook), -rCam*cos(AngC*betaLook)*cos(AngC*alfaLook),
+	gluLookAt(rCam*cos(AngC*betaCam)*sin(AngC*alfaCam), rCam*sin(AngC*betaCam), rCam*cos(AngC*betaCam)*cos(AngC*alfaCam),
+		0, 0, 0,
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
-	glTranslatef(X, 0, Z);
-
-	switch (axis)
-	{
-		case 0: glRotatef(angle, 1, 0, 0);
-		case 1: glRotatef(angle, 0, 1, 0);
-		case 2: glRotatef(angle, 0, 0, 1);
-	default: 
-		break;
-	}
+	glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
 	drawFromFile();
@@ -91,26 +85,31 @@ void renderScene(void) {
 void responseKeyboard(unsigned char key, int x, int y) {
 	switch (key)
 	{
-	case 'x': axis = 0; glutPostRedisplay(); break;
-	case 'y': axis = 1; glutPostRedisplay(); break;
-	case 'z': axis = 2; glutPostRedisplay(); break;
-	default:
-		break;
+		case 'w': if (betaCam < 90) { betaCam--; } glutPostRedisplay(); break;
+		case 's': if (betaCam > -90) { betaCam++; } glutPostRedisplay(); break;
+		case 'a': alfaCam--; glutPostRedisplay(); break;
+		case 'd': alfaCam++; glutPostRedisplay(); break;
+		case 'r': rCam=rCam+0.25; glutPostRedisplay(); break;
+		case 't': rCam=rCam-0.25; glutPostRedisplay(); break;
+		default:
+			break;
 	}
 }
+
 
 void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
 	switch (key_code)
 	{
-	case GLUT_KEY_UP: Z++; glutPostRedisplay(); break;
-	case GLUT_KEY_DOWN: Z--; glutPostRedisplay(); break;
-	case GLUT_KEY_LEFT: X--; glutPostRedisplay(); break;
-	case GLUT_KEY_RIGHT: X++; glutPostRedisplay(); break;
-	case GLUT_KEY_F1: angle++; glutPostRedisplay(); break;
-	case GLUT_KEY_F2: angle--; glutPostRedisplay(); break;
-	default:
-		break;
+		//case GLUT_KEY_UP: if (betaLook < 90) { betaLook++; } glutPostRedisplay(); break;
+		//case GLUT_KEY_DOWN: if (betaLook > -90) { betaLook--; } glutPostRedisplay(); break;
+		//case GLUT_KEY_LEFT: alfaLook++; glutPostRedisplay(); break;
+		//case GLUT_KEY_RIGHT: alfaLook--; glutPostRedisplay(); break;
+		case GLUT_KEY_F1: angle++; glutPostRedisplay(); break;
+		case GLUT_KEY_F2: angle--; glutPostRedisplay(); break;
+
+		default:
+			break;
 	}
 	
 }
@@ -191,6 +190,12 @@ int readFile3d(string filemodelo, char delem) {
 }
 
 int main(int argc, char **argv) {
+	angle = 0;
+	betaCam = 0;
+	alfaCam = 0;
+	rCam = 8;
+	betaLook = 0;
+	alfaLook = 0;
 
 	char* pFilename = argv[1];
 	TiXmlDocument doc;
@@ -243,7 +248,7 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Wire", 1);
 	glutAddMenuEntry("Fill", 2);
 	glutAddMenuEntry("Point", 3);
-	glutAddMenuEntry("Multiple Colores", 4);
+	glutAddMenuEntry("Multiple Colors", 4);
 	glutAddMenuEntry("Single Color: Blue", 5);
 	glutAddMenuEntry("Single Color: Red", 6);
 	glutAddMenuEntry("Single Color: Green", 7);
