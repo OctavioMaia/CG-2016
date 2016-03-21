@@ -3,6 +3,7 @@
 
 #include "Ponto.h"
 #include "Color.h"
+#include <glew.h>
 #include <GL/glut.h>
 
 using namespace std;
@@ -14,6 +15,7 @@ private:
 	int nPontos;
 	vector<Ponto> listaPontos;
 	vector<Color> listaCores;
+	vector<double> listafloat;
 
 public:
 	Figura(string fileName, int n);
@@ -27,5 +29,6 @@ public:
 	int gerarCores();
 
 	void drawFigure(bool multiColor);
+	void drawFigureArrays();
 };
 #endif
