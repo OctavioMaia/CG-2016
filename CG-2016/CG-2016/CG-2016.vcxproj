@@ -200,6 +200,7 @@
     <ClInclude Include="Escala.h" />
     <ClInclude Include="Figura.h" />
     <ClInclude Include="Referencial.h" />
+    <ClInclude Include="Rotacao.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="Ponto.h" />
     <ClInclude Include="tinyxml.h" />
