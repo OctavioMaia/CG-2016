@@ -1,16 +1,22 @@
 #include "Figura.h"
+#include <stdlib.h>
+
+GLuint buffers[1];
 
 Figura::Figura(string fileName, int n) {
 	file = fileName;
 	nPontos = n;
+	pos = 0;
 }
 
 void Figura::addPonto(double x, double y, double z) {
 	listaPontos.push_back(Ponto::Ponto(x, y, z));
-	listafloat.push_back(x);
-	listafloat.push_back(y);
-	listafloat.push_back(z);
-
+	listafloat[pos++]=x;
+	listafloat[pos++]=y;
+	listafloat[pos++]=z;
+	//listafloat.push_back(x);
+	//listafloat.push_back(y);
+	//listafloat.push_back(z);
 }
 
 void Figura::addColor(double r, double g, double b) {
@@ -57,17 +63,29 @@ void Figura::drawFigure(bool multiColor) {
 }
 
 void Figura::drawFigureArrays() {
-	GLuint buffers[1];
+	
+
+	cout << "1";
+
 	glGenBuffers(1, buffers);
+
+	cout << "2";
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 
-	glBufferData(GL_ARRAY_BUFFER, listafloat.size()*sizeof(double), &listafloat.front(), GL_STATIC_DRAW);
+	cout << "3";
+
+	glBufferData(GL_ARRAY_BUFFER, nPontos*sizeof(double)*3, listafloat, GL_STATIC_DRAW);
+
+	cout << "4";
+
+	cout << "5";
+
+	glVertexPointer(3, GL_FLOAT, 0, 0);
 
 
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]); 
-	glVertexPointer(3, GL_DOUBLE, 0, 0);
+	cout << "6";
+	glDrawArrays(GL_TRIANGLES, 0, nPontos*3);
 
-	glDrawArrays(GL_TRIANGLES, 0, listafloat.size());
 
 }

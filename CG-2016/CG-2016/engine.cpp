@@ -4,10 +4,10 @@
 #include "windows.h" 
 
 #include <GL\glew.h>
-#include <GL\glut.h>
-
+//#include <GL\glut.h>
 
 #pragma comment(lib, "glew32.lib")
+
 
 
 #include <chrono>
@@ -63,9 +63,9 @@ void renderScene(void) {
 	// set the camera
 	glLoadIdentity();
 
-	//-rCam*cos(AngC*betaLook)*sin(AngC*alfaLook), -rCam*sin(AngC*betaLook), -rCam*cos(AngC*betaLook)*cos(AngC*alfaLook),
+	
 	gluLookAt(rCam*cos(AngC*betaCam)*sin(AngC*alfaCam), rCam*sin(AngC*betaCam), rCam*cos(AngC*betaCam)*cos(AngC*alfaCam),
-		0, 0, 0,
+		0,0,0,
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
@@ -83,12 +83,12 @@ void renderScene(void) {
 void responseKeyboard(unsigned char key, int x, int y) {
 	switch (key)
 	{
-		case 'w': if (betaCam < 90) { betaCam--; } glutPostRedisplay(); break;
-		case 's': if (betaCam > -90) { betaCam++; } glutPostRedisplay(); break;
-		case 'a': alfaCam--; glutPostRedisplay(); break;
-		case 'd': alfaCam++; glutPostRedisplay(); break;
-		case 'r': rCam=rCam+0.25; glutPostRedisplay(); break;
-		case 't': rCam=rCam-0.25; glutPostRedisplay(); break;
+		case 'w': if (betaCam < 90) { betaCam+=10; } glutPostRedisplay(); break;
+		case 's': if (betaCam > -90) { betaCam-=10; } glutPostRedisplay(); break;
+		case 'a': alfaCam-=10; glutPostRedisplay(); break;
+		case 'd': alfaCam+=10; glutPostRedisplay(); break;
+		case 'r': rCam=rCam+50; glutPostRedisplay(); break;
+		case 't': rCam=rCam-50; glutPostRedisplay(); break;
 		default:
 			break;
 	}
@@ -99,10 +99,10 @@ void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
 	switch (key_code)
 	{
-		//case GLUT_KEY_UP: if (betaLook < 90) { betaLook++; } glutPostRedisplay(); break;
-		//case GLUT_KEY_DOWN: if (betaLook > -90) { betaLook--; } glutPostRedisplay(); break;
-		//case GLUT_KEY_LEFT: alfaLook++; glutPostRedisplay(); break;
-		//case GLUT_KEY_RIGHT: alfaLook--; glutPostRedisplay(); break;
+		case GLUT_KEY_UP: if (betaLook < 90) { betaLook++; } glutPostRedisplay(); break;
+		case GLUT_KEY_DOWN: if (betaLook > -90) { betaLook--; } glutPostRedisplay(); break;
+		case GLUT_KEY_LEFT: alfaLook++; glutPostRedisplay(); break;
+		case GLUT_KEY_RIGHT: alfaLook--; glutPostRedisplay(); break;
 		case GLUT_KEY_F1: angle++; glutPostRedisplay(); break;
 		case GLUT_KEY_F2: angle--; glutPostRedisplay(); break;
 
@@ -207,7 +207,7 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 
 		cout << "translate\n";
 		if (valeu = elem1->Attribute("X")) {
-			trans.setX(atof(valeu));
+			trans.setX(atof(valeu) );
 			cout << "X=" << valeu << "\n";
 		}
 
@@ -216,7 +216,7 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 			cout << "Y=" << valeu << "\n";
 		}
 		if (valeu = elem1->Attribute("Z")) {
-			trans.setZ(atof(valeu));
+			trans.setZ(atof(valeu) );
 			cout << "Z=" << valeu << "\n";
 		}
 		ref->setTranslacao(trans);
@@ -341,16 +341,19 @@ int main(int argc, char **argv) {
 	angle = 0;
 	betaCam = 0;
 	alfaCam = 0;
-	rCam = 8;
+	rCam = 20;
 	betaLook = 0;
 	alfaLook = 0;
 
+
 	
+	
+	glEnableClientState(GL_VERTEX_ARRAY);
 
 	readFileXML(argv[1]);
 	
 	
-	glEnableClientState(GL_VERTEX_ARRAY);
+	
 
 
 	// init GLUT and the window
@@ -359,6 +362,8 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow("CG@DI-UM");
+
+	glewInit();
 
 	glPolygonMode(GL_FRONT, GL_LINE);
 
@@ -384,7 +389,7 @@ int main(int argc, char **argv) {
 	glutAttachMenu(GLUT_LEFT_BUTTON);
 
 
-	glewInit();
+	
 
 
 	//  OpenGL settings
