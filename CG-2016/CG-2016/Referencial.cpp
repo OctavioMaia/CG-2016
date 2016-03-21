@@ -33,11 +33,12 @@ void Referencial::apply() {
 	for(int i=0;i<filhos.size();i++){
 		filhos[i].apply();
 		
-		filhos[i].resetGlReferncial();
+		//filhos[i].resetGlReferncial();
 	}
+	glPopMatrix();
 	
 }
-void Referencial::resetGlReferncial() { glPopMatrix();; }
+void Referencial::resetGlReferncial() { glPopMatrix();}
 Escala Referencial::getEscala() { return escala; }
 Translacao Referencial::getTranslacao() { return translacao; }
 Rotacao Referencial::getRotacao() { return rotacao; }

@@ -89,6 +89,9 @@
     <ClInclude Include="Translacao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Rotacao.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="scene1.xml">
