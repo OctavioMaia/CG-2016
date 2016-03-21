@@ -7,6 +7,10 @@ Figura::Figura(string fileName, int n) {
 
 void Figura::addPonto(double x, double y, double z) {
 	listaPontos.push_back(Ponto::Ponto(x, y, z));
+	listafloat.push_back(x);
+	listafloat.push_back(y);
+	listafloat.push_back(z);
+
 }
 
 void Figura::addColor(double r, double g, double b) {
@@ -50,4 +54,20 @@ void Figura::drawFigure(bool multiColor) {
 			glEnd();
 		}
 	}
+}
+
+void Figura::drawFigureArrays() {
+	GLuint buffers[1];
+	glGenBuffers(1, buffers);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+
+	glBufferData(GL_ARRAY_BUFFER, listafloat.size()*sizeof(double), &listafloat.front(), GL_STATIC_DRAW);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]); 
+	glVertexPointer(3, GL_DOUBLE, 0, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, listafloat.size());
+
 }
