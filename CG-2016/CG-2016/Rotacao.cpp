@@ -8,16 +8,16 @@ Rotacao::Rotacao() {
 	angle = 0.0;
 }
 Rotacao::Rotacao(float x, float y,float z, float angle ) {
-	x = x;
-	y = y;
-	z = z;
-	angle = angle;
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->angle = angle;
 }
 
-void Rotacao::setX(float x) { x = x; }
-void Rotacao::setY(float y) { y = y; }
-void Rotacao::setZ(float z) { z = z; }
-void Rotacao::setAngle(float angle) { angle = angle; }
+void Rotacao::setX(float x) { this->x = x; }
+void Rotacao::setY(float y) { this->y = y; }
+void Rotacao::setZ(float z) { this->z = z; }
+void Rotacao::setAngle(float angle) { this->angle = angle; }
 
 float Rotacao::getX() { return x; }
 float Rotacao::getY() { return y; }

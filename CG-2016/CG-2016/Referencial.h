@@ -17,8 +17,7 @@ private:
 	Translacao translacao;
 	Rotacao rotacao;
 	vector<Referencial> filhos;
-	vector<Figura> figuras
-	;
+	vector<Figura> figuras;
 
 public:
 	Referencial();

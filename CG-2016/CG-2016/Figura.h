@@ -1,4 +1,4 @@
-#ifndef Figura_H
+#ifndef FIGURA_H
 #define FIGURA_H
 
 #include "Ponto.h"
@@ -6,7 +6,6 @@
 #include <GL/glut.h>
 
 using namespace std;
-
 
 class Figura
 {

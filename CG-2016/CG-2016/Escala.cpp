@@ -7,9 +7,9 @@ Escala::Escala() {
 	z = 1.0;
 }
 Escala::Escala(float x, float y, float z) {
-	x = x;
-	y = y;
-	z = z;
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
 Escala::Escala(float value) {
 	x = value;
@@ -17,9 +17,9 @@ Escala::Escala(float value) {
 	z = value;
 }
 
-void Escala::setX(float x) { x = x; }
-void Escala::setY(float y) { y = y; }
-void Escala::setZ(float z) { z = z; }
+void Escala::setX(float x) { this->x = x; }
+void Escala::setY(float y) { this->y = y; }
+void Escala::setZ(float z) { this->z = z; }
 void Escala::setAll(float value) {
 	x = value;
 	y = value;
