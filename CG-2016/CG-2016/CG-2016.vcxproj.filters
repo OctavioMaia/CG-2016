@@ -51,6 +51,18 @@
     <ClCompile Include="teste.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Referencial.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rotacao.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Escala.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Translacao.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ponto.h">
@@ -66,6 +78,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tinyxml.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Referencial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Escala.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Translacao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
