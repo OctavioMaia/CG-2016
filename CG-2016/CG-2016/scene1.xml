@@ -2,94 +2,91 @@
 <scene>
   <!--SOL-->
   <group>
-    <scale X="16.94" Y="16.94" Z="16.94"/>
+    <scale X="1" Y="1" Z="1"/>
     <models>
       <model file ="esfera.3d" />
     </models>
+
     <!--MERCURIO-->
     <group>
-      <translate X="3" Y="0" Z="0" />
-      <scale X="0.24" Y="0.24" Z="0.24"/>
+      <translate X="1.5" Y="0" Z="0" />
+      <scale X="0.028" Y="0.028" Z="0.028"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!------------>
 
+  
     <!--VENUS-->
     <group>
-      <translate X="6" Y="0" Z="0" />
-      <scale X="0.6052" Y="0.6052" Z="0.6052"/>
+      <translate X="1.868" Y="0" Z="0" />
+      <scale X="0.0696" Y="0.0696" Z="0.0696"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!--------->
+
 
     <!--TERRA-->
     <group>
-      <translate X="9" Y="0" Z="0" />
-      <scale X="0.6371" Y="0.6371" Z="0.6371"/>
+      <translate X="2.583" Y="0" Z="0" />
+      <scale X="0.0728" Y="0.0728" Z="0.0728"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!--------->
+
 
     <!--MARTE-->
     <group>
-      <translate X="12" Y="0" Z="0" />
-      <scale X="0.3389" Y="0.3389" Z="0.3389"/>
+      <translate X="3.936" Y="0" Z="0" />
+      <scale X="0.0392" Y="0.0392" Z="0.0392"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!------->
+
 
     <!--JUPITER-->
     <group>
-      <translate X="15" Y="0" Z="0" />
-      <scale X="0.9911" Y="0.9911" Z="0.9911"/>
+      <translate X="13.44" Y="0" Z="0" />
+      <scale X="0.6032" Y="0.6032" Z="0.6032"/>
       <models>
         <model file ="esfera.3d" />
       </models>
-
-
     </group>
-    <!----------->
+
 
     <!--Saturno-->
     <group>
-      <translate X="18" Y="0" Z="0" />
-      <scale X="0.8232" Y="0.8232" Z="0.8232"/>
+      <translate X="24.6" Y="0" Z="0" />
+      <scale X="0.5032" Y="0.5032" Z="0.5032"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!----------->
+
 
     <!--URANUS-->
     <group>
-      <translate X="21" Y="0" Z="0" />
-      <scale X="0.5362" Y="0.5362" Z="0.5362"/>
-
+      <translate X="49.62" Y="0" Z="0" />
+      <scale X="0.2912" Y="0.2912" Z="0.2912"/>
       <models>
         <model file ="esfera.3d" />
       </models>
-
-
     </group>
-    <!----------->
+
 
     <!--NEPTUNO-->
     <group>
-      <translate X="24" Y="0" Z="0" />
-      <scale X="0.4622" Y="0.4622" Z="0.4622"/>
+      <translate X="77.72" Y="0" Z="0" />
+      <scale X="0.2832" Y="0.2832" Z="0.2832"/>
       <models>
         <model file ="esfera.3d" />
       </models>
     </group>
-    <!----------->
+
+
   </group>
-  <!----------->
+
 </scene>

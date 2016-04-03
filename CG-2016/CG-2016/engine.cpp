@@ -87,8 +87,8 @@ void responseKeyboard(unsigned char key, int x, int y) {
 		case 's': if (betaCam > -90) { betaCam-=10; } glutPostRedisplay(); break;
 		case 'a': alfaCam-=10; glutPostRedisplay(); break;
 		case 'd': alfaCam+=10; glutPostRedisplay(); break;
-		case 'r': rCam=rCam+50; glutPostRedisplay(); break;
-		case 't': rCam=rCam-50; glutPostRedisplay(); break;
+		case 'r': rCam=rCam+1; glutPostRedisplay(); break;
+		case 't': rCam=rCam-1; glutPostRedisplay(); break;
 		default:
 			break;
 	}
@@ -165,8 +165,6 @@ void readModels(TiXmlElement* elem, Referencial* ref){
 
 		filemodelo = elemFunc->Attribute("file");
 
-		cout << "Go read file: " << filemodelo << "\n";
-
 		vector<string> campos;
 		string line;
 		int nVertices;
@@ -205,19 +203,15 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 		
 		const char* valeu;
 
-		cout << "translate\n";
 		if (valeu = elem1->Attribute("X")) {
 			trans.setX(atof(valeu) );
-			cout << "X=" << valeu << "\n";
 		}
 
 		if (valeu = elem1->Attribute("Y")) {
 			trans.setY(atof(valeu));
-			cout << "Y=" << valeu << "\n";
 		}
 		if (valeu = elem1->Attribute("Z")) {
 			trans.setZ(atof(valeu) );
-			cout << "Z=" << valeu << "\n";
 		}
 		ref->setTranslacao(trans);
 	}
@@ -235,19 +229,15 @@ void readScale(TiXmlElement* elem, Referencial* ref) {
 
 		const char* valeu;
 
-		cout << "translate\n";
 		if (valeu = elem1->Attribute("X")) {
 			scale.setX(atof(valeu));
-			cout << "X=" << valeu << "\n";
 		}
 
 		if (valeu = elem1->Attribute("Y")) {
 			scale.setY(atof(valeu));
-			cout << "Y=" << valeu << "\n";
 		}
 		if (valeu = elem1->Attribute("Z")) {
 			scale.setZ(atof(valeu));
-			cout << "Z=" << valeu << "\n";
 		}
 		ref->setEscala(scale);
 	}
@@ -264,25 +254,18 @@ void readRotate(TiXmlElement* elem, Referencial* ref) {
 
 		if (valeu = elem1->Attribute("angle")) {
 			rot.setAngle(atof(valeu));
-			cout << "angle=" << atof(valeu) << "\n";
 		}
 
 		if (valeu = elem1->Attribute("axisX")) {
 			rot.setX(atof(valeu));
-			cout << "axisX=" << atof(valeu) << "\n";
 		}
 		if (valeu = elem1->Attribute("axisY")) {
 			rot.setY(atof(valeu));
-			cout << "axisY=" << atof(valeu) << "\n";
 		}
 		if (valeu = elem1->Attribute("axisZ")) {
 			rot.setZ(atof(valeu));
-			cout << "axisZ=" << atof(valeu) << "\n";
 		}
 		ref->setRotacao(rot);
-
-
-		cout << "ola";
 	}
 
 }
@@ -327,7 +310,6 @@ void readFileXML(char* file) {
 		}
 		catch (const std::exception&)
 		{
-			cout << file << "\n";
 			printf("Failed to load file \"%s\"\n", file);
 		}
 	}
@@ -360,7 +342,7 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(800, 800);
+	glutInitWindowSize(1500, 800);
 	glutCreateWindow("CG@DI-UM");
 
 	glewInit();
@@ -388,19 +370,9 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Single Color: Green", 7);
 	glutAttachMenu(GLUT_LEFT_BUTTON);
 
-
-	
-
-
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
-
-	
-
-
-
 
 	// enter GLUT's main cycle
 	glutMainLoop();

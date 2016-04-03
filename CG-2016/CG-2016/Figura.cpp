@@ -14,9 +14,6 @@ void Figura::addPonto(double x, double y, double z) {
 	listafloat[pos++]=x;
 	listafloat[pos++]=y;
 	listafloat[pos++]=z;
-	//listafloat.push_back(x);
-	//listafloat.push_back(y);
-	//listafloat.push_back(z);
 }
 
 void Figura::addColor(double r, double g, double b) {
@@ -61,7 +58,7 @@ void Figura::drawFigure(bool multiColor) {
 		}
 	}
 }
-
+/*
 void Figura::drawFigureArrays() {
 	
 
@@ -89,3 +86,5 @@ void Figura::drawFigureArrays() {
 
 
 }
+
+*/

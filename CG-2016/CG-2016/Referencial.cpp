@@ -31,9 +31,8 @@ void Referencial::apply() {
 	
 	for(int i=0; i<(figuras.size());i++){
 		figuras[i].drawFigure(false);
-		cout << "ola";
+		//para no futuro desenhar apartir de Buffers
 		//figuras[i].drawFigureArrays();
-		cout << "rui";
 	}
 	for(int i=0;i<(filhos.size());i++){
 		filhos[i].apply();
