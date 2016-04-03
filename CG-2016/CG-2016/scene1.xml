@@ -16,7 +16,7 @@
       </models>
     </group>
 
-  
+
     <!--VENUS-->
     <group>
       <translate X="1.868" Y="0" Z="0" />
@@ -34,6 +34,14 @@
       <models>
         <model file ="esfera.3d" />
       </models>
+      <!--LUA-->
+      <group>
+        <translate X="2.59" Y="0" Z="0" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
     </group>
 
 
@@ -44,49 +52,122 @@
       <models>
         <model file ="esfera.3d" />
       </models>
+      <!--PHOBOS-->
+      <group>
+        <translate X="1" Y="0" Z="1" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+
+      </group>
+
+      <!--DEIMOS-->
+      <group>
+        <translate X="1.5" Y="0" Z="1.5" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
     </group>
 
 
     <!--JUPITER-->
     <group>
-      <translate X="13.44" Y="0" Z="0" />
+      <translate X="5.44" Y="0" Z="0" />
       <scale X="0.6032" Y="0.6032" Z="0.6032"/>
       <models>
         <model file ="esfera.3d" />
       </models>
+      <!--GANYMEDE-->
+      <group>
+        <translate X="1.2" Y="0" Z="1.2" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
+
+      <!--CALLISTO-->
+      <group>
+        <translate X="1.8" Y="0" Z="0" />
+        <scale X="0.15" Y="0.15" Z="0.15"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
+
     </group>
 
 
     <!--Saturno-->
     <group>
-      <translate X="24.6" Y="0" Z="0" />
+      <translate X="8.6" Y="0" Z="0" />
       <scale X="0.5032" Y="0.5032" Z="0.5032"/>
       <models>
         <model file ="esfera.3d" />
       </models>
+      <!--REIA-->
+      <group>
+        <translate X="0.9" Y="0" Z="0.9" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
+      
+      <!--TITA-->
+      <group>
+        <translate X="1" Y="0" Z="-1" />
+        <scale X="0.05" Y="0.05" Z="0.05"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
+
     </group>
 
 
     <!--URANUS-->
     <group>
-      <translate X="49.62" Y="0" Z="0" />
+      <translate X="10.62" Y="0" Z="0" />
       <scale X="0.2912" Y="0.2912" Z="0.2912"/>
       <models>
         <model file ="esfera.3d" />
       </models>
+
+      <!--TITANIA-->
+      <group>
+        <translate X="1" Y="0" Z="-1" />
+        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <models>
+          <model file ="esfera.3d" />
+        </models>
+      </group>
+
     </group>
 
 
     <!--NEPTUNO-->
     <group>
-      <translate X="77.72" Y="0" Z="0" />
+      <translate X="12.72" Y="0" Z="0" />
       <scale X="0.2832" Y="0.2832" Z="0.2832"/>
       <models>
         <model file ="esfera.3d" />
       </models>
+      
+      <!--TRITAO-->
+        <group>
+          <translate X="1" Y="0" Z="1" />
+          <scale X="0.1" Y="0.1" Z="´0.1"/>
+          <models>
+            <model file ="esfera.3d" />
+          </models>
+        </group>
+
     </group>
-
-
+    
   </group>
 
 </scene>
