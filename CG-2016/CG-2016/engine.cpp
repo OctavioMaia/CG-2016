@@ -321,7 +321,7 @@ void readFileXML(char* file) {
 
 int main(int argc, char **argv) {
 	angle = 0;
-	betaCam = 0;
+	betaCam = 10;
 	alfaCam = 0;
 	rCam = 20;
 	betaLook = 0;
