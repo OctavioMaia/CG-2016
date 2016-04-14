@@ -1,13 +1,18 @@
-#ifndef Figura_H
+#ifndef FIGURA_H
 #define FIGURA_H
 
 #include "Ponto.h"
 #include "Color.h"
-#include <glew.h>
+
+#include <GL/glew.h>
 #include <GL/glut.h>
 
-using namespace std;
 
+
+
+#pragma comment(lib, "glew32.lib")
+
+using namespace std;
 
 class Figura
 {
@@ -16,7 +21,8 @@ private:
 	int nPontos;
 	vector<Ponto> listaPontos;
 	vector<Color> listaCores;
-	vector<double> listafloat;
+	double listafloat[7200];
+	int pos;
 
 public:
 	Figura(string fileName, int n);

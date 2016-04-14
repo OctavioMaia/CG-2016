@@ -13,8 +13,6 @@ private:
 	float y;
 	float z;
 
-	;
-
 public:
 	Translacao();
 	Translacao(float x, float y, float z);
