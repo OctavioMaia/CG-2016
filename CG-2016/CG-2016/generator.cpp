@@ -5,13 +5,31 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include <sstream>
 #include <iomanip>
 #include "tinyxml.h"
 #include "tinystr.h"
 #include "Ponto.h"
+#include "Patch.h"
+
 
 #define AngC  M_PI / 180
 using namespace std;
+
+int mmin(int i1, int i2){
+	if(i1<=i2) return i1;
+	return i2;
+}
+
+std::vector<std::string> &msplit(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
 
 void printTriangulo(ofstream& file, Ponto p1, Ponto p2, Ponto p3) {
 	p1.printFile(file, ";", true);
@@ -249,7 +267,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 	opfile.close();
 }
 
-
+/*
 void updateXML(char* xmlName, char* modeloName) {
 	TiXmlDocument doc;
 	if (doc.LoadFile(xmlName))
@@ -296,8 +314,115 @@ void updateXML(char* xmlName, char* modeloName) {
 	}
 }
 
+*/
+
+string mtrim(string& str)
+{
+    size_t first = str.find_first_not_of(' ');
+    size_t last = str.find_last_not_of(' ');
+    return str.substr(first, (last-first+1));
+}
+
+void loadPatch(string source,vector<Patch>& paches, vector<Ponto>& pontos){
+	ifstream file(source);
+	string line;
+	getline(file, line);
+	mtrim(line);
+	int nPach = stoi(line);
+	vector<string> campos;
+	for (int i = 0; i < nPach; i++)
+	{
+		//vai buscar a linha daquel patch
+		getline(file, line);
+
+		Patch pa = Patch::Patch(line);
+		paches.push_back(pa);
+
+	}
+	getline(file, line);
+	mtrim(line);
+	int nPoint = stoi(line);
+	for (int i = 0; i < nPoint; i++)
+	{
+		//vai buscar a linha daquel ponto e met e na variavel global
+		getline(file, line);
+		mtrim(line);
+		campos.clear();
+		msplit(line, ',',campos);
+		Ponto p = Ponto::Ponto(atof(campos[0].c_str()),atof(campos[1].c_str()),atof(campos[2].c_str()));
+		pontos.push_back(p);
+
+	}
+	file.close();
+}
+
+Ponto bezieCurve(float t, Ponto p0,Ponto p1,Ponto p2,Ponto p3){
+	float x=0,y=0,z=0;
+	float invT = 1.0-t;
+	float t1,t2,t3,t4;
+	t1=t*t*t;
+	t2=3*(t*t)*invT;
+	t3=3*(t*(invT*invT));
+	t4=invT*invT*invT;
+	x = t1*p3.getx()+t2*p2.getx()+t3*p1.getx()+t4*p0.getx();
+	y = t1*p3.gety()+t2*p2.gety()+t3*p1.gety()+t4*p0.gety();
+	z = t1*p3.getz()+t2*p2.getz()+t3*p1.getz()+t4*p0.getz();
+
+	return Ponto::Ponto(x, y, z);
+}
+
+Ponto bezieSurface(float h, float v, Patch p,vector<Ponto> pontos){
+	vector<Ponto> calculados;
+
+	for (int i = 0; i < 4; i++)
+	{
+		Ponto po = bezieCurve(h, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
+		calculados.push_back(po);
+	}
+	return bezieCurve(v,calculados[0],calculados[1],calculados[2],calculados[3]);
+}
+
+
+void bezieToTriangles(int tess, int patchnum, ofstream& output,vector<Patch>& paches, vector<Ponto>& pontos){
+	float step = 1.0/tess;
+	float h,v,hNext,vNext;
+	for (int i = 0; i < tess; i++)
+	{
+		h=i*step;
+		hNext=(i+1)*step;
+		for (int j = 0; j < tess; j++)
+		{
+			v=j*step;
+			vNext=(j+1)*step;
+			Ponto p1 = bezieSurface(h,v,paches[patchnum],pontos);
+			Ponto p2 = bezieSurface(h,vNext,paches[patchnum],pontos);
+			Ponto p3 = bezieSurface(hNext,v,paches[patchnum],pontos);
+			Ponto p4 = bezieSurface(hNext,vNext,paches[patchnum],pontos);
+			printTriangulo(output,p1,p3,p4);
+			printTriangulo(output,p1,p4,p2);
+
+		}
+
+	}
+}
+
+
+void translateFromBezie(int tess, string fname,vector<Patch>& paches, vector<Ponto>& pontos){
+	ofstream file(fname);
+
+	int totpatch = paches.size();
+
+	file << (totpatch*tess*tess * 6) << endl;
+	for (int i = 0; i < totpatch; i++){
+		bezieToTriangles(tess,i,file,paches,pontos);
+	}
+	file.close();
+}
+
 int main(int argc, char *argv[]) {
 	char* nome;
+	vector<Patch> paches;
+	vector<Ponto> pontos;
 	if (argc>1) {
 		if (!strcmp(argv[1], "plano") && argc == 5) {
 			cout << "PLANO" << endl;
@@ -329,14 +454,26 @@ int main(int argc, char *argv[]) {
 							nome = argv[5];
 						}
 						else {
-							cout << "Desconhecido" << endl;
-							return 1;
+							if (!strcmp(argv[1], "patch") && argc == 5) {
+								cout << "PATCH" << endl;
+								string source = argv[2];
+								int tess = atoi(argv[3]);
+								string out = argv[4]; 
+								loadPatch(source,paches,pontos);
+								translateFromBezie(tess,out,paches,pontos);
+								nome = argv[5];
+							}
+							else{
+								
+								cout << "Desconhecido" << endl;
+								return 1;
+							}
 						}
 					}
 				}
 			}
 		}
-		updateXML(argv[argc-1], nome);
+		//updateXML(argv[argc-1], nome);
 		return 0;
 	}
 
