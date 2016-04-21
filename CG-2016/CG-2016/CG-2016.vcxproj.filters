@@ -92,7 +92,10 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="scene.xml">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="teste.xml">
+      <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>
 </Project>

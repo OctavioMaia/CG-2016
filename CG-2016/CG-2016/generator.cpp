@@ -296,6 +296,19 @@ void updateXML(char* xmlName, char* modeloName) {
 	}
 }
 
+
+float evalBezierCurve(const float* P, const float &t) 
+{ 
+    float b0 = (1 - t) * (1 - t) * (1 - t); 
+    float b1 = 3 * t * (1 - t) * (1 - t); 
+    float b2 = 3 * t * t * (1 - t); 
+    float b3 = t * t * t; 
+    return P[0] * b0 + P[1] * b1 + P[2] * b2 + P[3] * b3; 
+} 
+
+
+
+
 int main(int argc, char *argv[]) {
 	char* nome;
 	if (argc>1) {

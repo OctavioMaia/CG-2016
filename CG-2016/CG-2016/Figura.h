@@ -21,7 +21,7 @@ private:
 	int nPontos;
 	vector<Ponto> listaPontos;
 	vector<Color> listaCores;
-	double listafloat[7200];
+	float* listafloat;
 	int pos;
 
 public:
