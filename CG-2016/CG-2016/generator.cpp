@@ -5,13 +5,31 @@
 #include <vector>
 #include <string>
 #include <stdio.h>
+#include <sstream>
 #include <iomanip>
 #include "tinyxml.h"
 #include "tinystr.h"
 #include "Ponto.h"
+#include "Patch.h"
+
 
 #define AngC  M_PI / 180
 using namespace std;
+
+int mmin(int i1, int i2){
+	if(i1<=i2) return i1;
+	return i2;
+}
+
+std::vector<std::string> &msplit(const std::string &s, char delim, std::vector<std::string> &elems) {
+    std::stringstream ss(s);
+    std::string item;
+    while (std::getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
 
 void printTriangulo(ofstream& file, Ponto p1, Ponto p2, Ponto p3) {
 	p1.printFile(file, ";", true);
@@ -249,7 +267,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 	opfile.close();
 }
 
-
+/*
 void updateXML(char* xmlName, char* modeloName) {
 	TiXmlDocument doc;
 	if (doc.LoadFile(xmlName))
@@ -296,21 +314,116 @@ void updateXML(char* xmlName, char* modeloName) {
 	}
 }
 
+*/
 
-float evalBezierCurve(const float* P, const float &t) 
-{ 
-    float b0 = (1 - t) * (1 - t) * (1 - t); 
-    float b1 = 3 * t * (1 - t) * (1 - t); 
-    float b2 = 3 * t * t * (1 - t); 
-    float b3 = t * t * t; 
-    return P[0] * b0 + P[1] * b1 + P[2] * b2 + P[3] * b3; 
-} 
+void loadPatch(string source,vector<Patch>& paches, vector<Ponto>& pontos){
+	ifstream file(source);
+	string line;
+	getline(file, line);
+	int nPach = stoi(line);
+	vector<string> campos;
+	for (int i = 0; i < nPach; i++)
+	{
+		//vai buscar a linha daquele patch
+		getline(file, line);
+		Patch pa = Patch::Patch(line);
+		paches.push_back(pa);
+
+	}
+	//linha com o total de pontos
+	getline(file, line);
+	int nPoint = stoi(line);
+	for (int i = 0; i < nPoint; i++)
+	{
+		//vai buscar a linha daquel ponto e mete no array que contem os pontos
+		getline(file, line);
+		campos.clear();
+		msplit(line, ',',campos);
+		Ponto p = Ponto::Ponto(atof(campos[0].c_str()),atof(campos[1].c_str()),atof(campos[2].c_str()));
+		pontos.push_back(p);
+
+	}
+	file.close();
+}
+
+//Funcça que dada uma curva de bezier calcula o ponto da mesma utilizando a formula
+// bt = t^3*P3+
+//	3*t^2*(1-t)*P2
+//	3*(t*(1-t)^2)*P1
+//	((1-t)^3)*P0     
+Ponto bezieCurve(float t, Ponto p0,Ponto p1,Ponto p2,Ponto p3){
+	float x=0,y=0,z=0;
+	float uMent = 1.0-t;
+	float t1,t2,t3,t4;
+	t1=t*t*t;
+	t2=3*(t*t)*uMent;
+	t3=3*(t*(uMent*uMent));
+	t4=uMent*uMent*uMent;
+	x = t1*p3.getx()+t2*p2.getx()+t3*p1.getx()+t4*p0.getx();
+	y = t1*p3.gety()+t2*p2.gety()+t3*p1.gety()+t4*p0.gety();
+	z = t1*p3.getz()+t2*p2.getz()+t3*p1.getz()+t4*p0.getz();
+
+	return Ponto::Ponto(x, y, z);
+}
 
 
+//esta funcçao cacula o ponto representado pelo patch de bezier
+//caclula primeiro para as 4 curvas, obtem 4 pontos que fazem uma linha de bezier 
+//e depois calcula o nuvo ponto para essa linha
+Ponto bezieSurface(float u, float v, Patch p,vector<Ponto> pontos){
+	vector<Ponto> calculados;
 
+	for (int i = 0; i < 16; i+=4)
+	{
+		Ponto po = bezieCurve(u, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
+		calculados.push_back(po);
+	}
+	return bezieCurve(v,calculados[0],calculados[1],calculados[2],calculados[3]);
+}
+
+//ºara um pactch vai calcular e imprimir todos os 
+//triangulos que o formam, dado um numero de tesselation dejesada
+//para cada iteraçap calclua 4 pontos devido à variaçao de u e de t, sendo casludades
+//para u e t atualis e seguites em combinaçao dpeois imprime os dois triangulos
+// formados pelos 4 pontos calculados 
+void bezieToTriangles(int tess, int patchnum, ofstream& output,vector<Patch>& paches, vector<Ponto>& pontos){
+	float step = 1.0/tess;
+	float u,v,uNext,vNext;
+
+	for (int i = 0; i < tess; i++)
+	{
+		u=i*step;
+		uNext=(i+1)*step;
+		for (int j = 0; j < tess; j++)
+		{
+			v=j*step;
+			vNext=(j+1)*step;
+			Ponto p1 = bezieSurface(u,v,paches[patchnum],pontos);
+			Ponto p2 = bezieSurface(u,vNext,paches[patchnum],pontos);
+			Ponto p3 = bezieSurface(uNext,v,paches[patchnum],pontos);
+			Ponto p4 = bezieSurface(uNext,vNext,paches[patchnum],pontos);
+			printTriangulo(output,p1,p3,p4);
+			printTriangulo(output,p1,p4,p2);
+		}
+	}
+}
+
+void translateFromBezie(int tess, string fname,vector<Patch>& paches, vector<Ponto>& pontos){
+	ofstream file(fname);
+
+	int totpatch = paches.size();
+
+	file << (totpatch*tess*tess * 2*3) << endl;
+	for (int i = 0; i < totpatch; i++){
+		bezieToTriangles(tess,i,file,paches,pontos);
+	}
+	file.close();
+}
 
 int main(int argc, char *argv[]) {
 	char* nome;
+	vector<Patch> paches;
+	vector<Ponto> pontos;
 	if (argc>1) {
 		if (!strcmp(argv[1], "plano") && argc == 5) {
 			cout << "PLANO" << endl;
@@ -342,14 +455,26 @@ int main(int argc, char *argv[]) {
 							nome = argv[5];
 						}
 						else {
-							cout << "Desconhecido" << endl;
-							return 1;
+							if (!strcmp(argv[1], "patch") && argc == 5) {
+								cout << "PATCH" << endl;
+								string source = argv[2];
+								int tess = atoi(argv[3]);
+								string out = argv[4]; 
+								loadPatch(source,paches,pontos);
+								translateFromBezie(tess,out,paches,pontos);
+								nome = argv[5];
+							}
+							else{
+								
+								cout << "Desconhecido" << endl;
+								return 1;
+							}
 						}
 					}
 				}
 			}
 		}
-		updateXML(argv[argc-1], nome);
+		//updateXML(argv[argc-1], nome);
 		return 0;
 	}
 
