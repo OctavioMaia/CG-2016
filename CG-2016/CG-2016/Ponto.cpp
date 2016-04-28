@@ -11,6 +11,10 @@ double Ponto::getx() { return x; }
 double Ponto::getz() { return z; }
 double Ponto::gety() { return y; }
 
+void Ponto::setX(double x) { this->x = x; }
+void Ponto::setY(double y) { this->y = y; }
+void Ponto::setZ(double z) { this->z = z; }
+
 void Ponto::printFile(ofstream& file, string sep, bool enl) {
 	if (enl) {
 		file << x << sep << y << sep << z << endl;
@@ -29,4 +33,16 @@ void Ponto::printStdout(string sep, bool enl) {
 		cout << x << sep << y << sep << z;
 	}
 
+}
+
+double Ponto::getXYZ(int pos) {
+	
+	if (pos == 0) { return x; }
+	else
+	{
+		if (pos == 1) { return y; }
+		else {
+			return z;
+		}
+	}
 }

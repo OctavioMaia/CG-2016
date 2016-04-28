@@ -1,29 +1,29 @@
 #include "Rotacao.h"
 
-
 Rotacao::Rotacao() {
 	x = 0.0;
 	y = 0.0;
 	z = 0.0;
-	angle = 0.0;
+	time = 0.0;
 }
-Rotacao::Rotacao(float x, float y,float z, float angle ) {
+Rotacao::Rotacao(float x, float y,float z, float t ) {
 	this->x = x;
 	this->y = y;
 	this->z = z;
-	this->angle = angle;
+	this->time = t;
 }
 
 void Rotacao::setX(float x) { this->x = x; }
 void Rotacao::setY(float y) { this->y = y; }
 void Rotacao::setZ(float z) { this->z = z; }
-void Rotacao::setAngle(float angle) { this->angle = angle; }
+void Rotacao::setTime(float time) { this->time = time; }
 
 float Rotacao::getX() { return x; }
 float Rotacao::getY() { return y; }
 float Rotacao::getZ() { return z; }
-float Rotacao::getAngle() { return angle; }
+float Rotacao::getTime() { return time; }
 
-void Rotacao::Apply() { 
-	glRotatef(angle, x, y, z); 
+void Rotacao::Apply(float time) {
+	float step = 360.0;
+	//glRotatef();
 }

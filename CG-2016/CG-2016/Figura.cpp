@@ -5,6 +5,7 @@ GLuint buffers[1];
 
 Figura::Figura(string fileName, int n) {
 	file = fileName;
+	listafloat = (float*)malloc(sizeof(float)* 7200);
 	nPontos = n;
 	pos = 0;
 }
@@ -36,7 +37,6 @@ int Figura::gerarCores() {
 	return i;
 }
 
-
 void Figura::drawFigure(bool multiColor) {
 	if (multiColor==false) {
 		for (int i = 0; i < nPontos; i = i + 3) {
@@ -58,33 +58,14 @@ void Figura::drawFigure(bool multiColor) {
 		}
 	}
 }
-/*
+
 void Figura::drawFigureArrays() {
 	
-
-	cout << "1";
-
 	glGenBuffers(1, buffers);
-
-	cout << "2";
-
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-
-	cout << "3";
-
-	glBufferData(GL_ARRAY_BUFFER, nPontos*sizeof(double)*3, listafloat, GL_STATIC_DRAW);
-
-	cout << "4";
-
-	cout << "5";
-
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-
-
-	cout << "6";
-	glDrawArrays(GL_TRIANGLES, 0, nPontos*3);
+	glBufferData(GL_ARRAY_BUFFER, pos*sizeof(float), listafloat, GL_STATIC_DRAW);
+	glDrawArrays(GL_TRIANGLES, 0, nPontos);
 
 
 }
-
-*/

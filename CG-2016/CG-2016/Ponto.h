@@ -18,8 +18,14 @@ public:
 	double getz();
 	double gety();
 
+	void setX(double x);
+	void setY(double y);
+	void setZ(double z);
+
 	void printFile(ofstream& file, string sep, bool enl);
 	void printStdout(string sep, bool enl);
+
+	double getXYZ(int pos);
 
 };
 
