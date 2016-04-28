@@ -22,7 +22,6 @@ float alfaCam;
 float rCam;
 float betaLook;
 float alfaLook;
-int timebase, frame;
 
 int frame = 0;
 int timebase = 0;

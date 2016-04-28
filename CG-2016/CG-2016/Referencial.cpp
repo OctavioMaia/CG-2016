@@ -26,7 +26,7 @@ void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	translacao.Apply(timePerFrame);
+	translacao.Apply(500,timePerFrame);
 	rotacao.Apply(timePerFrame);
 	escala.Apply();
 	
@@ -34,7 +34,7 @@ void Referencial::apply(float timePerFrame) {
 		figuras[i].drawFigureArrays();
 	}
 	for(int i=0;i<(filhos.size());i++){
-		filhos[i].apply();
+		filhos[i].apply(timePerFrame);
 		
 	}
 	glPopMatrix();
