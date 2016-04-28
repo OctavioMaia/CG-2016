@@ -325,7 +325,7 @@ void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
 	}
 }
 
-void readFileXML(char* file) {
+void readFileXML(const char* file) {
 
 	princRef = Referencial::Referencial();
 

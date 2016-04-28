@@ -3,14 +3,25 @@
   <!--SOL-->
   <group>
     <scale X="1" Y="1" Z="1"/>
+    <rotate time="" axisX="0" axisY="1" axisZ="0" />
     <models>
       <model file ="esfera.3d" />
     </models>
 
     <!--MERCURIO-->
     <group>
-      <translate X="1.5" Y="0" Z="0" />
       <scale X="0.028" Y="0.028" Z="0.028"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="9">
+        <point X="1.0607" Y="0" Z="0.7955"/>
+        <point X="0.0" Y="0" Z="1.125"/>
+        <point X="-1.0607" Y="0" Z="0.7955"/>
+        <point X="-1.5" Y="0" Z="0.0"/>
+        <point X="-1.0607" Y="0" Z="-0.7955"/>
+        <point X="-0.0" Y="0" Z="-1.125"/>
+        <point X="1.0607" Y="0" Z="-0.7955"/>
+        <point X="1.5" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
@@ -19,8 +30,18 @@
 
     <!--VENUS-->
     <group>
-      <translate X="1.868" Y="0" Z="0" />
       <scale X="0.0696" Y="0.0696" Z="0.0696"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="23">
+        <point X="1.3209" Y="0" Z="0.9907"/>
+        <point X="0.0" Y="0" Z="1.401"/>
+        <point X="-1.3209" Y="0" Z="0.9907"/>
+        <point X="-1.868" Y="0" Z="0.0"/>
+        <point X="-1.3209" Y="0" Z="-0.9907"/>
+        <point X="-0.0" Y="0" Z="-1.401"/>
+        <point X="1.3209" Y="0" Z="-0.9907"/>
+        <point X="1.868" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
@@ -29,15 +50,34 @@
 
     <!--TERRA-->
     <group>
-      <translate X="2.583" Y="0" Z="0" />
       <scale X="0.0728" Y="0.0728" Z="0.0728"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="36">
+        <point X="1.8265" Y="0" Z="1.3698"/>
+        <point X="0.0" Y="0" Z="1.9373"/>
+        <point X="-1.8265" Y="0" Z="1.3698"/>
+        <point X="-2.583" Y="0" Z="0.0"/>
+        <point X="-1.8265" Y="0" Z="-1.3698"/>
+        <point X="-0.0" Y="0" Z="-1.9373"/>
+        <point X="1.8265" Y="0" Z="-1.3698"/>
+        <point X="2.583" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
       <!--LUA-->
       <group>
-        <translate X="2.59" Y="0" Z="0" />
-        <scale X="0.1" Y="0.1" Z="0.1"/>
+        <scale X="0.1" Y="0.1" Z="0.1" />
+        <translate time="10">
+          <point X="1.8314" Y="0" Z="1.3736"/>
+          <point X="0.0" Y="0" Z="1.9425"/>
+          <point X="-1.8314" Y="0" Z="1.3736"/>
+          <point X="-2.59" Y="0" Z="0.0"/>
+          <point X="-1.8314" Y="0" Z="-1.3736"/>
+          <point X="-0.0" Y="0" Z="-1.9425"/>
+          <point X="1.8314" Y="0" Z="-1.3736"/>
+          <point X="2.59" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -47,15 +87,35 @@
 
     <!--MARTE-->
     <group>
-      <translate X="3.936" Y="0" Z="0" />
       <scale X="0.0392" Y="0.0392" Z="0.0392"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="68">
+        <point X="2.7832" Y="0" Z="2.0874"/>
+        <point X="0.0" Y="0" Z="2.952"/>
+        <point X="-2.7832" Y="0" Z="2.0874"/>
+        <point X="-3.936" Y="0" Z="0.0"/>
+        <point X="-2.7832" Y="0" Z="-2.0874"/>
+        <point X="-0.0" Y="0" Z="-2.952"/>
+        <point X="2.7832" Y="0" Z="-2.0874"/>
+        <point X="3.936" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
       <!--PHOBOS-->
       <group>
-        <translate X="1" Y="0" Z="1" />
         <scale X="0.1" Y="0.1" Z="0.1"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="0.7071" Y="0" Z="0.5303"/>
+          <point X="0.0" Y="0" Z="0.75"/>
+          <point X="-0.7071" Y="0" Z="0.5303"/>
+          <point X="-1.0" Y="0" Z="0.0"/>
+          <point X="-0.7071" Y="0" Z="-0.5303"/>
+          <point X="-0.0" Y="0" Z="-0.75"/>
+          <point X="0.7071" Y="0" Z="-0.5303"/>
+          <point X="1.0" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -64,8 +124,18 @@
 
       <!--DEIMOS-->
       <group>
-        <translate X="1.5" Y="0" Z="1.5" />
         <scale X="0.1" Y="0.1" Z="0.1"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="1.0607" Y="0" Z="0.7955"/>
+          <point X="0.0" Y="0" Z="1.125"/>
+          <point X="-1.0607" Y="0" Z="0.7955"/>
+          <point X="-1.5" Y="0" Z="0.0"/>
+          <point X="-1.0607" Y="0" Z="-0.7955"/>
+          <point X="-0.0" Y="0" Z="-1.125"/>
+          <point X="1.0607" Y="0" Z="-0.7955"/>
+          <point X="1.5" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -75,15 +145,35 @@
 
     <!--JUPITER-->
     <group>
-      <translate X="5.44" Y="0" Z="0" />
       <scale X="0.6032" Y="0.6032" Z="0.6032"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="200">
+        <point X="3.8467" Y="0" Z="2.885"/>
+        <point X="0.0" Y="0" Z="4.08"/>
+        <point X="-3.8467" Y="0" Z="2.885"/>
+        <point X="-5.44" Y="0" Z="0.0"/>
+        <point X="-3.8467" Y="0" Z="-2.885"/>
+        <point X="-0.0" Y="0" Z="-4.08"/>
+        <point X="3.8467" Y="0" Z="-2.885"/>
+        <point X="5.44" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
       <!--GANYMEDE-->
       <group>
-        <translate X="1.2" Y="0" Z="1.2" />
         <scale X="0.1" Y="0.1" Z="0.1"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="0.8485" Y="0" Z="0.6364"/>
+          <point X="0.0" Y="0" Z="0.9"/>
+          <point X="-0.8485" Y="0" Z="0.6364"/>
+          <point X="-1.2" Y="0" Z="0.0"/>
+          <point X="-0.8485" Y="0" Z="-0.6364"/>
+          <point X="-0.0" Y="0" Z="-0.9"/>
+          <point X="0.8485" Y="0" Z="-0.6364"/>
+          <point X="1.2" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -91,8 +181,18 @@
 
       <!--CALLISTO-->
       <group>
-        <translate X="1.8" Y="0" Z="0" />
         <scale X="0.15" Y="0.15" Z="0.15"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="1.2728" Y="0" Z="0.9546"/>
+          <point X="0.0" Y="0" Z="1.35"/>
+          <point X="-1.2728" Y="0" Z="0.9546"/>
+          <point X="-1.8" Y="0" Z="0.0"/>
+          <point X="-1.2728" Y="0" Z="-0.9546"/>
+          <point X="-0.0" Y="0" Z="-1.35"/>
+          <point X="1.2728" Y="0" Z="-0.9546"/>
+          <point X="1.8" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -103,15 +203,35 @@
 
     <!--Saturno-->
     <group>
-      <translate X="8.6" Y="0" Z="0" />
       <scale X="0.5032" Y="0.5032" Z="0.5032"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="300">
+        <point X="6.0811" Y="0" Z="4.5608"/>
+        <point X="0.0" Y="0" Z="6.45"/>
+        <point X="-6.0811" Y="0" Z="4.5608"/>
+        <point X="-8.6" Y="0" Z="0.0"/>
+        <point X="-6.0811" Y="0" Z="-4.5608"/>
+        <point X="-0.0" Y="0" Z="-6.45"/>
+        <point X="6.0811" Y="0" Z="-4.5608"/>
+        <point X="8.6" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
       <!--REIA-->
       <group>
-        <translate X="0.9" Y="0" Z="0.9" />
         <scale X="0.1" Y="0.1" Z="0.1"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="0.6364" Y="0" Z="0.4773"/>
+          <point X="0.0" Y="0" Z="0.675"/>
+          <point X="-0.6364" Y="0" Z="0.4773"/>
+          <point X="-0.9" Y="0" Z="0.0"/>
+          <point X="-0.6364" Y="0" Z="-0.4773"/>
+          <point X="-0.0" Y="0" Z="-0.675"/>
+          <point X="0.6364" Y="0" Z="-0.4773"/>
+          <point X="0.9" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -119,8 +239,18 @@
       
       <!--TITA-->
       <group>
-        <translate X="1" Y="0" Z="-1" />
         <scale X="0.05" Y="0.05" Z="0.05"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="0.7071" Y="0" Z="0.5303"/>
+          <point X="0.0" Y="0" Z="0.75"/>
+          <point X="-0.7071" Y="0" Z="0.5303"/>
+          <point X="-1.0" Y="0" Z="0.0"/>
+          <point X="-0.7071" Y="0" Z="-0.5303"/>
+          <point X="-0.0" Y="0" Z="-0.75"/>
+          <point X="0.7071" Y="0" Z="-0.5303"/>
+          <point X="1.0" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -131,16 +261,36 @@
 
     <!--URANUS-->
     <group>
-      <translate X="10.62" Y="0" Z="0" />
       <scale X="0.2912" Y="0.2912" Z="0.2912"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="430">
+        <point X="7.5095" Y="0" Z="5.6321"/>
+        <point X="0.0" Y="0" Z="7.965"/>
+        <point X="-7.5095" Y="0" Z="5.6321"/>
+        <point X="-10.62" Y="0" Z="0.0"/>
+        <point X="-7.5095" Y="0" Z="-5.6321"/>
+        <point X="-0.0" Y="0" Z="-7.965"/>
+        <point X="7.5095" Y="0" Z="-5.6321"/>
+        <point X="10.62" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
 
       <!--TITANIA-->
       <group>
-        <translate X="1" Y="0" Z="-1" />
         <scale X="0.1" Y="0.1" Z="0.1"/>
+        <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+        <translate time="10">
+          <point X="0.7071" Y="0" Z="0.5303"/>
+          <point X="0.0" Y="0" Z="0.75"/>
+          <point X="-0.7071" Y="0" Z="0.5303"/>
+          <point X="-1.0" Y="0" Z="0.0"/>
+          <point X="-0.7071" Y="0" Z="-0.5303"/>
+          <point X="-0.0" Y="0" Z="-0.75"/>
+          <point X="0.7071" Y="0" Z="-0.5303"/>
+          <point X="1.0" Y="0" Z="-0.0"/>
+        </translate>
         <models>
           <model file ="esfera.3d" />
         </models>
@@ -151,16 +301,36 @@
 
     <!--NEPTUNO-->
     <group>
-      <translate X="12.72" Y="0" Z="0" />
       <scale X="0.2832" Y="0.2832" Z="0.2832"/>
+      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+      <translate time="500">
+        <point X="8.9944" Y="0" Z="6.7458"/>
+        <point X="0.0" Y="0" Z="9.54"/>
+        <point X="-8.9944" Y="0" Z="6.7458"/>
+        <point X="-12.72" Y="0" Z="0.0"/>
+        <point X="-8.9944" Y="0" Z="-6.7458"/>
+        <point X="-0.0" Y="0" Z="-9.54"/>
+        <point X="8.9944" Y="0" Z="-6.7458"/>
+        <point X="12.72" Y="0" Z="-0.0"/>
+      </translate>
       <models>
         <model file ="esfera.3d" />
       </models>
       
       <!--TRITAO-->
         <group>
-          <translate X="1" Y="0" Z="1" />
           <scale X="0.1" Y="0.1" Z="´0.1"/>
+          <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+          <translate time="10">
+            <point X="0.7071" Y="0" Z="0.5303"/>
+            <point X="0.0" Y="0" Z="0.75"/>
+            <point X="-0.7071" Y="0" Z="0.5303"/>
+            <point X="-1.0" Y="0" Z="0.0"/>
+            <point X="-0.7071" Y="0" Z="-0.5303"/>
+            <point X="-0.0" Y="0" Z="-0.75"/>
+            <point X="0.7071" Y="0" Z="-0.5303"/>
+            <point X="1.0" Y="0" Z="-0.0"/>
+          </translate>
           <models>
             <model file ="esfera.3d" />
           </models>

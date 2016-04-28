@@ -6,7 +6,6 @@
 #include "Translacao.h"
 #include "Rotacao.h"
 #include "Figura.h"
-//using namespace std;
 
 
 class Referencial
