@@ -1,5 +1,7 @@
 #include "Translacao.h"
 
+
+float refere = 10;
 Translacao::Translacao() {
 	time = 0.0;
 	flag = false;
@@ -152,7 +154,7 @@ void normalizeVector(float* res) {
 
 void Translacao::Apply(int tess, float timePerFrame) {
 	cout << timePerFrame << endl;
-	this->tpGlobal += timePerFrame;
+	this->tpGlobal +=( timePerFrame*this->time)/ refere;
 
 	cout << "Global "<<this->tpGlobal << endl;
 	if  (points.size()>=4) {

@@ -12,7 +12,19 @@
     <models>
       <model file ="esfera.3d" />
     </models>
-
+  </group>
+  <!--SOL2-->
+  <group>
+    <scale X="1" Y="1" Z="1"/>
+    <translate time="20">
+      <point X="5.583" Y="0" Z="0"/>
+      <point X="0" Y="0" Z="5.583"/>
+      <point X="-5.583" Y="0" Z="0"/>
+      <point X="0" Y="0" Z="-5.583"/>
+    </translate>
+    <models>
+      <model file ="esfera.3d" />
+    </models>
   </group>
 
 </scene>

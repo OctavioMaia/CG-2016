@@ -25,7 +25,14 @@ float Rotacao::getZ() { return z; }
 float Rotacao::getTime() { return time; }
 
 void Rotacao::Apply(float timestep) {
-	float angle = (360.0*timestep)/time;
+	float angle;
+	if (this->time == 0) {
+		 angle = 0;
+	}
+	else {
+		angle = (360.0*timestep) / time;
+	}
+	
 	this->localAngle = this->localAngle + angle;
 	glRotatef(localAngle,x,y,z);
 }
