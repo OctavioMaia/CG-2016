@@ -24,4 +24,6 @@ float Rotacao::getY() { return y; }
 float Rotacao::getZ() { return z; }
 float Rotacao::getAngle() { return angle; }
 
-void Rotacao::Apply() { glRotatef(angle, x, y, z); }
+void Rotacao::Apply() { 
+	glRotatef(angle, x, y, z); 
+}

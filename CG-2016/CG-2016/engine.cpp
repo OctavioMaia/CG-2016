@@ -25,10 +25,33 @@ float rCam;
 float betaLook;
 float alfaLook;
 
+int frame = 0;
+int timebase = 0;
+float fps = 0.0f;
+
 Referencial princRef;
 
 vector<Figura> figuras;
 bool multiColor=false;
+
+void updateFPS() {
+
+	frame += 1;
+
+	int time = glutGet(GLUT_ELAPSED_TIME);
+
+	if (time - timebase > 1000) {
+
+		fps = frame * 1000.0 / (time - timebase);
+		timebase = time;
+		frame = 0;
+	}
+
+	char sFPS[32];
+	sprintf(sFPS, "CG@DI-UM %.4f", fps);
+
+	glutSetWindowTitle(sFPS);
+}
 
 void changeSize(int w, int h) {
 
@@ -72,7 +95,9 @@ void renderScene(void) {
 	glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply();
+	princRef.apply(); 
+
+	updateFPS();
 
 	// End of frame
 	glutSwapBuffers();
