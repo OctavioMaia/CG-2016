@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <scene>
-  <!--SOL-->
-  <group>
-    <scale X="1" Y="1" Z="1"/>
-    <translate time="10">
-      <point X="2.583" Y="0" Z="0"/>
-      <point X="0" Y="0" Z="2.583"/>
-      <point X="-2.583" Y="0" Z="0"/>
-      <point X="0" Y="0" Z="-2.583"/>
-    </translate>
-    <models>
-      <model file ="esfera.3d" />
-    </models>
-  </group>
-  <!--SOL2-->
-  <group>
-    <scale X="1" Y="1" Z="1"/>
-    <translate time="20">
-      <point X="5.583" Y="0" Z="0"/>
-      <point X="0" Y="0" Z="5.583"/>
-      <point X="-5.583" Y="0" Z="0"/>
-      <point X="0" Y="0" Z="-5.583"/>
-    </translate>
-    <models>
-      <model file ="esfera.3d" />
-    </models>
-  </group>
 
+
+  <group>
+    <scale X="1" Y="1" Z="1"/>
+    <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+    <translate time="10">
+      <point X="0.7071" Y="0" Z="0.1414"/>
+      <point X="0.0" Y="0" Z="0.2"/>
+      <point X="-0.7071" Y="0" Z="0.1414"/>
+      <point X="-1.0" Y="0" Z="0.0"/>
+      <point X="-0.7071" Y="0" Z="-0.1414"/>
+      <point X="-0.0" Y="0" Z="-0.2"/>
+      <point X="0.7071" Y="0" Z="-0.1414"/>
+      <point X="1.0" Y="0" Z="-0.0"/>
+    </translate>
+    <models>
+      <model file ="esfera.3d" />
+    </models>
+  </group>
 </scene>

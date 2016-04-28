@@ -1,5 +1,8 @@
 #include "Rotacao.h"
 
+#include <stdio.h>
+
+int an = 0;
 Rotacao::Rotacao() {
 	x = 0.0;
 	y = 1.0;
@@ -30,9 +33,11 @@ void Rotacao::Apply(float timestep) {
 		 angle = 0;
 	}
 	else {
-		angle = (360.0*timestep) / time;
+		angle = (360.0*timestep) / (1.0/time);
 	}
 	
-	this->localAngle = this->localAngle + angle;
+	this->localAngle += angle;
+
 	glRotatef(localAngle,x,y,z);
+
 }

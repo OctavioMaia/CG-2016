@@ -74,14 +74,13 @@ void  Translacao::getGlobalCatmullRomPoint(float gt, float *res) {
 
 				   // indices store the points
 	int indices[4];
-	indices[0] = (index +  - 1) % POINT_COUNT;
+	indices[0] = (index + POINT_COUNT - 1) % POINT_COUNT;
 	indices[1] = (indices[0] + 1) % POINT_COUNT;
 	indices[2] = (indices[1] + 1) % POINT_COUNT;
 	indices[3] = (indices[2] + 1) % POINT_COUNT;
 
 	getCatmullRomPoint(t, indices, res);
 }
-
 
 void Translacao::getCatmullDerivatePoint(float t, int* indices, float *res) {
 	res[0] = 0;
@@ -153,15 +152,14 @@ void normalizeVector(float* res) {
 }
 
 void Translacao::Apply(int tess, float timePerFrame) {
-	cout << timePerFrame << endl;
-	this->tpGlobal +=( timePerFrame*this->time)/ refere;
 
-	cout << "Global "<<this->tpGlobal << endl;
+	this->tpGlobal += (timePerFrame*(1.0/this->time))/ 1;
+
 	if  (points.size()>=4) {
 		
 		float step = 1.0 / tess;
 		float val[3];
-		int v = 0;
+		int index = 0;
 
 		if (!flag) {
 			flag = true;
@@ -170,14 +168,14 @@ void Translacao::Apply(int tess, float timePerFrame) {
 			for (int passo = 0; passo < tess; passo++) {
 				float gt = step*passo;
 				getGlobalCatmullRomPoint(gt, val);
-				catmullVertex[v++] = val[0];
-				catmullVertex[v++] = val[1];
-				catmullVertex[v++] = val[2];
+				catmullVertex[index++] = val[0];
+				catmullVertex[index++] = val[1];
+				catmullVertex[index++] = val[2];
 			}
 
 			glGenBuffers(1, buffersTranslate);
 			glBindBuffer(GL_ARRAY_BUFFER, buffersTranslate[0]);
-			glBufferData(GL_ARRAY_BUFFER, v*sizeof(float), catmullVertex, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, index*sizeof(float), catmullVertex, GL_STATIC_DRAW);
 
 		}
 
@@ -185,7 +183,6 @@ void Translacao::Apply(int tess, float timePerFrame) {
 		glVertexPointer(3, GL_FLOAT, 0, 0);
 		glDrawArrays(GL_LINE_LOOP, 0, tess);
 
-	
 	GLfloat* m = (GLfloat*)malloc(sizeof(GLfloat) * 16);
 
 	for (int i = 0; i < 16; i++) {
@@ -220,7 +217,7 @@ void Translacao::Apply(int tess, float timePerFrame) {
 		}
 		glMultMatrixf(m);
 	}
-	
+	free(m);
 }
 	
 	

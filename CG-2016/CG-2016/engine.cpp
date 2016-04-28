@@ -236,7 +236,6 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 			
 			if (valeu = elemPoint->Attribute("X")) {
 				p.setX(atof(valeu));
-				cout << p.getx();
 			}
 
 			if (valeu = elemPoint->Attribute("Y")) {
@@ -325,7 +324,7 @@ void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
 	}
 }
 
-void readFileXML(char* file) {
+void readFileXML(const char* file) {
 
 	princRef = Referencial::Referencial();
 

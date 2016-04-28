@@ -2,7 +2,7 @@
 #define ROTACAO_H
 
 #include <GL/glut.h>
-using namespace std;
+
 
 
 class Rotacao
