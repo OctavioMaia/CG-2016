@@ -26,7 +26,6 @@ void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	cout << "timeperframe" << timePerFrame << endl;
 	translacao.Apply(500,timePerFrame);
 	
 	glPushMatrix();

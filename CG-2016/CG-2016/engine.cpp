@@ -236,7 +236,6 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 			
 			if (valeu = elemPoint->Attribute("X")) {
 				p.setX(atof(valeu));
-				cout << p.getx();
 			}
 
 			if (valeu = elemPoint->Attribute("Y")) {

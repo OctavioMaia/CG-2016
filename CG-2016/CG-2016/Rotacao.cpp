@@ -29,17 +29,14 @@ float Rotacao::getTime() { return time; }
 
 void Rotacao::Apply(float timestep) {
 	float angle;
-	printf("timestep:%f\n",timestep);
 	if (this->time == 0) {
 		 angle = 0;
 	}
 	else {
 		angle = (360.0*timestep) / (1.0/time);
-		printf("Angle: %f\n", angle);
 	}
 	
 	this->localAngle += angle;
-	printf("Global%f\n",localAngle);
 
 	glRotatef(localAngle,x,y,z);
 
