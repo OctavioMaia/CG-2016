@@ -77,21 +77,6 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void framesPerSecond(void) {
-	int time = glutGet(GLUT_ELAPSED_TIME);
-
-	glutPostRedisplay();
-	frame++;
-
-	if (time - timebase > 1000) {
-		double fps = frame*1000.0 / (time - timebase);
-		timebase = time; frame = 0;
-		char name[1000];
-		sprintf_s(name, "FPS: %f", fps);
-		glutSetWindowTitle(name);
-	}
-}
-
 void renderScene(void) {
 
 	// clear buffers
@@ -109,7 +94,7 @@ void renderScene(void) {
 	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply(); 
+	princRef.apply(1.0/fps); 
 
 	updateFPS();
 

@@ -22,12 +22,12 @@ void Referencial::setFiguras(vector<Figura> f) { figuras=f; }
 void Referencial::addFilho(Referencial f) { filhos.push_back(f); }
 void Referencial::addFigura(Figura f) { figuras.push_back(f); }
 
-void Referencial::apply() {
+void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	translacao.Apply(500);
-	rotacao.Apply(10);
+	translacao.Apply(timePerFrame);
+	rotacao.Apply(timePerFrame);
 	escala.Apply();
 	
 	for(int i=0; i<(figuras.size());i++){

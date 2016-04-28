@@ -1,7 +1,6 @@
 #ifndef ROTACAO_H
 #define ROTACAO_H
 
-//#include <vector.h>
 #include <GL/glut.h>
 using namespace std;
 
@@ -13,6 +12,7 @@ private:
 	float y;
 	float z;
 	float time;
+	float localAngle;
 	;
 
 public:

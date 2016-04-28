@@ -30,7 +30,7 @@ public:
 
 	void addFigura(Figura f);
 	void addFilho(Referencial f);
-	void apply();
+	void apply(float timePerFrame);
 	void resetGlReferncial();
 
 	Escala getEscala();

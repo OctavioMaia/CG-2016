@@ -18,6 +18,7 @@ private:
 	bool flag;
 	float* catmullVertex;
 	GLuint buffersTranslate[1];
+	float tpGlobal;
 
 	void getCatmullRomPoint(float t, int *indices, float *res);
 	void Translacao::getCatmullDerivatePoint(float t, int* indices, float *res);
@@ -36,7 +37,7 @@ public:
 
 	void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res);
 
-	void Apply(int tess);
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif
