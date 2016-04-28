@@ -1,16 +1,17 @@
 #include "Translacao.h"
 
 
-float tp = 0.0;
-
+float refere = 10;
 Translacao::Translacao() {
 	time = 0.0;
 	flag = false;
+	this->tpGlobal=0.0;
 }
 
 Translacao::Translacao(float time) {
 	this->time = time;
 	this->flag = false;
+	this->tpGlobal=0.0;
 }
 
 void Translacao::setTime(float t) { this->time = t; }
@@ -151,8 +152,11 @@ void normalizeVector(float* res) {
 	res[2] = res[2] / norm;
 }
 
-void Translacao::Apply(int tess) {
-	cout << "ola";
+void Translacao::Apply(int tess, float timePerFrame) {
+	cout << timePerFrame << endl;
+	this->tpGlobal +=( timePerFrame*this->time)/ refere;
+
+	cout << "Global "<<this->tpGlobal << endl;
 	if  (points.size()>=4) {
 		
 		float step = 1.0 / tess;
@@ -195,12 +199,12 @@ void Translacao::Apply(int tess) {
 	float left[3];
 	float res[3];
 
-	if (tp == 0) {
-		getGlobalCatmullRomPoint(tp, res);
+	if (this->tpGlobal == 0) {
+		getGlobalCatmullRomPoint(this->tpGlobal, res);
 		glTranslatef(res[0],res[1],res[2]);
 	}else {
-		getGlobalCatmullDerivatePoint(tp, d);
-		getGlobalCatmullRomPoint(tp, res);
+		getGlobalCatmullDerivatePoint(this->tpGlobal, d);
+		getGlobalCatmullRomPoint(this->tpGlobal, res);
 
 		normalizeVector(d);
 		productVetor(up, d, left);
@@ -217,9 +221,6 @@ void Translacao::Apply(int tess) {
 		glMultMatrixf(m);
 	}
 	
-	tp += 0.1;
-	cout << tp<<endl;
-
 }
 	
 	

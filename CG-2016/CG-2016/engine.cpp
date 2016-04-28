@@ -22,12 +22,34 @@ float alfaCam;
 float rCam;
 float betaLook;
 float alfaLook;
-int timebase, frame;
+
+int frame = 0;
+int timebase = 0;
+float fps = 60.0f;
 
 Referencial princRef;
 
 vector<Figura> figuras;
 bool multiColor=false;
+
+void updateFPS() {
+
+	frame += 1;
+
+	int time = glutGet(GLUT_ELAPSED_TIME);
+
+	if (time - timebase > 1000) {
+
+		fps = frame * 1000.0 / (time - timebase);
+		timebase = time;
+		frame = 0;
+	}
+
+	char sFPS[32];
+	sprintf(sFPS, "CG@DI-UM %.4f", fps);
+
+	glutSetWindowTitle(sFPS);
+}
 
 void changeSize(int w, int h) {
 
@@ -54,21 +76,6 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void framesPerSecond(void) {
-	int time = glutGet(GLUT_ELAPSED_TIME);
-
-	glutPostRedisplay();
-	frame++;
-
-	if (time - timebase > 1000) {
-		double fps = frame*1000.0 / (time - timebase);
-		timebase = time; frame = 0;
-		char name[1000];
-		sprintf_s(name, "FPS: %f", fps);
-		glutSetWindowTitle(name);
-	}
-}
-
 void renderScene(void) {
 
 	// clear buffers
@@ -86,7 +93,9 @@ void renderScene(void) {
 	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply();
+	princRef.apply(1.0/fps); 
+
+	updateFPS();
 
 	// End of frame
 	glutSwapBuffers();
