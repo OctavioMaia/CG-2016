@@ -151,7 +151,10 @@ void normalizeVector(float* res) {
 }
 
 void Translacao::Apply(int tess, float timePerFrame) {
+	cout << timePerFrame << endl;
 	this->tpGlobal += timePerFrame;
+
+	cout << "Global "<<this->tpGlobal << endl;
 	if  (points.size()>=4) {
 		
 		float step = 1.0 / tess;
@@ -194,12 +197,12 @@ void Translacao::Apply(int tess, float timePerFrame) {
 	float left[3];
 	float res[3];
 
-	if (tpGlobal == 0) {
-		getGlobalCatmullRomPoint(tpGlobal, res);
+	if (this->tpGlobal == 0) {
+		getGlobalCatmullRomPoint(this->tpGlobal, res);
 		glTranslatef(res[0],res[1],res[2]);
 	}else {
-		getGlobalCatmullDerivatePoint(tpGlobal, d);
-		getGlobalCatmullRomPoint(tpGlobal, res);
+		getGlobalCatmullDerivatePoint(this->tpGlobal, d);
+		getGlobalCatmullRomPoint(this->tpGlobal, res);
 
 		normalizeVector(d);
 		productVetor(up, d, left);

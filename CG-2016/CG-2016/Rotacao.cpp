@@ -2,7 +2,7 @@
 
 Rotacao::Rotacao() {
 	x = 0.0;
-	y = 0.0;
+	y = 1.0;
 	z = 0.0;
 	time = 0.0;
 	localAngle = 0.0;

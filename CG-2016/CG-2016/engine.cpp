@@ -25,7 +25,7 @@ float alfaLook;
 
 int frame = 0;
 int timebase = 0;
-float fps = 0.0f;
+float fps = 60.0f;
 
 Referencial princRef;
 
