@@ -22,35 +22,23 @@ void Referencial::setFiguras(vector<Figura> f) { figuras=f; }
 void Referencial::addFilho(Referencial f) { filhos.push_back(f); }
 void Referencial::addFigura(Figura f) { figuras.push_back(f); }
 
-void Referencial::apply() {
-
-	float distanceFromSun = sqrt(translacao.getX()*translacao.getX() + translacao.getY()*translacao.getY() + translacao.getZ()*translacao.getZ());
-
-	// draw a line strip
-	glBegin(GL_LINE_STRIP);
-
-	// loop round from 0 to 2*PI and draw around the radius of the orbit using trigonometry
-	for (float angle = 0.0f; angle < 6.283185307f; angle += 0.05f)
-	{
-		glVertex3f(sin(angle) * distanceFromSun, 0.0f, cos(angle) * distanceFromSun);
-	}
-	glVertex3f(0.0f, 0.0f, distanceFromSun);
-
-	glEnd();
+void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	translacao.Apply();
-	rotacao.Apply();
+	translacao.Apply(500,timePerFrame);
+	
+	glPushMatrix();
 	escala.Apply();
+	rotacao.Apply(timePerFrame);
+
 	
 	for(int i=0; i<(figuras.size());i++){
-		figuras[i].drawFigure(false);
-		//para no futuro desenhar apartir de Buffers
-		//figuras[i].drawFigureArrays();
+		figuras[i].drawFigureArrays();
 	}
+	glPopMatrix();
 	for(int i=0;i<(filhos.size());i++){
-		filhos[i].apply();
+		filhos[i].apply(timePerFrame);
 		
 	}
 	glPopMatrix();

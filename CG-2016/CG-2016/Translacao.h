@@ -1,30 +1,43 @@
 #ifndef TRANSLACAO_H
 #define TRANSLACAO_H
 
-//#include <vector.h>
-#include <GL/glut.h>
+
+#include "Ponto.h"
+#include <GL\glew.h>
+#pragma comment(lib, "glew32.lib")
+#include <vector>
+
 using namespace std;
 
 
 class Translacao
 {
 private:
-	float x;
-	float y;
-	float z;
+	float time;
+	vector<Ponto> points;
+	bool flag;
+	float* catmullVertex;
+	GLuint buffersTranslate[1];
+	float tpGlobal;
+
+	void getCatmullRomPoint(float t, int *indices, float *res);
+	void Translacao::getCatmullDerivatePoint(float t, int* indices, float *res);
 
 public:
 	Translacao();
-	Translacao(float x, float y, float z);
+	Translacao(float t);
 
-	void setX(float x);
-	void setY(float y);
-	void setZ(float z);
+	void setTime(float x);
 
-	float getX();
-	float getY();
-	float getZ();
-	void Apply();
+	float getTime();
+
+	void addPoint(Ponto p);
+
+	void getGlobalCatmullRomPoint(float gt, float *res);
+
+	void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res);
+
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif

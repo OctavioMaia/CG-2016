@@ -4,8 +4,6 @@
 #include "windows.h" 
 
 #include <GL\glew.h>
-//#include <GL\glut.h>
-
 #pragma comment(lib, "glew32.lib")
 
 
@@ -25,10 +23,33 @@ float rCam;
 float betaLook;
 float alfaLook;
 
+int frame = 0;
+int timebase = 0;
+float fps = 60.0f;
+
 Referencial princRef;
 
 vector<Figura> figuras;
 bool multiColor=false;
+
+void updateFPS() {
+
+	frame += 1;
+
+	int time = glutGet(GLUT_ELAPSED_TIME);
+
+	if (time - timebase > 1000) {
+
+		fps = frame * 1000.0 / (time - timebase);
+		timebase = time;
+		frame = 0;
+	}
+
+	char sFPS[32];
+	sprintf(sFPS, "CG@DI-UM %.4f", fps);
+
+	glutSetWindowTitle(sFPS);
+}
 
 void changeSize(int w, int h) {
 
@@ -69,10 +90,12 @@ void renderScene(void) {
 		0.0f, 1.0f, 0.0f);
 
 	// put the geometric transformations here
-	glRotatef(angle,0.0,1.0,0.0);
+	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply();
+	princRef.apply(1.0/fps); 
+
+	updateFPS();
 
 	// End of frame
 	glutSwapBuffers();
@@ -203,16 +226,29 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 		
 		const char* valeu;
 
-		if (valeu = elem1->Attribute("X")) {
-			trans.setX(atof(valeu) );
+		if (valeu = elem1->Attribute("time")) {
+			trans.setTime(atof(valeu) );
 		}
 
-		if (valeu = elem1->Attribute("Y")) {
-			trans.setY(atof(valeu));
+		TiXmlElement* elemPoint = elem1->FirstChildElement("point");
+		for (; elemPoint != NULL;elemPoint=elemPoint->NextSiblingElement()) {
+			Ponto p = Ponto::Ponto();
+			
+			if (valeu = elemPoint->Attribute("X")) {
+				p.setX(atof(valeu));
+			}
+
+			if (valeu = elemPoint->Attribute("Y")) {
+				p.setY(atof(valeu));
+			}
+
+			if (valeu = elemPoint->Attribute("Z")) {
+				p.setZ(atof(valeu));
+			}
+
+			trans.addPoint(p);
 		}
-		if (valeu = elem1->Attribute("Z")) {
-			trans.setZ(atof(valeu) );
-		}
+
 		ref->setTranslacao(trans);
 	}
 }
@@ -252,8 +288,8 @@ void readRotate(TiXmlElement* elem, Referencial* ref) {
 	if ((elem1 = elem->FirstChildElement("rotate")) != NULL) {
 		const char* valeu;;
 
-		if (valeu = elem1->Attribute("angle")) {
-			rot.setAngle(atof(valeu));
+		if (valeu = elem1->Attribute("time")) {
+			rot.setTime(atof(valeu));
 		}
 
 		if (valeu = elem1->Attribute("axisX")) {
@@ -282,15 +318,13 @@ void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
 	for (elemFunc = elemFunc->FirstChildElement("group"); elemFunc != NULL; elemFunc = elemFunc->NextSiblingElement()) {
 		Referencial refFilho = Referencial::Referencial();
 
-		
-
 		loadElementChild(elemFunc,&refFilho);
 
 		refPai->addFilho(refFilho);
 	}
 }
 
-void readFileXML(char* file) {
+void readFileXML(const char* file) {
 
 	princRef = Referencial::Referencial();
 
@@ -319,6 +353,8 @@ void readFileXML(char* file) {
 	}
 }
 
+
+
 int main(int argc, char **argv) {
 	angle = 0;
 	betaCam = 10;
@@ -327,16 +363,7 @@ int main(int argc, char **argv) {
 	betaLook = 0;
 	alfaLook = 0;
 
-
-	
-	
-	glEnableClientState(GL_VERTEX_ARRAY);
-
 	readFileXML(argv[1]);
-	
-	
-	
-
 
 	// init GLUT and the window
 	glutInit(&argc, argv);
@@ -351,7 +378,9 @@ int main(int argc, char **argv) {
 
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
+	glutIdleFunc(renderScene);
 	glutReshapeFunc(changeSize);
+
 
 	// put here the registration of the keyboard and menu callbacks
 
@@ -373,6 +402,8 @@ int main(int argc, char **argv) {
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
 
 	// enter GLUT's main cycle
 	glutMainLoop();

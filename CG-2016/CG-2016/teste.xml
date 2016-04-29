@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<scene>
+
+
+  <group>
+    <scale X="1" Y="1" Z="1"/>
+    <rotate time="10" axisX="0" axisY="1" axisZ="0" />
+    <translate time="10">
+      <point X="0.7071" Y="0" Z="0.1414"/>
+      <point X="0.0" Y="0" Z="0.2"/>
+      <point X="-0.7071" Y="0" Z="0.1414"/>
+      <point X="-1.0" Y="0" Z="0.0"/>
+      <point X="-0.7071" Y="0" Z="-0.1414"/>
+      <point X="-0.0" Y="0" Z="-0.2"/>
+      <point X="0.7071" Y="0" Z="-0.1414"/>
+      <point X="1.0" Y="0" Z="-0.0"/>
+    </translate>
+    <models>
+      <model file ="esfera.3d" />
+    </models>
+  </group>
+</scene>

@@ -6,7 +6,6 @@
 #include "Translacao.h"
 #include "Rotacao.h"
 #include "Figura.h"
-//using namespace std;
 
 
 class Referencial
@@ -30,7 +29,7 @@ public:
 
 	void addFigura(Figura f);
 	void addFilho(Referencial f);
-	void apply();
+	void apply(float timePerFrame);
 	void resetGlReferncial();
 
 	Escala getEscala();
