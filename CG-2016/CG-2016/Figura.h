@@ -17,6 +17,8 @@ using namespace std;
 class Figura
 {
 private:
+	GLuint buffers[1];
+	int fristTime;
 	string file;
 	int nPontos;
 	vector<Ponto> listaPontos;

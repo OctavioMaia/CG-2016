@@ -1,11 +1,12 @@
 #include "Figura.h"
 #include <stdlib.h>
 
-GLuint buffers[1];
+
 
 Figura::Figura(string fileName, int n) {
+	fristTime = 1;
 	file = fileName;
-	listafloat = (float*)malloc(sizeof(float)* 7200);
+	listafloat = (float*)malloc(sizeof(float)* n*3);
 	nPontos = n;
 	pos = 0;
 }
@@ -61,10 +62,16 @@ void Figura::drawFigure(bool multiColor) {
 
 void Figura::drawFigureArrays() {
 	
-	glGenBuffers(1, buffers);
+	if (fristTime==1) {
+		glGenBuffers(1, buffers);
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+		glBufferData(GL_ARRAY_BUFFER, pos*sizeof(float), listafloat, GL_STATIC_DRAW);
+		//free(listafloat);
+		fristTime = 0;
+	}
+
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
-	glBufferData(GL_ARRAY_BUFFER, pos*sizeof(float), listafloat, GL_STATIC_DRAW);
 	glDrawArrays(GL_TRIANGLES, 0, nPontos);
 
 
