@@ -381,6 +381,45 @@ Ponto bezieSurface(float u, float v, Patch p,vector<Ponto> pontos){
 	return bezieCurve(v,calculados[0],calculados[1],calculados[2],calculados[3]);
 }
 
+//ºara um pactch vai calcular e imprimir todos os 
+//triangulos que o formam, dado um numero de tesselation dejesada
+//para cada iteraçap calclua 4 pontos devido à variaçao de u e de t, sendo casludades
+//para u e t atualis e seguites em combinaçao dpeois imprime os dois triangulos
+// formados pelos 4 pontos calculados 
+void bezieToTriangles(int tess, int patchnum, ofstream& output,vector<Patch>& paches, vector<Ponto>& pontos){
+	float step = 1.0/tess;
+	float u,v,uNext,vNext;
+
+	for (int i = 0; i < tess; i++)
+	{
+		u=i*step;
+		uNext=(i+1)*step;
+		for (int j = 0; j < tess; j++)
+		{
+			v=j*step;
+			vNext=(j+1)*step;
+			Ponto p1 = bezieSurface(u,v,paches[patchnum],pontos);
+			Ponto p2 = bezieSurface(u,vNext,paches[patchnum],pontos);
+			Ponto p3 = bezieSurface(uNext,v,paches[patchnum],pontos);
+			Ponto p4 = bezieSurface(uNext,vNext,paches[patchnum],pontos);
+			printTriangulo(output,p1,p3,p4);
+			printTriangulo(output,p1,p4,p2);
+		}
+	}
+}
+
+void translateFromBezie(int tess, string fname,vector<Patch>& paches, vector<Ponto>& pontos){
+	ofstream file(fname);
+
+	int totpatch = paches.size();
+
+	file << (totpatch*tess*tess * 2*3) << endl;
+	for (int i = 0; i < totpatch; i++){
+		bezieToTriangles(tess,i,file,paches,pontos);
+	}
+	file.close();
+}
+
 int main(int argc, char *argv[]) {
 	char* nome;
 	vector<Patch> paches;
@@ -427,13 +466,13 @@ int main(int argc, char *argv[]) {
 							}
 							else{
 								
-							cout << "Desconhecido" << endl;
-							return 1;
+								cout << "Desconhecido" << endl;
+								return 1;
+							}
 						}
 					}
 				}
 			}
-		}
 		}
 		//updateXML(argv[argc-1], nome);
 		return 0;
