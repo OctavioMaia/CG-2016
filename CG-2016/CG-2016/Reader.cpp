@@ -36,27 +36,54 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 		getline(myfile, line);
 		nVertices = stoi(line);
 
-		Figura fg = Figura::Figura(filemodelo, nVertices);
+		getline(myfile, line);
+		split(line, campos, ';');
+		int enablePoints = stoi(campos[0]);
+		int enableNormals = stoi(campos[1]);
+		int enableTextures = stoi(campos[2]);
+
+		Figura fg = Figura::Figura(filemodelo, NULL, nVertices, false);
 
 		for (int i = 0; i < nVertices; i++)
 		{
-			getline(myfile, line);
-			campos.clear();
-			split(line, campos, ';');
-			fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
+			if (enablePoints == 1) {
+				getline(myfile, line);
+				campos.clear();
+				split(line, campos, ';');
+				fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
+			}
 			
-			getline(myfile, line);
-			campos.clear();
-			split(line, campos, ';');
-			fg.addNormal(stof(campos[0]), stof(campos[1]), stof(campos[2]));
-
-			getline(myfile, line);
-			campos.clear();
-			split(line, campos, ';');
-			fg.addTextur(stof(campos[0]), stof(campos[1]));
+			if (enableNormals == 1) {
+				getline(myfile, line);
+				campos.clear();
+				split(line, campos, ';');
+				fg.addNormal(stof(campos[0]), stof(campos[1]), stof(campos[2]));
+			}
+			
+			if (enableTextures == 1) {
+				getline(myfile, line);
+				campos.clear();
+				split(line, campos, ';');
+				fg.addTextur(stof(campos[0]), stof(campos[1]));
+			}
+			
 		}
 
-		//fg.gerarCores();
+
+		if (const char* valeu = elemFunc->Attribute("texture")) {
+			fg.setTextureFile(string(valeu));
+		}
+		else {
+			//de futuro verificar se podem existir as outras componentes
+			const char* diffR = elemFunc->Attribute("diffR");
+			const char* diffG = elemFunc->Attribute("diffG");
+			const char* diffB = elemFunc->Attribute("diffB");
+			if(diffR && diffG && diffB){
+				fg.setDiff(atof(diffR), atof(diffG), atof(diffB));
+			}else{
+				fg.setEnableLights(true);
+			}
+		}
 
 		ref->addFigura(fg);
 
@@ -97,7 +124,7 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 			trans.addPoint(p);
 		}
 
-		ref->setTranslacao(trans);
+		ref->addTransformation(trans);
 	}
 }
 
@@ -122,7 +149,7 @@ void readScale(TiXmlElement* elem, Referencial* ref) {
 		if (valeu = elem1->Attribute("Z")) {
 			scale.setZ(atof(valeu));
 		}
-		ref->setEscala(scale);
+		ref->addTransformation(scale);
 	}
 }
 
@@ -148,36 +175,36 @@ void readRotate(TiXmlElement* elem, Referencial* ref) {
 		if (valeu = elem1->Attribute("axisZ")) {
 			rot.setZ(atof(valeu));
 		}
-		ref->setRotacao(rot);
+		ref->addTransformation(rot);
 	}
 
 }
 
-void readLight(TiXmlElement* elem, Referencial* ref) {
+void readLights(TiXmlElement* elem, Scene* scene) {
 
 	TiXmlElement* newElem = elem->FirstChildElement("lights");
 
 	for (newElem = newElem->FirstChildElement("light"); newElem != NULL; newElem = newElem->NextSiblingElement()) {
-			const char* valeu;
+		const char* valeu;
 
-			Light light = Light::Light();
+		Light light = Light::Light();
 
-			if (valeu = newElem->Attribute("type")) {
-				light.setType(string(valeu));
-			}
-
-			if (valeu = newElem->Attribute("posX")) {
-				light.setPosX(atof(valeu));
-			}
-			if (valeu = newElem->Attribute("posY")) {
-				light.setPosY(atof(valeu));
-			}
-			if (valeu = newElem->Attribute("posZ")) {
-				light.setPosZ(atof(valeu));
-			}
-			ref->addLight(light);
+		if (valeu = newElem->Attribute("type")) {
+			light.setType(string(valeu));
 		}
-	
+
+		if (valeu = newElem->Attribute("posX")) {
+			light.setPosX(atof(valeu));
+		}
+		if (valeu = newElem->Attribute("posY")) {
+			light.setPosY(atof(valeu));
+		}
+		if (valeu = newElem->Attribute("posZ")) {
+			light.setPosZ(atof(valeu));
+		}
+		scene->addLight(light);
+	}
+
 }
 
 void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
@@ -208,6 +235,8 @@ Scene readFileXML(const char* file) {
 	{
 		try
 		{
+			readLights(doc.FirstChildElement("scene"), &princRef);
+
 			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("group"); elem != NULL; elem = elem->NextSiblingElement()) {
 				Referencial local = Referencial::Referencial();
 

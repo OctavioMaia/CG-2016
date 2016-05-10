@@ -1,10 +1,6 @@
 #include"Transformation.h"
 
-Transformation::Transformation()
-{
-}
+Transformation::Transformation(){}
 
-void Transformation::Apply(int tess, float timePerFrame){
-	
-}
+void Transformation::Apply(int tess, float timePerFrame){}
 

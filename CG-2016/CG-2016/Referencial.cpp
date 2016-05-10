@@ -30,6 +30,7 @@ void Referencial::apply(float timePerFrame) {
 	for(int i=0; i<(figuras.size());i++){
 		figuras[i].drawFigureArrays();
 	}
+
 	glPopMatrix();
 	for(int i=0;i<(filhos.size());i++){
 		filhos[i].apply(timePerFrame);
@@ -38,6 +39,5 @@ void Referencial::apply(float timePerFrame) {
 	glPopMatrix();
 	
 }
-void Referencial::resetGlReferncial() { glPopMatrix();}
 vector<Referencial> Referencial::getFilhos() { return filhos; }
 vector<Figura> Referencial::getFiguras() { return figuras; }

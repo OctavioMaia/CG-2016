@@ -27,7 +27,6 @@ public:
 	void addFigura(Figura f);
 	void addFilho(Referencial f);
 	void apply(float timePerFrame);
-	void resetGlReferncial();
 
 	vector<Referencial> getFilhos();
 	vector<Figura> getFiguras();

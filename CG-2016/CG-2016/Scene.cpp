@@ -4,12 +4,23 @@ Scene::Scene()
 {
 }
 
-void Scene::Apply(float timePerFrame)
+void Scene::apply(float timePerFrame)
 {
+	
+	for (int i = 0; i < lights.size(); i++) {
+		glEnable(GL_LIGHT0 + i);
+		lights[i].apply();
+	}
+
 	for each (Referencial ref in refs)
 	{
 		ref.apply(timePerFrame);
 	}
+
+	for (int i = 0; i < lights.size(); i++) {
+		glDisable(GL_LIGHT0 + i);
+	}
+
 }
 
 void Scene::addReferencial(Referencial ref)
@@ -17,7 +28,7 @@ void Scene::addReferencial(Referencial ref)
 	this->refs.push_back(ref);
 }
 
-void Scene::addLights(Light l)
+void Scene::addLight(Light l)
 {
 	this->lights.push_back(l);
 }

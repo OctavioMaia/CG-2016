@@ -2,9 +2,11 @@
 
 
 #include "Reader.h"
+#include "Scene.h"
+
 #include <math.h>
 #include "windows.h" 
-#include "Scene.h"
+
 #include <GL\glew.h>
 #pragma comment(lib, "glew32.lib")
 
@@ -91,7 +93,7 @@ void renderScene(void) {
 	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply(1.0/fps); 
+	princRef.apply(1.0/fps);
 
 	updateFPS();
 
@@ -114,7 +116,6 @@ void responseKeyboard(unsigned char key, int x, int y) {
 			break;
 	}
 }
-
 
 void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
@@ -159,8 +160,6 @@ void menuCreate(int id_op) {
 
 }
 
-
-
 int main(int argc, char **argv) {
 	angle = 0;
 	betaCam = 10;
@@ -170,6 +169,11 @@ int main(int argc, char **argv) {
 	alfaLook = 0;
 
 	readFileXML(argv[1]);
+
+	//DevIL Init
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
 	// init GLUT and the window
 	glutInit(&argc, argv);

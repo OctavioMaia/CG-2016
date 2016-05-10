@@ -12,9 +12,9 @@ private:
 
 public: 
 	Scene();
-	void Apply(float timePerFrame);
+	void apply(float timePerFrame);
 	void addReferencial(Referencial ref);
-	void addLights(Light l);
+	void addLight(Light l);
 };
 
 #endif // !SCENE_H
