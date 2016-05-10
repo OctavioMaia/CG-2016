@@ -6,9 +6,11 @@
 Figura::Figura(string fileName, int n) {
 	fristTime = 1;
 	file = fileName;
-	listafloat = (float*)malloc(sizeof(float)* n*3);
 	nPontos = n;
 	pos = 0;
+	listafloat = (float*)malloc(sizeof(float)* nPontos*3);
+	normais = (float*)malloc(sizeof(float)*nPontos * 3);
+	texturas = (float*)malloc(sizeof(float)*nPontos * 2);
 }
 
 void Figura::addPonto(double x, double y, double z) {
@@ -20,6 +22,19 @@ void Figura::addPonto(double x, double y, double z) {
 
 void Figura::addColor(double r, double g, double b) {
 	listaCores.push_back(Color::Color(r, g, b));
+}
+
+void Figura::addNormal(float x, float y, float z)
+{
+	normais[posNormais++] = x;
+	normais[posNormais++] = y;
+	normais[posNormais++] = z;
+}
+
+void Figura::addTextur(float x, float y)
+{
+	texturas[posTexturas++] = x;
+	texturas[posTexturas++] = y;
 }
 
 Ponto Figura::getP(int position) {

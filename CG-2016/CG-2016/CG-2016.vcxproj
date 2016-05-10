@@ -186,24 +186,32 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="Ponto.cpp" />
+    <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Referencial.cpp" />
     <ClCompile Include="Rotacao.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Translacao.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Color.h" />
     <ClInclude Include="Escala.h" />
     <ClInclude Include="Figura.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Reader.h" />
     <ClInclude Include="Referencial.h" />
     <ClInclude Include="Rotacao.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="Ponto.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="Transformation.h" />
     <ClInclude Include="Translacao.h" />
   </ItemGroup>
   <ItemGroup>

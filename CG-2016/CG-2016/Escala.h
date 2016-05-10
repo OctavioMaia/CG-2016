@@ -7,7 +7,7 @@
 using namespace std;
 
 
-class Escala
+class Escala : public Transformation
 {
 private:
 	float x;

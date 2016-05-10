@@ -5,7 +5,7 @@
 
 
 
-class Rotacao
+class Rotacao : public Transformation
 {
 private:
 	float x;

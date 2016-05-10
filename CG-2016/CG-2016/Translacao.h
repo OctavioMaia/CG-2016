@@ -10,7 +10,7 @@
 using namespace std;
 
 
-class Translacao
+class Translacao : public Transformation
 {
 private:
 	float time;

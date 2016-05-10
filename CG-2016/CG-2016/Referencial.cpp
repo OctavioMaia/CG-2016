@@ -2,20 +2,14 @@
 
 
 Referencial::Referencial() {
-	escala=Escala::Escala();
-	translacao=Translacao::Translacao();
-	rotacao=Rotacao::Rotacao();
 }
 
-Referencial::Referencial(Escala e, Translacao t, Rotacao r) {
-	escala = e;
-	translacao = t;
-	rotacao = r;
+
+void Referencial::addTransformation(Transformation t)
+{
+	this->transformations.push_back(t);
 }
 
-void Referencial::setEscala(Escala e) { escala = e; }
-void Referencial::setTranslacao(Translacao t) { translacao = t; }
-void Referencial::setRotacao(Rotacao r) { rotacao = r; }
 void Referencial::setFilhos(vector<Referencial> f) { filhos=f; }
 void Referencial::setFiguras(vector<Figura> f) { figuras=f; }
 
@@ -26,11 +20,11 @@ void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	translacao.Apply(500,timePerFrame);
-	
+	for each (Transformation t in transformations)
+	{
+		t.Apply(500, timePerFrame);
+	}
 	glPushMatrix();
-	escala.Apply();
-	rotacao.Apply(timePerFrame);
 
 	
 	for(int i=0; i<(figuras.size());i++){
@@ -45,8 +39,5 @@ void Referencial::apply(float timePerFrame) {
 	
 }
 void Referencial::resetGlReferncial() { glPopMatrix();}
-Escala Referencial::getEscala() { return escala; }
-Translacao Referencial::getTranslacao() { return translacao; }
-Rotacao Referencial::getRotacao() { return rotacao; }
 vector<Referencial> Referencial::getFilhos() { return filhos; }
 vector<Figura> Referencial::getFiguras() { return figuras; }
