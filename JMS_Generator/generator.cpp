@@ -176,10 +176,12 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 	normalDown = Ponto::Ponto(0, -1, 0);
 	vector<Ponto> ant,antNorm;
 	vector<Ponto> actual,actualNorm;
+	vector<Ponto> textAnt,textActual;
 	int totpont = (stacks*(slices * 2) + slices) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 													  //depois mais fatias para a base
 													  //cada triangulo sao 3 pontos
-	opfile << "1;1;0"<<endl;
+	Ponto centroDown = Ponto::Ponto(0.8125,0.1875,0);
+	opfile << "1;1;1"<<endl;
 	opfile << totpont << endl;
 	double trigAlt = (yStep * 0);
 	double triRaio = (raio*trigAlt) / alt;
@@ -194,6 +196,8 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 		//p.printFile(opfile,";",true);
 		ant.push_back(p);
 		antNorm.push_back(norm);
+		Ponto textura = Ponto::Ponto(fatia/(slices*1.0),y/(stacks*1.0),0);
+		textAnt.push_back(textura);
 	}
 
 	for (int stack = 1; stack <= stacks; stack++) {
@@ -211,24 +215,40 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 			norm = normalize(p);
 			actual.push_back(p);
 			actualNorm.push_back(norm);
+			Ponto textura = Ponto::Ponto(fatia/(slices*1.0),y/(stacks*1.0),0);
+			textActual.push_back(textura);
 		}
 
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
 			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] );
-			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] , antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat] );
+			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] ,
+			 antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+			 textAnt[fat], textActual[(fat + 1) % slices], textActual[fat] );
 			//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] );
-			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] , antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices],antNorm[fat]);
+			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] ,
+			 antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices],antNorm[fat],
+			 textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices],textAnt[fat]);
 		}
 
 		ant = std::move(actual);
 		antNorm=std::move(actualNorm);
 		actual.clear();
 		actualNorm.clear();
+		textAnt=std::move(textActual);
+		textActual.clear();
 
 	}
 
 	for (int fat = 0; fat<slices; fat++) { //contruir a base
-		printTriangulo(opfile, ant[fat], ant[(fat + 1) % slices], centro,normalDown,normalDown,normalDown);
+		double ang = fat*angleSLStep;
+		double ang2 = ang+ angleSLStep;
+
+		Ponto downTampa1 = Ponto::Ponto((0.375/2) * cos(ang*AngC)+0.8125,(0.375 / 2) * sin(ang*AngC)+0.1875,0);
+		Ponto downTampa2 = Ponto::Ponto((0.375/2) * cos(ang2*AngC)+0.8125,(0.375 / 2) * sin(ang2*AngC)+0.1875,0);
+
+		printTriangulo(opfile, ant[fat], ant[(fat + 1) % slices], centro,
+			normalDown,normalDown,normalDown,
+			downTampa1,centroDown,downTampa2);
 	}
 	opfile.close();
 
@@ -336,7 +356,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 	int totpont = (stacks*(slices * 2)) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 											 //pode ser preciso mais uma stack
 											 //cada triangulo sao 3 pontos
-	opfile << "1;1;0"<<endl;
+	opfile << "1;1;1"<<endl;
 	opfile << totpont << endl;
 	//angle da st esta a 90 stack do topo 
 	for (int fat = 0; fat <= slices; fat++) { //contruir cada ims das fastias
@@ -374,7 +394,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 
 
 			text = Ponto(fat*stepTextSl, (stacks -stack)*stepTextSt, 0); //y pode estar trocado com x
-
+			textActual.push_back(text);
 			p = Ponto::Ponto(x, y, z);
 			actual.push_back(p);
 			actualNorm.push_back(pN);
