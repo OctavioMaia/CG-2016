@@ -373,7 +373,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		p = Ponto::Ponto(x, y, z);
 		pN=Ponto::Ponto(xN, yN, zN);
 		ant.push_back(p); //mete o ponto da stack anterior no ant
-		antNorm.push_back(pN);
+		antNorm.push_back(normalize(pN));
 		angleSl += angleStepSl; //proxima fatia
 	}
 	//primeira camada ja tem os pontos todos gaudados em ante
@@ -392,12 +392,12 @@ void esfera(double raio, int slices, int stacks, string nome) {
 			double yN = sin(angleSt*AngC);
 			double zN = cos(angleSt*AngC) * sin(angleSl*AngC);
 
-
+			pN=Ponto::Ponto(xN, yN, zN);
 			text = Ponto(fat*stepTextSl, (stacks -stack)*stepTextSt, 0); //y pode estar trocado com x
 			textActual.push_back(text);
 			p = Ponto::Ponto(x, y, z);
 			actual.push_back(p);
-			actualNorm.push_back(pN);
+			actualNorm.push_back(normalize(pN));
 			angleSl += angleStepSl; //proxima fatia nesta camada
 		}
 		//ja tenho a camada atual e anterior prontas
