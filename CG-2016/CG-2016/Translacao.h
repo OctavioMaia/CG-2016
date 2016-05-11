@@ -6,6 +6,7 @@
 #include <GL\glew.h>
 #pragma comment(lib, "glew32.lib")
 #include <vector>
+#include "Transformation.h"
 
 using namespace std;
 

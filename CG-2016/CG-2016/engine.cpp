@@ -27,7 +27,7 @@ int frame = 0;
 int timebase = 0;
 float fps = 60.0f;
 
-Scene princRef;
+Scene sceneMain;
 
 
 bool multiColor=false;
@@ -93,7 +93,7 @@ void renderScene(void) {
 	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply(1.0/fps);
+	sceneMain.apply(1.0/fps);
 
 	updateFPS();
 
@@ -168,7 +168,7 @@ int main(int argc, char **argv) {
 	betaLook = 0;
 	alfaLook = 0;
 
-	readFileXML(argv[1]);
+	sceneMain = readFileXML(argv[1]);
 
 	//DevIL Init
 	ilInit();

@@ -48,7 +48,6 @@ public:
 
 	void setDiff(float r, float g, float b);
 	void setTextureFile(string file);
-	void setEnableLights(bool enable);
 	void drawFigureArrays();
 };
 #endif

@@ -8,10 +8,10 @@ Light::Light()
 	this->type = "POINT";
 }
 
-void Light::apply()
+void Light::apply(int light)
 {
 	GLfloat pos[] = { posX,posY,posZ };
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	glLightfv(GL_LIGHT0 + light, GL_POSITION, pos);
 }
 
 void Light::setPosX(float x) { this->posX = x; }

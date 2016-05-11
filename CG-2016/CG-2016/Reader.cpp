@@ -34,15 +34,15 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 		ifstream myfile(filemodelo);
 
 		getline(myfile, line);
-		nVertices = stoi(line);
-
-		getline(myfile, line);
 		split(line, campos, ';');
 		int enablePoints = stoi(campos[0]);
 		int enableNormals = stoi(campos[1]);
 		int enableTextures = stoi(campos[2]);
 
-		Figura fg = Figura::Figura(filemodelo, NULL, nVertices, false);
+		getline(myfile, line);
+		nVertices = stoi(line);
+
+		Figura fg = Figura::Figura(filemodelo, "", nVertices, false);
 
 		for (int i = 0; i < nVertices; i++)
 		{
@@ -78,10 +78,8 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 			const char* diffR = elemFunc->Attribute("diffR");
 			const char* diffG = elemFunc->Attribute("diffG");
 			const char* diffB = elemFunc->Attribute("diffB");
-			if(diffR && diffG && diffB){
+			if (diffR && diffG && diffB) {
 				fg.setDiff(atof(diffR), atof(diffG), atof(diffB));
-			}else{
-				fg.setEnableLights(true);
 			}
 		}
 
@@ -182,9 +180,10 @@ void readRotate(TiXmlElement* elem, Referencial* ref) {
 
 void readLights(TiXmlElement* elem, Scene* scene) {
 
-	TiXmlElement* newElem = elem->FirstChildElement("lights");
+	TiXmlElement* newElem = elem;
 
 	for (newElem = newElem->FirstChildElement("light"); newElem != NULL; newElem = newElem->NextSiblingElement()) {
+
 		const char* valeu;
 
 		Light light = Light::Light();
@@ -227,7 +226,7 @@ void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
 
 Scene readFileXML(const char* file) {
 
-	Scene princRef = Scene::Scene();
+	Scene scene = Scene::Scene();
 
 	TiXmlDocument doc;
 
@@ -235,14 +234,14 @@ Scene readFileXML(const char* file) {
 	{
 		try
 		{
-			readLights(doc.FirstChildElement("scene"), &princRef);
+			readLights(doc.FirstChildElement("scene")->FirstChildElement("lights"), &scene);
 
 			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("group"); elem != NULL; elem = elem->NextSiblingElement()) {
 				Referencial local = Referencial::Referencial();
 
 				loadElementChild(elem, &local);
 
-				princRef.addReferencial(local);
+				scene.addReferencial(local);
 			}
 		}
 		catch (const std::exception&)
@@ -254,5 +253,6 @@ Scene readFileXML(const char* file) {
 	{
 		printf("Failed to open file \"%s\"\n", file);
 	}
+	return scene; 
 }
 

@@ -75,7 +75,7 @@ void Figura::loadImageTexture() {
 }
 
 void Figura::drawFigureArrays() {
-	
+
 	if (fristTime==1) {
 		glGenBuffers(2, buffers);
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
@@ -92,6 +92,8 @@ void Figura::drawFigureArrays() {
 		fristTime= 0;
 	}
 
+	
+
 	glBindTexture(GL_TEXTURE_2D, textID);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
@@ -103,6 +105,8 @@ void Figura::drawFigureArrays() {
 	if (enableTexture) {	
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+	} else {
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
 	}
 	
 	glDrawArrays(GL_TRIANGLES, 0, nPontos);

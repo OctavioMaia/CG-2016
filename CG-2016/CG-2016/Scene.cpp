@@ -9,9 +9,8 @@ void Scene::apply(float timePerFrame)
 	
 	for (int i = 0; i < lights.size(); i++) {
 		glEnable(GL_LIGHT0 + i);
-		lights[i].apply();
+		lights[i].apply(i);
 	}
-
 	for each (Referencial ref in refs)
 	{
 		ref.apply(timePerFrame);

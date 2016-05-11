@@ -6,7 +6,7 @@ class Transformation
 {
 public:
 	Transformation();
-	void Apply(int tess, float timePerFrame);
+	virtual void  Apply(int tess, float timePerFrame);
 };
 
 #endif

@@ -1,5 +1,6 @@
 #ifndef LIGHT_H
 #define LIGHT_H
+#include <stdlib.h>
 
 #include <GL\glew.h>
 #include <GL\glut.h>
@@ -18,7 +19,7 @@ private:
 public:
 	Light();
 	
-	void apply();
+	void apply(int light);
 
 	void setPosX(float x);
 	void setPosY(float y);
