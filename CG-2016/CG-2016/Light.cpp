@@ -10,8 +10,13 @@ Light::Light()
 
 void Light::apply(int light)
 {
-	GLfloat pos[] = { posX,posY,posZ };
+	GLfloat pos[4] = { posX,posY,posZ,0.0 };
+	GLfloat amb[4] = { 1.0, 0.0, 0.0, 1.0 };
+	GLfloat diff[4] = { 0.0, 1.0, 0.0, 1.0 };
+
 	glLightfv(GL_LIGHT0 + light, GL_POSITION, pos);
+	glLightfv(GL_LIGHT0 + light, GL_AMBIENT, amb);
+	glLightfv(GL_LIGHT0 + light, GL_DIFFUSE, diff);
 }
 
 void Light::setPosX(float x) { this->posX = x; }

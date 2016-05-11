@@ -76,8 +76,6 @@ void Figura::loadImageTexture() {
 
 void Figura::drawFigureArrays() {
 
-	cout << fristTime << endl;
-
 	if (this->fristTime==1) {
 		this->fristTime = 0;
 		glGenBuffers(3, buffers);
@@ -92,23 +90,16 @@ void Figura::drawFigureArrays() {
 			glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 			glBufferData(GL_ARRAY_BUFFER, posTexturas * sizeof(float), texturas, GL_STATIC_DRAW);
 		}
-		
-		cout << "Depois:" << fristTime << endl;
 	}
 
-
-
-	cout << "DepoisT:" << fristTime << endl;
-
-	glBindTexture(GL_TEXTURE_2D, textID);
-	
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
 	glNormalPointer(GL_FLOAT, 0, 0);
 
-	if (enableTexture) {	
+	if (enableTexture) {
+		glBindTexture(GL_TEXTURE_2D, textID);
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 	} else {
