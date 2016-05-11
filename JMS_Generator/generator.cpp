@@ -23,7 +23,7 @@ int mmin(int i1, int i2){
 
 Ponto normalize(Ponto vetor){
 	double s = sqrt((vetor.getx()*vetor.getx())+ (vetor.gety()*vetor.gety())+ (vetor.getz()*vetor.getz()));
-	if(s==0) return Ponto::Ponto(0,0,0);
+	//if(s==0) return Ponto::Ponto(0,0,0);
 	return Ponto::Ponto(vetor.getx()/s,vetor.gety()/s,vetor.getz()/s);
 }
 
@@ -192,7 +192,13 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 		double x = triRaio*cos(startAngleSL*AngC); // estava z
 		startAngleSL += angleSLStep;
 		p = Ponto::Ponto(x, y, z);
-		norm=normalize(p);
+		//normal
+		Ponto aux = normalize(Ponto::Ponto(x,0,y));
+
+
+		norm=Ponto::Ponto(aux.getx()*alt/raio,raio/alt,aux.getz()*alt/raio);
+
+		//
 		//p.printFile(opfile,";",true);
 		ant.push_back(p);
 		antNorm.push_back(norm);
@@ -212,7 +218,8 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 			double x = triRaio*cos(startAngleSL*AngC); //estava z
 			startAngleSL += angleSLStep; //proximafatia
 			p = Ponto::Ponto(x, y, z);
-			norm = normalize(p);
+			Ponto aux = normalize(Ponto::Ponto(x,0,y));
+			norm=Ponto::Ponto(aux.getx()*alt/raio,raio/alt,aux.getz()*alt/raio);
 			actual.push_back(p);
 			actualNorm.push_back(norm);
 			Ponto textura = Ponto::Ponto(fatia/(slices*1.0),y/(stacks*1.0),0);
@@ -578,11 +585,11 @@ Ponto dUBezier(float u, float v,Patch p, vector<Ponto>& pontos)
   vector<Ponto> calculados; 
    for (int i = 0; i < 16; i+=4) { 
        //pontos2[i] = bezieCurve(v,pontos[paches[i]],pontos[paches[i+1]],pontos[paches[i+2]],pontos[paches[i+3]]); 
-   		Ponto po = bezieCurve(v, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
+   		Ponto po = bezieCurveD(u, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
 		calculados.push_back(po);
    } 
  
-   return bezieCurveD(u,calculados[0],calculados[1],calculados[2],calculados[3]); 
+   return bezieCurve(v,calculados[0],calculados[1],calculados[2],calculados[3]); 
 } 
  
 Ponto dVBezier(float u, float v,Patch p, vector<Ponto>& pontos)
@@ -631,20 +638,24 @@ void bezieToTriangles(int tess, int patchnum, ofstream& output,vector<Patch>& pa
 			vNext=(j+1)*step;
 			Ponto p1 = bezieSurface(u,v,paches[patchnum],pontos);
 			Ponto n1 = bezieNormal(u,v,paches[patchnum],pontos);
+			Ponto t1 = Ponto::Ponto(u,v,0);
 
 			Ponto p2 = bezieSurface(u,vNext,paches[patchnum],pontos);
 			Ponto n2 = bezieNormal(u,vNext,paches[patchnum],pontos);
+			Ponto t2 = Ponto::Ponto(u,vNext,0);
 
 			Ponto p3 = bezieSurface(uNext,v,paches[patchnum],pontos);
 			Ponto n3 = bezieNormal(uNext,v,paches[patchnum],pontos);
+			Ponto t3 = Ponto::Ponto(uNext,v,0);
 
 			Ponto p4 = bezieSurface(uNext,vNext,paches[patchnum],pontos);
 			Ponto n4 = bezieNormal(uNext,vNext,paches[patchnum],pontos);
+			Ponto t4 = Ponto::Ponto(uNext,vNext,0);
 
 			//printTriangulo(output,p1,p3,p4);
 			//printTriangulo(output,p1,p4,p2);
-			printTriangulo(output,p1,p3,p4,n1,n3,n4);
-			printTriangulo(output,p1,p4,p2,n1,n4,n2);
+			printTriangulo(output,p1,p3,p4,n1,n3,n4,t1,t3,t4);
+			printTriangulo(output,p1,p4,p2,n1,n4,n2,t1,t4,t2);
 		}
 	}
 }
@@ -653,7 +664,7 @@ void translateFromBezie(int tess, string fname,vector<Patch>& paches, vector<Pon
 	ofstream file(fname);
 
 	int totpatch = paches.size();
-	file << "1;1;0";
+	file << "1;1;1";
 	file << (totpatch*tess*tess * 2*3) << endl;
 	for (int i = 0; i < totpatch; i++){
 		bezieToTriangles(tess,i,file,paches,pontos);
