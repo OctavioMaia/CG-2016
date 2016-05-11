@@ -14,7 +14,7 @@ using namespace std;
 class Figura
 {
 private:
-	GLuint buffers[2];
+	GLuint buffers[3];
 	int fristTime;
 	int nPontos;
 	bool enableTexture;

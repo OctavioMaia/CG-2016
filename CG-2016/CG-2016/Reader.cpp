@@ -42,7 +42,7 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 		getline(myfile, line);
 		nVertices = stoi(line);
 
-		Figura fg = Figura::Figura(filemodelo, "", nVertices, false);
+		Figura fg = Figura::Figura(filemodelo,"", nVertices, false);
 
 		for (int i = 0; i < nVertices; i++)
 		{
