@@ -23,6 +23,8 @@ public:
 	void setZ(double z);
 
 	void printFile(ofstream& file, string sep, bool enl);
+	void printFile2D(ofstream& file, string sep, bool enl);
+
 	void printStdout(string sep, bool enl);
 
 	double getXYZ(int pos);
