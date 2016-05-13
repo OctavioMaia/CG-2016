@@ -25,6 +25,17 @@ void Ponto::printFile(ofstream& file, string sep, bool enl) {
 
 }
 
+void Ponto::printFile2D(ofstream& file, string sep, bool enl) {
+	if (enl) {
+		file << x << sep << y << endl;
+	}
+	else {
+		file << x << sep << y;
+	}
+
+}
+
+
 void Ponto::printStdout(string sep, bool enl) {
 	if (enl) {
 		cout << x << sep << y << sep << z << endl;
