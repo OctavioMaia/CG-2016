@@ -58,10 +58,13 @@ void Figura::loadImageTexture() {
 	unsigned int t;
 	ilGenImages(1, &t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)"texture_sun.jpg");
-	ilConvertImage(IL_LUMINANCE, IL_UNSIGNED_BYTE);
+
+
+	ilLoadImage((ILstring)this->fileTexture.c_str());
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	int width = ilGetInteger(IL_IMAGE_WIDTH);
 	int height = ilGetInteger(IL_IMAGE_HEIGHT);
+	
 	unsigned char* imageData = ilGetData();
 
 	glGenTextures(1, &textID);
