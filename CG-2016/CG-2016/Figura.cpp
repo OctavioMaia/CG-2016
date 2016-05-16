@@ -58,13 +58,14 @@ void Figura::loadImageTexture() {
 	unsigned int t;
 	ilGenImages(1, &t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)"terreno2.jpg");
+	ilLoadImage((ILstring)"texture_sun.jpg");
 	ilConvertImage(IL_LUMINANCE, IL_UNSIGNED_BYTE);
 	int width = ilGetInteger(IL_IMAGE_WIDTH);
 	int height = ilGetInteger(IL_IMAGE_HEIGHT);
 	unsigned char* imageData = ilGetData();
 
 	glGenTextures(1, &textID);
+
 	glBindTexture(GL_TEXTURE_2D, textID);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -99,11 +100,13 @@ void Figura::drawFigureArrays() {
 	glNormalPointer(GL_FLOAT, 0, 0);
 
 	if (enableTexture) {
+		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, textID);
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 	} else {
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+
 	}
 	
 	glDrawArrays(GL_TRIANGLES, 0, nPontos);

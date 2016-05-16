@@ -69,7 +69,6 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 			
 		}
 
-
 		if (const char* valeu = elemFunc->Attribute("texture")) {
 			fg.setTextureFile(string(valeu));
 		}

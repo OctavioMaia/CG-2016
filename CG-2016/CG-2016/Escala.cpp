@@ -1,6 +1,7 @@
 #include "Escala.h"
 
 
+
 Escala::Escala() {
 	x = 1.0;
 	y = 1.0;
@@ -30,4 +31,4 @@ float Escala::getX() { return x; }
 float Escala::getY() { return y; }
 float Escala::getZ() { return z; }
 
-void Escala::Apply() { glScalef(x, y, z); }
+void Escala::Apply(int tess, float timePerFrame) { glScalef(x, y, z); }

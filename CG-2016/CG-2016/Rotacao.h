@@ -13,7 +13,6 @@ private:
 	float z;
 	float time;
 	float localAngle;
-	;
 
 public:
 	Rotacao();
@@ -28,7 +27,7 @@ public:
 	float getY();
 	float getZ();
 	float getTime();
-	void Apply(float time);
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif

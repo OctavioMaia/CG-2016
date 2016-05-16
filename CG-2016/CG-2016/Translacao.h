@@ -38,7 +38,7 @@ public:
 
 	void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res);
 
-	void Apply(int tess, float timePerFrame);
+	virtual void Apply(int tess, float timePerFrame);
 
 };
 #endif

@@ -8,23 +8,28 @@
 
 using namespace std;
 
-class Light 
+class Light
 {
 private:
+	string type;
 	float posX;
 	float posY;
 	float posZ;
-	string type;
-
+	GLfloat amb[4] = { 1.0, 1.0, 1.0 };
+	GLfloat diff[4] = { 1.0, 1.0, 1.0 };
+	;
 public:
 	Light();
-	
+
 	void apply(int light);
 
 	void setPosX(float x);
 	void setPosY(float y);
 	void setPosZ(float z);
 	void setType(string t);
+
+	void setAmb(float r, float g, float b);
+	void setDiff(float r, float g, float b);
 };
 
 #endif // LIGHT

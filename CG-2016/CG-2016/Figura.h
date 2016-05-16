@@ -15,13 +15,13 @@ class Figura
 {
 private:
 	GLuint buffers[3];
+	GLuint textID;
 	int fristTime;
 	int nPontos;
 	bool enableTexture;
 
 	string file;
 	string fileTexture;
-	unsigned int textID;
 
 	GLfloat diff[4];
 	GLfloat emiss[4];

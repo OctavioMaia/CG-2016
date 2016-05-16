@@ -11,8 +11,6 @@ Light::Light()
 void Light::apply(int light)
 {
 	GLfloat pos[4] = { posX,posY,posZ,0.0 };
-	GLfloat amb[4] = { 1.0, 0.0, 0.0, 1.0 };
-	GLfloat diff[4] = { 0.0, 1.0, 0.0, 1.0 };
 
 	glLightfv(GL_LIGHT0 + light, GL_POSITION, pos);
 	glLightfv(GL_LIGHT0 + light, GL_AMBIENT, amb);
@@ -23,3 +21,18 @@ void Light::setPosX(float x) { this->posX = x; }
 void Light::setPosY(float y) { this->posY = y; }
 void Light::setPosZ(float z) { this->posZ = z; }
 void Light::setType(string t) { this->type = t; }
+
+void Light::setAmb(float r, float g, float b)
+{
+	this->amb[0] = r;
+	this->amb[1] = g;
+	this->amb[2] = b;
+}
+
+void Light::setDiff(float r, float g, float b)
+{
+	this->diff[0] = r;
+	this->diff[1] = g;
+	this->diff[2] = b;
+}
+

@@ -212,14 +212,14 @@ int main(int argc, char **argv) {
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-	//glEnable(GL_LIGHTING);
 
 
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	// enter GLUT's main cycle
 	glutMainLoop();
 
-	//glDisable(GL_LIGHTING);
 	return 1;
 }

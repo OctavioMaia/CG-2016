@@ -6,7 +6,9 @@
   
   <group>
     <models>
-      <model file="esfera2.3d" diffR="0.0" diffG="1.0" diffB="0.0" />
-    </models>
+      <!--<model file="esfera2.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>-->
+      <!--  <model file="bla.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>    -->
+      <model file="esfera2.3d" texture="textures/texture_earth_clouds.jpg"/>
+    </models>  
   </group>
 </scene>

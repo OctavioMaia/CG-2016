@@ -13,14 +13,14 @@
 class Referencial
 {
 private:
-	vector<Transformation> transformations;
+	vector<Transformation*> transformations;
 	vector<Referencial> filhos;
 	vector<Figura> figuras;
 
 public:
 	Referencial();
 
-	void addTransformation(Transformation t);
+	void addTransformation(Transformation &t);
 	void setFilhos(vector<Referencial> f);
 	void setFiguras(vector<Figura> f);
 

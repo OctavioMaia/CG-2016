@@ -14,8 +14,6 @@ private:
 	float y;
 	float z;
 
-	;
-
 public:
 	Escala();
 	Escala(float value);
@@ -30,7 +28,7 @@ public:
 	float getX();
 	float getY();
 	float getZ();
-	void Apply();
+	virtual void Apply(int tess, float timePerFrame);
 
 };
 #endif

@@ -5,9 +5,9 @@ Referencial::Referencial() {
 }
 
 
-void Referencial::addTransformation(Transformation t)
+void Referencial::addTransformation(Transformation &t)
 {
-	this->transformations.push_back(t);
+	this->transformations.push_back(&t);
 }
 
 void Referencial::setFilhos(vector<Referencial> f) { filhos=f; }
@@ -20,10 +20,13 @@ void Referencial::apply(float timePerFrame) {
 
 	glPushMatrix();
 
-	for each (Transformation t in transformations)
-	{
-		t.Apply(500, timePerFrame);
+
+	for (int i = 0; i < transformations.size();i++) {
+		if (transformations[i] != NULL) {
+			transformations[i]->Apply(500, timePerFrame);
+		}
 	}
+
 	glPushMatrix();
 
 	
