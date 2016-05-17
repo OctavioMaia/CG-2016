@@ -1,5 +1,9 @@
 #define _USE_MATH_DEFINES
 
+
+#include "Reader.h"
+#include "Scene.h"
+
 #include <math.h>
 #include "windows.h" 
 
@@ -9,10 +13,6 @@
 
 
 #include <chrono>
-#include "Referencial.h"
-
-#include "tinyxml.h"
-#include "tinystr.h"
 
 using namespace std;
 #define AngC  M_PI / 180
@@ -27,9 +27,9 @@ int frame = 0;
 int timebase = 0;
 float fps = 60.0f;
 
-Referencial princRef;
+Scene sceneMain;
 
-vector<Figura> figuras;
+
 bool multiColor=false;
 
 void updateFPS() {
@@ -93,7 +93,7 @@ void renderScene(void) {
 	//glRotatef(angle,0.0,1.0,0.0);
 	
 	// put drawing instructions here
-	princRef.apply(1.0/fps); 
+	sceneMain.apply(1.0/fps);
 
 	updateFPS();
 
@@ -116,7 +116,6 @@ void responseKeyboard(unsigned char key, int x, int y) {
 			break;
 	}
 }
-
 
 void responseKeyboardSpecial(int key_code, int x1, int y1) {
 
@@ -161,200 +160,6 @@ void menuCreate(int id_op) {
 
 }
 
-unsigned int split(const std::string &txt, std::vector<std::string> &strs, char ch)
-{
-	unsigned int pos = txt.find(ch);
-	unsigned int initialPos = 0;
-	strs.clear();
-
-	// Decompose statement
-	while (pos != std::string::npos) {
-		strs.push_back(txt.substr(initialPos, pos - initialPos + 1));
-		initialPos = pos + 1;
-
-		pos = txt.find(ch, initialPos);
-	}
-	// Add the last one
-	strs.push_back(txt.substr(initialPos, min(pos, txt.size()) - initialPos + 1));
-
-	return strs.size();
-}
-
-void readModels(TiXmlElement* elem, Referencial* ref){
-	const char* filemodelo;
-	TiXmlElement* elemFunc = elem->FirstChildElement("models");
-
-	for (elemFunc = elemFunc->FirstChildElement("model"); elemFunc != NULL; elemFunc = elemFunc->NextSiblingElement()) {
-
-		filemodelo = elemFunc->Attribute("file");
-
-		vector<string> campos;
-		string line;
-		int nVertices;
-
-		ifstream myfile(filemodelo);
-
-		getline(myfile, line);
-		nVertices = stoi(line);
-
-		Figura fg = Figura::Figura(filemodelo, nVertices);
-
-		for (int i = 0; i < nVertices; i++)
-		{
-			getline(myfile, line);
-			campos.clear();
-			split(line, campos, ';');
-
-			fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
-		}
-
-		fg.gerarCores();
-
-		ref->addFigura(fg);
-
-		myfile.close();
-
-	}
-}
-
-void readTranslate(TiXmlElement* elem, Referencial* ref) {
-	TiXmlElement* elem1;
-
-	Translacao trans = Translacao::Translacao();
-
-	if ((elem1 = elem->FirstChildElement("translate")) != NULL) {
-		
-		const char* valeu;
-
-		if (valeu = elem1->Attribute("time")) {
-			trans.setTime(atof(valeu) );
-		}
-
-		TiXmlElement* elemPoint = elem1->FirstChildElement("point");
-		for (; elemPoint != NULL;elemPoint=elemPoint->NextSiblingElement()) {
-			Ponto p = Ponto::Ponto();
-			
-			if (valeu = elemPoint->Attribute("X")) {
-				p.setX(atof(valeu));
-			}
-
-			if (valeu = elemPoint->Attribute("Y")) {
-				p.setY(atof(valeu));
-			}
-
-			if (valeu = elemPoint->Attribute("Z")) {
-				p.setZ(atof(valeu));
-			}
-
-			trans.addPoint(p);
-		}
-
-		ref->setTranslacao(trans);
-	}
-}
-
-
-void readScale(TiXmlElement* elem, Referencial* ref) {
-	TiXmlElement* elem1;
-
-	Escala scale = Escala::Escala();
-
-	//<scale X = "0.5" Y = "0.5" Z = "0.5" / >
-
-	if ((elem1 = elem->FirstChildElement("scale")) != NULL) {
-
-		const char* valeu;
-
-		if (valeu = elem1->Attribute("X")) {
-			scale.setX(atof(valeu));
-		}
-
-		if (valeu = elem1->Attribute("Y")) {
-			scale.setY(atof(valeu));
-		}
-		if (valeu = elem1->Attribute("Z")) {
-			scale.setZ(atof(valeu));
-		}
-		ref->setEscala(scale);
-	}
-}
-
-void readRotate(TiXmlElement* elem, Referencial* ref) {
-	TiXmlElement* elem1;
-
-	//<rotate angle="45" axisX="0" axisY="1" axisZ="0" />
-	Rotacao rot = Rotacao::Rotacao();
-
-	if ((elem1 = elem->FirstChildElement("rotate")) != NULL) {
-		const char* valeu;;
-
-		if (valeu = elem1->Attribute("time")) {
-			rot.setTime(atof(valeu));
-		}
-
-		if (valeu = elem1->Attribute("axisX")) {
-			rot.setX(atof(valeu));
-		}
-		if (valeu = elem1->Attribute("axisY")) {
-			rot.setY(atof(valeu));
-		}
-		if (valeu = elem1->Attribute("axisZ")) {
-			rot.setZ(atof(valeu));
-		}
-		ref->setRotacao(rot);
-	}
-
-}
-
-void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
-
-	TiXmlElement* elemFunc = elem;
-
-	readTranslate(elemFunc, refPai);
-	readRotate(elemFunc, refPai); 
-	readScale(elemFunc, refPai);
-	readModels(elemFunc, refPai);
-
-	for (elemFunc = elemFunc->FirstChildElement("group"); elemFunc != NULL; elemFunc = elemFunc->NextSiblingElement()) {
-		Referencial refFilho = Referencial::Referencial();
-
-		loadElementChild(elemFunc,&refFilho);
-
-		refPai->addFilho(refFilho);
-	}
-}
-
-void readFileXML(const char* file) {
-
-	princRef = Referencial::Referencial();
-
-	TiXmlDocument doc;
-
-	if (doc.LoadFile(file))
-	{
-		try
-		{
-			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("group"); elem != NULL; elem = elem->NextSiblingElement()) {
-				Referencial local = Referencial::Referencial();
-				
-				loadElementChild(elem,&local);
-
-				princRef.addFilho(local);
-			}
-		}
-		catch (const std::exception&)
-		{
-			printf("Failed to load file \"%s\"\n", file);
-		}
-	}
-	else
-	{
-		printf("Failed to open file \"%s\"\n", file);
-	}
-}
-
-
-
 int main(int argc, char **argv) {
 	angle = 0;
 	betaCam = 10;
@@ -363,7 +168,12 @@ int main(int argc, char **argv) {
 	betaLook = 0;
 	alfaLook = 0;
 
-	readFileXML(argv[1]);
+	sceneMain = readFileXML(argv[1]);
+
+	//DevIL Init
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
 	// init GLUT and the window
 	glutInit(&argc, argv);
@@ -403,7 +213,10 @@ int main(int argc, char **argv) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 
+
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	// enter GLUT's main cycle
 	glutMainLoop();
