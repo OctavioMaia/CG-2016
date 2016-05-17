@@ -2,10 +2,10 @@
 #define ROTACAO_H
 
 #include <GL/glut.h>
+#include "Transformation.h"
 
 
-
-class Rotacao
+class Rotacao : public Transformation
 {
 private:
 	float x;
@@ -13,7 +13,6 @@ private:
 	float z;
 	float time;
 	float localAngle;
-	;
 
 public:
 	Rotacao();
@@ -28,7 +27,7 @@ public:
 	float getY();
 	float getZ();
 	float getTime();
-	void Apply(float time);
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif

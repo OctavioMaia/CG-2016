@@ -3,76 +3,117 @@
 
 
 
-Figura::Figura(string fileName, int n) {
+Figura::Figura(string fileName, string textF, int n,bool enableTexture) {
 	fristTime = 1;
-	file = fileName;
-	listafloat = (float*)malloc(sizeof(float)* n*3);
 	nPontos = n;
-	pos = 0;
+	this->enableTexture = enableTexture;
+
+	file = fileName;
+	fileTexture = textF;
+
+	posPontos = 0;
+	posNormais = 0;
+	posTexturas = 0;
+
+	listaPontos = (float*)malloc(sizeof(float)* nPontos*3);
+	normais = (float*)malloc(sizeof(float)*nPontos * 3);
+	texturas = (float*)malloc(sizeof(float)*nPontos * 2);
 }
 
 void Figura::addPonto(double x, double y, double z) {
-	listaPontos.push_back(Ponto::Ponto(x, y, z));
-	listafloat[pos++]=x;
-	listafloat[pos++]=y;
-	listafloat[pos++]=z;
+	listaPontos[posPontos++]=x;
+	listaPontos[posPontos++]=y;
+	listaPontos[posPontos++]=z;
 }
 
-void Figura::addColor(double r, double g, double b) {
-	listaCores.push_back(Color::Color(r, g, b));
+void Figura::addNormal(float x, float y, float z)
+{
+	normais[posNormais++] = x;
+	normais[posNormais++] = y;
+	normais[posNormais++] = z;
 }
 
-Ponto Figura::getP(int position) {
-	return listaPontos[position];
+void Figura::addTextur(float x, float y)
+{
+	texturas[posTexturas++] = x;
+	texturas[posTexturas++] = y;
 }
 
-Color Figura::getC(int position) {
-	return listaCores[position];
+void Figura::setDiff(float r, float g, float b)
+{
+	this->diff[0] = r;
+	this->diff[1] = g;
+	this->diff[2] = b;
+	this->diff[3] = 1.0;
 }
 
-int Figura::gerarCores() {
-	int i;
-	for (i = 0; i < (nPontos / 3); i++) {
-		listaCores.push_back(Color::Color((double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX), (double)rand() / (RAND_MAX)));
-	}
-	return i;
+void Figura::setTextureFile(string file)
+{
+	this->fileTexture = file;
+	this->enableTexture = true;
 }
 
-void Figura::drawFigure(bool multiColor) {
-	if (multiColor==false) {
-		for (int i = 0; i < nPontos; i = i + 3) {
-			glBegin(GL_TRIANGLES);
-			glVertex3d(listaPontos[i].getx(), listaPontos[i].gety(), listaPontos[i].getz());
-			glVertex3d(listaPontos[i + 1].getx(), listaPontos[i + 1].gety(), listaPontos[i + 1].getz());
-			glVertex3d(listaPontos[i + 2].getx(), listaPontos[i + 2].gety(), listaPontos[i + 2].getz());
-			glEnd();
-		}
-	}
-	else {
-		for (int i = 0, j = 0; i < nPontos; i = i + 3, j++) {
-			glBegin(GL_TRIANGLES);
-			glColor3d(listaCores[j].getr(), listaCores[j].getg(), listaCores[j].getb());
-			glVertex3d(listaPontos[i].getx(), listaPontos[i].gety(), listaPontos[i].getz());
-			glVertex3d(listaPontos[i + 1].getx(), listaPontos[i + 1].gety(), listaPontos[i + 1].getz());
-			glVertex3d(listaPontos[i + 2].getx(), listaPontos[i + 2].gety(), listaPontos[i + 2].getz());
-			glEnd();
-		}
-	}
+void Figura::loadImageTexture() {
+	//imagem para altitude
+	unsigned int t;
+	ilGenImages(1, &t);
+	ilBindImage(t);
+
+
+	ilLoadImage((ILstring)this->fileTexture.c_str());
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	int width = ilGetInteger(IL_IMAGE_WIDTH);
+	int height = ilGetInteger(IL_IMAGE_HEIGHT);
+	
+	unsigned char* imageData = ilGetData();
+
+	glGenTextures(1, &textID);
+
+	glBindTexture(GL_TEXTURE_2D, textID);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 }
 
 void Figura::drawFigureArrays() {
-	
-	if (fristTime==1) {
-		glGenBuffers(1, buffers);
+
+	if (this->fristTime==1) {
+		this->fristTime = 0;
+		glGenBuffers(3, buffers);
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-		glBufferData(GL_ARRAY_BUFFER, pos*sizeof(float), listafloat, GL_STATIC_DRAW);
-		//free(listafloat);
-		fristTime = 0;
+		glBufferData(GL_ARRAY_BUFFER, posPontos*sizeof(float), listaPontos, GL_STATIC_DRAW);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+		glBufferData(GL_ARRAY_BUFFER, posNormais*sizeof(float), normais, GL_STATIC_DRAW);
+
+		if (enableTexture) {
+			loadImageTexture();
+			glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+			glBufferData(GL_ARRAY_BUFFER, posTexturas * sizeof(float), texturas, GL_STATIC_DRAW);
+		}
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 	glVertexPointer(3, GL_FLOAT, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glNormalPointer(GL_FLOAT, 0, 0);
+
+	if (enableTexture) {
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, textID);
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+	} else {
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+
+	}
+	
 	glDrawArrays(GL_TRIANGLES, 0, nPontos);
 
-
+	//colocar sem texturas
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
