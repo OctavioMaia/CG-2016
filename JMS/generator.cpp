@@ -375,7 +375,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		double yN =sin(angleSt*AngC);
 		double zN =cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
 
-		text = Ponto(fat*stepTextSl, 1, 0); //y pode estar trocado com x
+		text = Ponto((slices-fat)*stepTextSl, 1, 0); //y pode estar trocado com x
 		textAnt.push_back(text);
 		p = Ponto::Ponto(x, y, z);
 		pN=Ponto::Ponto(xN, yN, zN);
@@ -391,7 +391,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 								//char str [80];
 								//printf("Stack nuemro : %d\n angulo com XZ %f",stack, angleSt);
 								//scanf ("%79s",str); 
-		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias
+		for (int fat = 0; fat<=slices; fat++) { //contruir cada ims das fastias
 			double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC);
 			double y = raio * sin(angleSt*AngC);
 			double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC);
@@ -400,7 +400,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 			double zN = cos(angleSt*AngC) * sin(angleSl*AngC);
 
 			pN=Ponto::Ponto(xN, yN, zN);
-			text = Ponto(fat*stepTextSl, (stacks -stack)*stepTextSt, 0); //y pode estar trocado com x
+			text = Ponto((slices-fat)*stepTextSl, (stacks -stack)*stepTextSt, 0); //y pode estar trocado com x
 			textActual.push_back(text);
 			p = Ponto::Ponto(x, y, z);
 			actual.push_back(p);
@@ -412,16 +412,35 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
 			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
 			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
-			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
-				antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
-				textAnt[fat], textActual[(fat + 1) % slices], textActual[fat]);
-			//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
-			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
-			 antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
-			 textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices], textAnt[fat]);
+			if(fat+1!=slices){
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					textAnt[fat], textActual[(fat + 1) % slices], textActual[fat]);
+				//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+			 	antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+			 	textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices], textAnt[fat]);
+			}else{
+				Ponto autalNext = textActual[(fat + 1) % slices];
+				autalNext.setX(0);
+				Ponto autalThis = textActual[fat % slices];
+				autalThis.setX(stepTextSl);
+				Ponto antNext = textAnt[(fat + 1) % slices];
+				antNext.setX(0);
+				Ponto antThis = textAnt[fat % slices];
+				antThis.setX(stepTextSl);
+
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					antThis, autalNext, autalThis);
+				
+				
+
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+			 	antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+			 	antNext, autalThis, antThis);
+			}
 		}
-		//triangulos imprimidos
-		//meter o ant =  atual e limpar o atual
 		ant = std::move(actual);
 		antNorm = std::move(actualNorm);
 		textAnt=std::move(textActual);
