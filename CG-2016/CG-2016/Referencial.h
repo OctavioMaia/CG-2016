@@ -2,6 +2,8 @@
 #define REFERENCIAL_H
 
 #include <vector>
+#include "Transformation.h"
+#include "Light.h"
 #include "Escala.h"
 #include "Translacao.h"
 #include "Rotacao.h"
@@ -11,30 +13,21 @@
 class Referencial
 {
 private:
-	Escala escala;
-	Translacao translacao;
-	Rotacao rotacao;
+	vector<Transformation> transformations;
 	vector<Referencial> filhos;
 	vector<Figura> figuras;
 
 public:
 	Referencial();
-	Referencial(Escala e,Translacao t,Rotacao r);
 
-	void setEscala(Escala e);
-	void setTranslacao(Translacao t);
-	void setRotacao(Rotacao r);
+	void addTransformation(Transformation t);
 	void setFilhos(vector<Referencial> f);
 	void setFiguras(vector<Figura> f);
 
 	void addFigura(Figura f);
 	void addFilho(Referencial f);
 	void apply(float timePerFrame);
-	void resetGlReferncial();
 
-	Escala getEscala();
-	Translacao getTranslacao();
-	Rotacao getRotacao();
 	vector<Referencial> getFilhos();
 	vector<Figura> getFiguras();
 

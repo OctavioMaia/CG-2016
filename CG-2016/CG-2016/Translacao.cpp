@@ -3,12 +3,14 @@
 
 float refere = 10;
 Translacao::Translacao() {
+	Transformation(3);
 	time = 0.0;
 	flag = false;
 	this->tpGlobal=0.0;
 }
 
 Translacao::Translacao(float time) {
+	Transformation(3);
 	this->time = time;
 	this->flag = false;
 	this->tpGlobal=0.0;

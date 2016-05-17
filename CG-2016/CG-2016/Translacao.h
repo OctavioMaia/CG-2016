@@ -6,11 +6,12 @@
 #include <GL\glew.h>
 #pragma comment(lib, "glew32.lib")
 #include <vector>
+#include "Transformation.h"
 
 using namespace std;
 
 
-class Translacao
+class Translacao : public Transformation
 {
 private:
 	float time;
@@ -37,7 +38,7 @@ public:
 
 	void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res);
 
-	void Apply(int tess, float timePerFrame);
+	virtual void Apply(int tess, float timePerFrame);
 
 };
 #endif

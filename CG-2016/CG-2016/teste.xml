@@ -1,47 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <scene>
-  <!--SOL-->
+  <lights>
+    <light type="POINT" posX="30" posY="30" posZ="-10" />
+  </lights>
+  
   <group>
-    <scale X="1" Y="1" Z="1"/>
-    <rotate time="" axisX="0" axisY="1" axisZ="0" />
     <models>
-      <model file ="esfera.3d" />
-    </models>
-	
-	 <!--neptuno-->
-       <group>
-      <scale X="0.2832" Y="0.2832" Z="0.2832"/>
-      <rotate time="10" axisX="0" axisY="1" axisZ="0" />
-      <translate time="500">
-        <point X="8.9944" Y="0" Z="6.7458"/>
-        <point X="0.0" Y="0" Z="9.54"/>
-        <point X="-8.9944" Y="0" Z="6.7458"/>
-        <point X="-12.72" Y="0" Z="0.0"/>
-        <point X="-8.9944" Y="0" Z="-6.7458"/>
-        <point X="-0.0" Y="0" Z="-9.54"/>
-        <point X="8.9944" Y="0" Z="-6.7458"/>
-        <point X="12.72" Y="0" Z="-0.0"/>
-      </translate>
-      <models>
-        <model file ="esfera.3d" />
-      </models>
-        </group>
-
+      <!--<model file="esfera2.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>-->
+      <!--  <model file="bla.3d" diffR="0.8" diffG="0.8" diffB="0.15" />    -->
+      <model file="esfera5.3d" texture="textures/texture_sun.jpg"/>
+    </models>  
   </group>
-  
-  <!--cometa-->
-    <group>
-
-   <scale X="0.1" Y="0.1" Z="´0.1"/>
-        <translate time="10">
-			<point X="0.7071" Y="7.58" Z="10.5303"/>
-			<point X="0.0" Y="0" Z="0.75"/>
-			<point X="-0.7071" Y="0" Z="0.5303"/>
-			<point X="-1.0" Y="0" Z="0.0"/>
-	    </translate>
-	  <models>
-		<model file ="teapot.3d" />
-	  </models>
-  </group>
-  
 </scene>
