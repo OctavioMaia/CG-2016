@@ -4,6 +4,7 @@
 
 int an = 0;
 Rotacao::Rotacao() {
+	Transformation(2);
 	x = 0.0;
 	y = 1.0;
 	z = 0.0;
@@ -11,6 +12,7 @@ Rotacao::Rotacao() {
 	localAngle = 0.0;
 }
 Rotacao::Rotacao(float x, float y,float z, float t ) {
+	Transformation(2);
 	this->x = x;
 	this->y = y;
 	this->z = z;

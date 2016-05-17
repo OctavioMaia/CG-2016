@@ -1,11 +1,15 @@
 #pragma once
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
-
 class Transformation
 {
+private:
+	int type;
 public:
 	Transformation();
-	virtual void  Apply(int tess, float timePerFrame)=0;
+	Transformation(int type);
+	int getType();
 };
+
+
 #endif
