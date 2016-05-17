@@ -173,7 +173,7 @@
   <ItemGroup>
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="engine.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -181,12 +181,13 @@
     <ClCompile Include="Escala.cpp" />
     <ClCompile Include="Figura.cpp" />
     <ClCompile Include="generator.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Patch.cpp" />
     <ClCompile Include="Ponto.cpp" />
     <ClCompile Include="Reader.cpp" />
     <ClCompile Include="Referencial.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Escala.h" />
     <ClInclude Include="Figura.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Patch.h" />
     <ClInclude Include="Reader.h" />
     <ClInclude Include="Referencial.h" />
     <ClInclude Include="Rotacao.h" />

@@ -63,16 +63,19 @@
     <ClCompile Include="Translacao.cpp">
       <Filter>Source Files\Engine\Transformations</Filter>
     </ClCompile>
+    <ClCompile Include="Patch.cpp">
+      <Filter>Source Files\Generater</Filter>
+    </ClCompile>
     <ClCompile Include="Transformation.cpp">
       <Filter>Source Files\Engine\Transformations</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Reader.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,16 +107,19 @@
     <ClInclude Include="Rotacao.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Patch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Transformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Reader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Reader.h">
+    <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
