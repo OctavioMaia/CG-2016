@@ -13,6 +13,8 @@ using namespace std;
 class Translacao
 {
 private:
+	bool enableCatmullRom; // verificar aqui se podemos fazer o translate e o catmul rom depois ou apenas um
+	Ponto trans; 
 	int nPontos;
 	Ponto points[100];
 	GLuint buffersTranslate[1];
