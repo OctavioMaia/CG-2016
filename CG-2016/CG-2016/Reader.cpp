@@ -239,17 +239,16 @@ void loadElementChild(TiXmlElement* elem, Referencial* refPai) {
 
 	TiXmlElement* elemFunc = elem;
 
-	readTranslate(elemFunc, refPai);
-	readRotate(elemFunc, refPai);
-	readScale(elemFunc, refPai);
-	readModels(elemFunc, refPai);
-
-	for (elemFunc = elemFunc->FirstChildElement("group"); elemFunc != NULL; elemFunc = elemFunc->NextSiblingElement()) {
-		Referencial refFilho = Referencial::Referencial();
-
-		loadElementChild(elemFunc, &refFilho);
-
-		refPai->addFilho(refFilho);
+	for (TiXmlElement* elemTrans = elem->FirstChildElement(); elemTrans != NULL;elemTrans = elemTrans->NextSiblingElement()) {
+		if (!string(elemTrans->Value()).compare("translate")) { readTranslate(elemFunc, refPai); }
+		if (!string(elemTrans->Value()).compare("rotate")) { readRotate(elemFunc, refPai); }
+		if (!string(elemTrans->Value()).compare("scale")) {	readScale(elemFunc, refPai); }
+		if (!string(elemTrans->Value()).compare("models")) { readModels(elemFunc, refPai); }
+		if (!string(elemTrans->Value()).compare("group")) {
+			Referencial refFilho = Referencial::Referencial();
+			loadElementChild(elemTrans, &refFilho);
+			refPai->addFilho(refFilho);
+		}
 	}
 }
 
@@ -263,13 +262,12 @@ Scene readFileXML(const char* file) {
 	{
 		try
 		{
-			readLights(doc.FirstChildElement("scene")->FirstChildElement("lights"), &scene);
-
+			if (doc.FirstChildElement("scene")->FirstChildElement("lights") != NULL) {
+				readLights(doc.FirstChildElement("scene")->FirstChildElement("lights"), &scene);
+			}
 			for (TiXmlElement* elem = doc.FirstChildElement("scene")->FirstChildElement("group"); elem != NULL; elem = elem->NextSiblingElement()) {
 				Referencial local = Referencial::Referencial();
-
 				loadElementChild(elem, &local);
-
 				scene.addReferencial(local);
 			}
 		}

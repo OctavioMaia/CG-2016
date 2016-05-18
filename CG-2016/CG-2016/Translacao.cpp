@@ -1,25 +1,29 @@
 #include "Translacao.h"
 
-
-float refere = 10;
 Translacao::Translacao() {
 	this->nPontos = 0;
-	time = 0.0;
-	flag = false;
+	this->trans = Ponto::Ponto();
+	this->enableCatmullRom = false;
+	this->time = 0.0;
+	this->flag = false;
 	this->tpGlobal=0.0;
 }
 
 Translacao::Translacao(float time) {
+	this->nPontos = 0;
+	this->trans = Ponto::Ponto();
+	this->enableCatmullRom = false;
 	this->time = time;
 	this->flag = false;
 	this->tpGlobal=0.0;
 }
 
+void Translacao::setTrans(Ponto p){ this->trans = p; }
 void Translacao::setTime(float t) { this->time = t; }
 float Translacao::getTime() { return this->time; }
-
-void Translacao::addPoint(Ponto p) {
-	points[this->nPontos++]=p;
+void Translacao::addPoint(Ponto p) { 
+	points[this->nPontos++]=p; 
+	this->enableCatmullRom = true;
 }
 
 void getT(float t, float* res) {
@@ -154,71 +158,78 @@ void normalizeVector(float* res) {
 
 void Translacao::Apply(int tess, float timePerFrame) {
 
-	this->tpGlobal += (timePerFrame*(1.0/this->time))/ 1;
+	if (enableCatmullRom) {
+		this->tpGlobal += (timePerFrame*(1.0 / this->time)) / 1;
 
-	if  (this->nPontos>=4) {
-		
-		float step = 1.0 / tess;
-		float val[3];
-		int index = 0;
+		if (this->nPontos >= 4) {
 
-		if (!flag) {
-			flag = true;
-			this->catmullVertex = (float*)malloc(sizeof(float)*tess * 3);
+			float step = 1.0 / tess;
+			float val[3];
+			int index = 0;
 
-			for (int passo = 0; passo < tess; passo++) {
-				float gt = step*passo;
-				getGlobalCatmullRomPoint(gt, val);
-				catmullVertex[index++] = val[0];
-				catmullVertex[index++] = val[1];
-				catmullVertex[index++] = val[2];
+			if (!flag) {
+				flag = true;
+				this->catmullVertex = (float*)malloc(sizeof(float)*tess * 3);
+
+				for (int passo = 0; passo < tess; passo++) {
+					float gt = step*passo;
+					getGlobalCatmullRomPoint(gt, val);
+					catmullVertex[index++] = val[0];
+					catmullVertex[index++] = val[1];
+					catmullVertex[index++] = val[2];
+				}
+
+				glGenBuffers(1, buffersTranslate);
+				glBindBuffer(GL_ARRAY_BUFFER, buffersTranslate[0]);
+				glBufferData(GL_ARRAY_BUFFER, index * sizeof(float), catmullVertex, GL_STATIC_DRAW);
+
 			}
 
-			glGenBuffers(1, buffersTranslate);
 			glBindBuffer(GL_ARRAY_BUFFER, buffersTranslate[0]);
-			glBufferData(GL_ARRAY_BUFFER, index*sizeof(float), catmullVertex, GL_STATIC_DRAW);
+			glVertexPointer(3, GL_FLOAT, 0, 0);
+			glDrawArrays(GL_LINE_LOOP, 0, tess);
 
+			GLfloat* m = (GLfloat*)malloc(sizeof(GLfloat) * 16);
+
+			for (int i = 0; i < 16; i++) {
+				m[i] = 0.0;
+			}
+
+			m[15] = 1.0;
+
+			float d[3];
+			float up[3] = { 0.0f, 1.0f, 0.0f };
+			float left[3];
+			float res[3];
+
+			if (this->tpGlobal == 0) {
+				getGlobalCatmullRomPoint(this->tpGlobal, res);
+				glTranslatef(res[0], res[1], res[2]);
+			}
+			else {
+				getGlobalCatmullDerivatePoint(this->tpGlobal, d);
+				getGlobalCatmullRomPoint(this->tpGlobal, res);
+
+				normalizeVector(d);
+				productVetor(up, d, left);
+				normalizeVector(left);
+				productVetor(d, left, up);
+
+				int v = 0;
+				for (int i = 0; i < 3; i++) {
+					m[i] = left[i];
+					m[4 + i] = up[i];
+					m[8 + i] = d[i];
+					m[12 + i] = res[i];
+				}
+				glMultMatrixf(m);
+			}
+			free(m);
 		}
-
-		glBindBuffer(GL_ARRAY_BUFFER, buffersTranslate[0]);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		glDrawArrays(GL_LINE_LOOP, 0, tess);
-
-	GLfloat* m = (GLfloat*)malloc(sizeof(GLfloat) * 16);
-
-	for (int i = 0; i < 16; i++) {
-		m[i] = 0.0;
-	}
-
-	m[15] = 1.0;
-
-	float d[3];
-	float up[3] = { 0.0f, 1.0f, 0.0f };
-	float left[3];
-	float res[3];
-
-	if (this->tpGlobal == 0) {
-		getGlobalCatmullRomPoint(this->tpGlobal, res);
-		glTranslatef(res[0],res[1],res[2]);
-	}else {
-		getGlobalCatmullDerivatePoint(this->tpGlobal, d);
-		getGlobalCatmullRomPoint(this->tpGlobal, res);
-
-		normalizeVector(d);
-		productVetor(up, d, left);
-		normalizeVector(left);
-		productVetor(d, left, up);
-
-		int v = 0;
-		for (int i = 0; i < 3; i++) {
-			m[i] = left[i];
-			m[4 + i] = up[i];
-			m[8 + i] = d[i];
-			m[12 + i] = res[i];
+		else{
+			glTranslatef(trans.getx(), trans.gety(), trans.getz());
 		}
-		glMultMatrixf(m);
-	}
-	free(m);
+	
 }
 	
 	

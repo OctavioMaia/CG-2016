@@ -30,6 +30,8 @@ public:
 	Translacao();
 	Translacao(float t);
 
+
+	void setTrans(Ponto p);
 	void setTime(float x);
 	float getTime();
 	void addPoint(Ponto p);
