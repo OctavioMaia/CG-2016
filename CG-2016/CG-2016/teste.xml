@@ -8,7 +8,7 @@
     <models>
       <!--<model file="esfera2.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>-->
       <!--  <model file="bla.3d" diffR="0.8" diffG="0.8" diffB="0.15" />    -->
-      <model file="esfera5.3d" texture="textures/texture_sun.jpg"/>
+      <model file="Modelos/esferav2.3d" texture="Texturas/imagens/sol.jpg"/>
     </models>  
   </group>
 </scene>
