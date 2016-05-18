@@ -2,10 +2,9 @@
 #define ROTACAO_H
 
 #include <GL/glut.h>
-#include "Transformation.h"
 
 
-class Rotacao : public Transformation
+class Rotacao
 {
 private:
 	float x;

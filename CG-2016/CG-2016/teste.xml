@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <scene>
+
   <lights>
-    <light type="POINT" posX="30" posY="30" posZ="-10" />
+    <light type="POINT"
+            posX="30" posY="20" posZ="-10"
+            diffR="0.3" diffG="0.4" diffB="0.5"
+            emisR="0.4" emisG="0.9" emisB="0.5"
+            ambR="0.2" ambG="0.3" ambB="0.9"
+            espcR="0.7" espcG="0.5" espcB="0.5"/> 
   </lights>
   
-  <group>
-    <models>
-      <!--<model file="esfera2.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>-->
-      <!--  <model file="bla.3d" diffR="0.8" diffG="0.8" diffB="0.15" />    -->
-      <model file="Modelos/cilindrov2.3d" texture="Texturas/outras/barril.jpg"/>
-    </models>  
+
+
+   
+    <group>
+      <scale X="1" Y="1" Z="1"/>
+      <!-- <rotate time="10" axisX="0" axisY="1" axisZ="0" /> -->
+     
+      <translate time="9">
+        <point X="1.0607" Y="0" Z="0.7955"/>
+        <point X="0.0" Y="0" Z="1.125"/>
+        <point X="-1.0607" Y="0" Z="0.7955"/>
+        <point X="-1.5" Y="0" Z="0.0"/>
+        <point X="-1.0607" Y="0" Z="-0.7955"/>
+        <point X="-0.0" Y="0" Z="-1.125"/>
+        <point X="1.0607" Y="0" Z="-0.7955"/>
+        <point X="1.5" Y="0" Z="-0.0"/>
+      </translate>
+      <models>
+        <model file ="Modelos/boxv2.3d" 
+               diffR="1.0" diffG="0.0" diffB="0.5" 
+               emisR="1.0" emisG="0.9" emisB="0.5" 
+               ambR="1.0" ambG="0.3" ambB="0.9" 
+               espcR="1.0" espcG="0.5" espcB="0.5"/>
+      </models>
+
   </group>
+
+
+  
+  
 </scene>

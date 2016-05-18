@@ -23,10 +23,15 @@ private:
 	string file;
 	string fileTexture;
 
-	GLfloat diff[4];
-	GLfloat emiss[4];
-	GLfloat amb[4];
-	GLfloat espct[4];
+	GLfloat diff[3];
+	GLfloat emis[3];
+	GLfloat amb[3];
+	GLfloat espc[3];
+
+	bool enableDiff;
+	bool enableEmis;
+	bool enableAmb;
+	bool enableEspc;
 
 	float* listaPontos;
 	int posPontos;
@@ -47,6 +52,9 @@ public:
 	void addTextur(float x, float y);
 
 	void setDiff(float r, float g, float b);
+	void setAmb(float r, float g, float b);
+	void setEmis(float r, float g, float b);
+	void setEsp(float r, float g, float b);
 	void setTextureFile(string file);
 	void drawFigureArrays();
 };

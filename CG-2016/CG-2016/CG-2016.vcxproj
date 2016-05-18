@@ -197,7 +197,6 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
-    <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Translacao.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +220,9 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="teste.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="teste2.xml">
       <SubType>Designer</SubType>
     </Xml>
   </ItemGroup>

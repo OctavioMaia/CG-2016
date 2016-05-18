@@ -3,14 +3,13 @@
 
 float refere = 10;
 Translacao::Translacao() {
-	Transformation(3);
+	this->nPontos = 0;
 	time = 0.0;
 	flag = false;
 	this->tpGlobal=0.0;
 }
 
 Translacao::Translacao(float time) {
-	Transformation(3);
 	this->time = time;
 	this->flag = false;
 	this->tpGlobal=0.0;
@@ -20,7 +19,7 @@ void Translacao::setTime(float t) { this->time = t; }
 float Translacao::getTime() { return this->time; }
 
 void Translacao::addPoint(Ponto p) {
-	points.push_back(p);
+	points[this->nPontos++]=p;
 }
 
 void getT(float t, float* res) {
@@ -69,7 +68,7 @@ void Translacao::getCatmullRomPoint(float t, int *indices, float *res) {
 
 // given  global t, returns the point in the curve
 void  Translacao::getGlobalCatmullRomPoint(float gt, float *res) {
-	int POINT_COUNT = points.size();
+	int POINT_COUNT = this->nPontos;
 	float t = gt * POINT_COUNT; // this is the real global t
 	int index = floor(t);  // which segment
 	t = t - index; // where within  the segment
@@ -123,7 +122,7 @@ void Translacao::getCatmullDerivatePoint(float t, int* indices, float *res) {
 }
 
 void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res) {
-	int POINT_COUNT = points.size();
+	int POINT_COUNT = this->nPontos;
 
 	float t = gt * POINT_COUNT; // this is the real global t
 	int index = floor(t);  // which segment
@@ -157,7 +156,7 @@ void Translacao::Apply(int tess, float timePerFrame) {
 
 	this->tpGlobal += (timePerFrame*(1.0/this->time))/ 1;
 
-	if  (points.size()>=4) {
+	if  (this->nPontos>=4) {
 		
 		float step = 1.0 / tess;
 		float val[3];

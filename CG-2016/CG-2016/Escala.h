@@ -1,13 +1,12 @@
 #ifndef ESCALA_H
 #define ESCALA_H
 
-#include "Transformation.h"
 #include <GL\glew.h>
 #include <GL/glut.h>
 using namespace std;
 
 
-class Escala : public Transformation
+class Escala
 {
 private:
 	float x;
@@ -28,7 +27,7 @@ public:
 	float getX();
 	float getY();
 	float getZ();
-	virtual void Apply(int tess, float timePerFrame);
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif

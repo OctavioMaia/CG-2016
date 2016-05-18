@@ -27,6 +27,11 @@ int frame = 0;
 int timebase = 0;
 float fps = 60.0f;
 
+float camX = 0, camY, camZ = 5;
+int startX, startY, tracking = 0;
+
+int alpha = 0, beta = 0, r = 5;
+
 Scene sceneMain;
 
 
@@ -131,7 +136,6 @@ void responseKeyboardSpecial(int key_code, int x1, int y1) {
 		default:
 			break;
 	}
-	
 }
 
 // write function to process menu events
@@ -145,20 +149,78 @@ void menuCreate(int id_op) {
 		case 2: glPolygonMode(GL_FRONT, GL_FILL); glutPostRedisplay(); break;
 			// Modo Point
 		case 3: glPolygonMode(GL_FRONT, GL_POINT); glutPostRedisplay(); break;
-			// Random Colors in all triangles
-		case 4: multiColor=true; glutPostRedisplay(); break;
-			// Single color blue 0.0 0.0 1.0
-		case 5: glColor3d(0.0, 0.0, 1.0); multiColor = false; glutPostRedisplay(); break;
-			// Single color red 1.0 0.0 0.0
-		case 6: glColor3d(1.0, 0.0, 0.0); multiColor = false; glutPostRedisplay(); break;
-			//Single Color green 0.0 1.0 0.0
-		case 7: glColor3d(0.0, 1.0, 0.0); multiColor = false; glutPostRedisplay(); break;
-
 		default:
 			break;
 	}
 
 }
+
+
+void processMouseButtons(int button, int state, int xx, int yy)
+{
+	if (state == GLUT_DOWN) {
+		startX = xx;
+		startY = yy;
+		if (button == GLUT_LEFT_BUTTON)
+			tracking = 1;
+		else if (button == GLUT_RIGHT_BUTTON)
+			tracking = 2;
+		else
+			tracking = 0;
+	}
+	else if (state == GLUT_UP) {
+		if (tracking == 1) {
+			alpha += (xx - startX);
+			beta += (yy - startY);
+		}
+		else if (tracking == 2) {
+
+			r -= yy - startY;
+			if (r < 3)
+				r = 3.0;
+		}
+		tracking = 0;
+	}
+}
+
+
+void processMouseMotion(int xx, int yy)
+{
+	int deltaX, deltaY;
+	int alphaAux, betaAux;
+	int rAux;
+
+	if (!tracking)
+		return;
+
+	deltaX = xx - startX;
+	deltaY = yy - startY;
+
+	if (tracking == 1) {
+
+		alphaAux = alpha + deltaX;
+		betaAux = beta + deltaY;
+
+		if (betaAux > 85.0)
+			betaAux = 85.0;
+		else if (betaAux < -85.0)
+			betaAux = -85.0;
+
+		rAux = r;
+	}
+	else if (tracking == 2) {
+
+		alphaAux = alpha;
+		betaAux = beta;
+		rAux = r - deltaY;
+		if (rAux < 3)
+			rAux = 3;
+	}
+	camX = rAux * sin(alphaAux * 3.14 / 180.0) * cos(betaAux * 3.14 / 180.0);
+	camZ = rAux * cos(alphaAux * 3.14 / 180.0) * cos(betaAux * 3.14 / 180.0);
+	camY = rAux *							     sin(betaAux * 3.14 / 180.0);
+}
+
 
 int main(int argc, char **argv) {
 	angle = 0;
@@ -184,7 +246,7 @@ int main(int argc, char **argv) {
 
 	glewInit();
 
-	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_FRONT, GL_FILL);
 
 	// Required callback registry 
 	glutDisplayFunc(renderScene);
@@ -193,20 +255,18 @@ int main(int argc, char **argv) {
 
 
 	// put here the registration of the keyboard and menu callbacks
-
 	glutKeyboardFunc(responseKeyboard);
 	glutSpecialFunc(responseKeyboardSpecial);
 
-	// put here the definition of the menu 
+	// mouse callbacks
+	glutMouseFunc(processMouseButtons);
+	glutMotionFunc(processMouseMotion);
 
+	// put here the definition of the menu 
 	glutCreateMenu(menuCreate);
 	glutAddMenuEntry("Wire", 1);
 	glutAddMenuEntry("Fill", 2);
 	glutAddMenuEntry("Point", 3);
-	glutAddMenuEntry("Multiple Colors", 4);
-	glutAddMenuEntry("Single Color: Blue", 5);
-	glutAddMenuEntry("Single Color: Red", 6);
-	glutAddMenuEntry("Single Color: Green", 7);
 	glutAttachMenu(GLUT_LEFT_BUTTON);
 
 	//  OpenGL settings

@@ -66,9 +66,6 @@
     <ClCompile Include="Patch.cpp">
       <Filter>Source Files\Generater</Filter>
     </ClCompile>
-    <ClCompile Include="Transformation.cpp">
-      <Filter>Source Files\Engine\Transformations</Filter>
-    </ClCompile>
     <ClCompile Include="Reader.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -128,6 +125,9 @@
       <Filter>Resource Files</Filter>
     </Xml>
     <Xml Include="teste.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="teste2.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>
