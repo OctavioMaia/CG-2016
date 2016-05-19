@@ -357,6 +357,7 @@ void cilindro(double h, double r, int slices, string nome) {
 			printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices],
 				downNorm[(fat + 1) % slices], topNorm[fat], topNorm[(fat + 1) % slices],
 				textDown[(fat + 1) % slices], textTop[fat], textTop[(fat + 1) % slices]);
+
 	}
 
 
