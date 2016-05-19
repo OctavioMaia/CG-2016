@@ -165,7 +165,7 @@ void box(double x, double y, double z, string nome) {
 }
 
 void cone(double raio, double alt, int slices, int stacks, string nome) {
-	//cone 3 10 20 20 Modelos/conev2.3d teste.xml
+	//
 	ofstream opfile(nome);
 	double starY = alt / 2.0;
 	double yStep = alt / float(stacks);
@@ -182,7 +182,7 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 	int totpont = (stacks*(slices * 2) + slices) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 													  //depois mais fatias para a base
 													  //cada triangulo sao 3 pontos
-	Ponto centroDown = Ponto::Ponto(0.4325,0.1875,0);
+	Ponto centroDown = Ponto::Ponto(0.8125,0.1875,0);
 	opfile << "1;1;1"<<endl;
 	opfile << totpont << endl;
 	double trigAlt = (yStep * 0);
@@ -219,10 +219,6 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 		for (int fatia = 0; fatia<slices; fatia++) {
 			double z = triRaio*sin(startAngleSL*AngC); //estava x
 			double x = triRaio*cos(startAngleSL*AngC); //estava z
-			if (stack == stacks) {
-				Ponto texture = Ponto::Ponto((0.375 / 2) * cos(-startAngleSL*AngC) + 0.4375, (0.375 / 2) * sin(-startAngleSL*AngC) + 0.1875, 0);
-				texturebase.push_back(texture);
-			}
 			startAngleSL += angleSLStep; //proximafatia
 			p = Ponto::Ponto(x, y, z);
 			Ponto aux = normalize(Ponto::Ponto(x,0,y));
@@ -278,15 +274,18 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 
 	}
 
+	for (int slice = 0; slice < slices; slice++) {
+		Ponto texture = Ponto::Ponto((0.375 / 2) * cos(-angleSLStep*slice*AngC) + 0.8125, (0.375 / 2) * sin(-angleSLStep*slice*AngC) + 0.1875, 0);
+		texturebase.push_back(texture);
+	}
+
 	for (int fat = 0; fat<slices; fat++) { //contruir a base
 		double ang = fat*angleSLStep;
 		double ang2 = ang+ angleSLStep;
 
-	
-
 		printTriangulo(opfile, ant[fat], ant[(fat + 1) % slices], centro,
 			normalDown,normalDown,normalDown,
-			texturebase[fat],centroDown, texturebase[(fat + 1) % slices]);
+			texturebase[fat], texturebase[(fat + 1) % slices], centroDown);
 	}
 	opfile.close();
 
@@ -352,12 +351,12 @@ void cilindro(double h, double r, int slices, string nome) {
 	}
 	for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
 		//printTriangulo(opfile, top[fat], down[fat], down[(fat + 1) % slices]);
-		printTriangulo(opfile,down[(fat + 1) % slices], down[fat], top[fat],
-			downNorm[(fat + 1) % slices], downNorm[fat], topNorm[fat],
-			textDown[(fat + 1) % slices], textDown[fat], textTop[fat]);
-		printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices],
-		 downNorm[(fat + 1) % slices], topNorm[fat], topNorm[(fat + 1) % slices],
-		 textDown[(fat + 1) % slices], textTop[fat], textTop[(fat + 1) % slices]);
+			printTriangulo(opfile, down[(fat + 1) % slices], down[fat], top[fat],
+				downNorm[(fat + 1) % slices], downNorm[fat], topNorm[fat],
+				textDown[(fat + 1) % slices], textDown[fat], textTop[fat]);
+			printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices],
+				downNorm[(fat + 1) % slices], topNorm[fat], topNorm[(fat + 1) % slices],
+				textDown[(fat + 1) % slices], textTop[fat], textTop[(fat + 1) % slices]);
 	}
 
 
