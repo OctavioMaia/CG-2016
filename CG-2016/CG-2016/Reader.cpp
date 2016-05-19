@@ -33,6 +33,11 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 
 		ifstream myfile(filemodelo);
 
+		if (!myfile) {
+			cout << "Não foi possivel encontrar o ficheiro " << filemodelo << endl;
+			break;
+		}
+
 		getline(myfile, line);
 		split(line, campos, ';');
 		int enablePoints = stoi(campos[0]);
@@ -72,41 +77,39 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 		if (const char* valeu = elemFunc->Attribute("texture")) {
 			fg.setTextureFile(string(valeu));
 		}
-		else {
-			//de futuro verificar se podem existir as outras componentes
-			const char* diffR = elemFunc->Attribute("diffR");
-			const char* diffG = elemFunc->Attribute("diffG");
-			const char* diffB = elemFunc->Attribute("diffB");
-			if (diffR && diffG && diffB) {
-				fg.setDiff(atof(diffR), atof(diffG), atof(diffB));
-			}
-			//de futuro verificar se podem existir as outras componentes
-			const char* ambR = elemFunc->Attribute("ambR");
-			const char* ambG = elemFunc->Attribute("ambG");
-			const char* ambB = elemFunc->Attribute("ambB");
-			if (ambR && ambG && ambB) {
-				fg.setAmb(atof(ambR), atof(ambG), atof(ambB));
-			}
-			//de futuro verificar se podem existir as outras componentes
-			const char* emisR = elemFunc->Attribute("emisR");
-			const char* emisG = elemFunc->Attribute("emisG");
-			const char* emisB = elemFunc->Attribute("emisB");
-			if (emisR && emisG && emisB) {
-				fg.setEmis(atof(diffR), atof(diffG), atof(diffB));
-			}
-			//de futuro verificar se podem existir as outras componentes
-			const char* espcR = elemFunc->Attribute("espcR");
-			const char* espcG = elemFunc->Attribute("espcG");
-			const char* espcB = elemFunc->Attribute("espcB");
-			if (espcR && espcG && espcB) {
-				fg.setEsp(atof(espcR), atof(espcG), atof(espcB));
-			}
+
+		//de futuro verificar se podem existir as outras componentes
+		const char* diffR = elemFunc->Attribute("diffR");
+		const char* diffG = elemFunc->Attribute("diffG");
+		const char* diffB = elemFunc->Attribute("diffB");
+		if (diffR && diffG && diffB) {
+			fg.setDiff(atof(diffR), atof(diffG), atof(diffB));
+		}
+		//de futuro verificar se podem existir as outras componentes
+		const char* ambR = elemFunc->Attribute("ambR");
+		const char* ambG = elemFunc->Attribute("ambG");
+		const char* ambB = elemFunc->Attribute("ambB");
+		if (ambR && ambG && ambB) {
+			fg.setAmb(atof(ambR), atof(ambG), atof(ambB));
+		}
+		//de futuro verificar se podem existir as outras componentes
+		const char* emisR = elemFunc->Attribute("emisR");
+		const char* emisG = elemFunc->Attribute("emisG");
+		const char* emisB = elemFunc->Attribute("emisB");
+		if (emisR && emisG && emisB) {
+			fg.setEmis(atof(diffR), atof(diffG), atof(diffB));
+		}
+		//de futuro verificar se podem existir as outras componentes
+		const char* espcR = elemFunc->Attribute("espcR");
+		const char* espcG = elemFunc->Attribute("espcG");
+		const char* espcB = elemFunc->Attribute("espcB");
+		if (espcR && espcG && espcB) {
+			fg.setEsp(atof(espcR), atof(espcG), atof(espcB));
 		}
 
 		ref->addFigura(fg);
 
 		myfile.close();
-
 	}
 }
 
@@ -118,19 +121,26 @@ void readTranslate(TiXmlElement* elem, Referencial* ref) {
 	if ((elem1 = elem->FirstChildElement("translate")) != NULL) {
 		const char* valeu;
 
-		if (valeu = elem1->Attribute("time")) { trans1.setTime(atof(valeu)); }
-		TiXmlElement* elemPoint = elem1->FirstChildElement("point");
-		if (elemPoint != NULL) {
-			for (; elemPoint != NULL; elemPoint = elemPoint->NextSiblingElement()) {
-				Ponto p = Ponto::Ponto();
+		if (valeu = elem1->Attribute("time")) {
+			trans1.setTime(atof(valeu));
 
-				if (valeu = elemPoint->Attribute("X")) { p.setX(atof(valeu)); }
-				if (valeu = elemPoint->Attribute("Y")) { p.setY(atof(valeu)); }
-				if (valeu = elemPoint->Attribute("Z")) { p.setZ(atof(valeu)); }
-				trans1.addPoint(p);
+			TiXmlElement* elemPoint = elem1->FirstChildElement("point");
+			if (elemPoint != NULL) {
+				for (; elemPoint != NULL; elemPoint = elemPoint->NextSiblingElement()) {
+					Ponto p = Ponto::Ponto();
+
+					if (valeu = elemPoint->Attribute("X")) { p.setX(atof(valeu)); }
+					if (valeu = elemPoint->Attribute("Y")) { p.setY(atof(valeu)); }
+					if (valeu = elemPoint->Attribute("Z")) { p.setZ(atof(valeu)); }
+					trans1.addPoint(p);
+				}
 			}
-		}else {
-			//fazer qualquer coisa para ler a translação normal
+		}else{
+			Ponto p = Ponto::Ponto();
+			if (valeu = elem1->Attribute("X")) { p.setX(atof(valeu)); }
+			if (valeu = elem1->Attribute("Y")) { p.setY(atof(valeu)); }
+			if (valeu = elem1->Attribute("Z")) { p.setZ(atof(valeu)); }
+			trans1.setTrans(p);
 		}
 		Transformation t = (Transformation)malloc(sizeof(struct transformation));
 		t->type = TRANSLACAO;

@@ -51,6 +51,7 @@ void Light::setAmb(float r, float g, float b)
 	this->amb[0] = r;
 	this->amb[1] = g;
 	this->amb[2] = b;
+	this->amb[3] = 1.0;
 	this->enableAmb = true;
 }
 
@@ -59,6 +60,7 @@ void Light::setDiff(float r, float g, float b)
 	this->diff[0] = r;
 	this->diff[1] = g;
 	this->diff[2] = b;
+	this->diff[3] = 1.0;
 	this->enableDiff = true;
 }
 
@@ -67,6 +69,7 @@ void Light::setEmis(float r, float g, float b)
 	this->emis[0] = r;
 	this->emis[1] = g;
 	this->emis[2] = b;
+	this->emis[3] = 1.0;
 	this->enableEmis = true;
 }
 
@@ -75,6 +78,7 @@ void Light::setEspc(float r, float g, float b)
 	this->espc[0] = r;
 	this->espc[1] = g;
 	this->espc[2] = b;
+	this->espc[3] = 1.0;
 	this->enableEspc = true;
 }
 

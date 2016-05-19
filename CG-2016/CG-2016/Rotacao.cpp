@@ -33,7 +33,7 @@ void Rotacao::Apply(int tess, float timePerFrame) {
 		 angle = 0;
 	}
 	else {
-		angle = (360.0*timePerFrame) / (1.0/time);
+		angle = (360.0*timePerFrame) / (time);
 	}
 	this->localAngle += angle;
 	glRotatef(localAngle,x,y,z);

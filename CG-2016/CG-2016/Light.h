@@ -14,10 +14,10 @@ class Light
 private:
 	GLfloat pos[4] = { 0.0,0.0,0.0,0.0 }; // por defenição a luz é direcional
 	GLfloat spotDir[3];
-	GLfloat amb[3];
-	GLfloat diff[3];
-	GLfloat espc[3];
-	GLfloat emis[3];
+	GLfloat amb[4];
+	GLfloat diff[4];
+	GLfloat espc[4];
+	GLfloat emis[4];
 
 	float spotCUTOFF;
 	

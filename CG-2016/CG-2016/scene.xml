@@ -21,7 +21,7 @@
     </translate>
     <scale X="0.45" Y="0.45" Z="0.45"/>
     <models>
-      <model file ="Modelos/teapotv2.3d" />
+      <model file ="Modelos/teapotv2.3d" texture="Texturas/imagens/asteroides.jpg"/>
     </models>
   </group>
   
@@ -29,7 +29,7 @@
   <group>
     <scale X="1" Y="1" Z="1"/>
     <models>
-      <model file ="Modelos/esferav2.3d" />
+      <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/sol.jpg"/>
     </models>
 	
     <!--MERCURIO-->
@@ -47,7 +47,7 @@
       <scale X="0.028" Y="0.028" Z="0.028"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/mercurio.jpg"/>
       </models>
     </group>
 
@@ -67,7 +67,7 @@
       <scale X="0.0696" Y="0.0696" Z="0.0696"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/asteroides.jpg"/>
       </models>
     </group>
 
@@ -87,7 +87,7 @@
       <scale X="0.0728" Y="0.0728" Z="0.0728"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/terra.jpg"/>
       </models>
       <!--LUA-->
       <group>
@@ -103,7 +103,7 @@
         </translate>
         <scale X="0.05" Y="0.05" Z="0.05" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/lua.jpg"/>
         </models>
       </group>
     </group>
@@ -124,7 +124,7 @@
       <scale X="0.0492" Y="0.0492" Z="0.0492"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/marte.jpg"/>
       </models>
       <!--PHOBOS-->
       <group>
@@ -184,7 +184,7 @@
       <scale X="0.6032" Y="0.6032" Z="0.6032"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/jupiter.jpg"/>
       </models>
       <!--GANYMEDE-->
       <group>
@@ -245,7 +245,7 @@
       <scale X="0.5032" Y="0.5032" Z="0.5032"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/saturno.jpg"/>
       </models>
       <!--REIA-->
       <group>
@@ -306,7 +306,7 @@
       <scale X="0.2912" Y="0.2912" Z="0.2912"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/urano.jpg"/>
       </models>
 
       <!--TITANIA-->
@@ -348,7 +348,7 @@
       <scale X="0.2832" Y="0.2832" Z="0.2832"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" />
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/neptuno.jpg"/>
       </models>
       
       <!--TRITAO-->

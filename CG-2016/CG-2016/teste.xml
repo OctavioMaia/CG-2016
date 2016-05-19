@@ -16,23 +16,12 @@
     <group>
       <scale X="1" Y="1" Z="1"/>
       <!-- <rotate time="10" axisX="0" axisY="1" axisZ="0" /> -->
-     
-      <translate time="9">
-        <point X="1.0607" Y="0" Z="0.7955"/>
-        <point X="0.0" Y="0" Z="1.125"/>
-        <point X="-1.0607" Y="0" Z="0.7955"/>
-        <point X="-1.5" Y="0" Z="0.0"/>
-        <point X="-1.0607" Y="0" Z="-0.7955"/>
-        <point X="-0.0" Y="0" Z="-1.125"/>
-        <point X="1.0607" Y="0" Z="-0.7955"/>
-        <point X="1.5" Y="0" Z="-0.0"/>
-      </translate>
       <models>
-        <model file ="Modelos/boxv2.3d" 
-               diffR="1.0" diffG="0.0" diffB="0.5" 
-               emisR="1.0" emisG="0.9" emisB="0.5" 
-               ambR="1.0" ambG="0.3" ambB="0.9" 
-               espcR="1.0" espcG="0.5" espcB="0.5"/>
+        <model file ="Modelos/teapotv2.3d" texture="Texturas/imagens/texture_sun.jpg"
+               diffR="1.0" diffG="1.0" diffB="1.0" 
+               emisR="1.0" emisG="1.0" emisB="1.0" 
+               ambR="1.0" ambG="1.0" ambB="1.0" 
+               espcR="1.0" espcG="1.0" espcB="1.0"/>
       </models>
 
   </group>

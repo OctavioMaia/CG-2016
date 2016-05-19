@@ -267,7 +267,7 @@ int main(int argc, char **argv) {
 	glutAddMenuEntry("Wire", 1);
 	glutAddMenuEntry("Fill", 2);
 	glutAddMenuEntry("Point", 3);
-	glutAttachMenu(GLUT_LEFT_BUTTON);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	//  OpenGL settings
 	glEnable(GL_DEPTH_TEST);

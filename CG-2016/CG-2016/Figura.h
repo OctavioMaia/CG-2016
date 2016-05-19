@@ -23,10 +23,10 @@ private:
 	string file;
 	string fileTexture;
 
-	GLfloat diff[3];
-	GLfloat emis[3];
-	GLfloat amb[3];
-	GLfloat espc[3];
+	GLfloat diff[4];
+	GLfloat emis[4];
+	GLfloat amb[4];
+	GLfloat espc[4];
 
 	bool enableDiff;
 	bool enableEmis;
