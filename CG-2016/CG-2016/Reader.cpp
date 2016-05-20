@@ -55,21 +55,28 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 				getline(myfile, line);
 				campos.clear();
 				split(line, campos, ';');
-				fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
+				if (campos.size()==3) {
+					fg.addPonto(stold(campos[0]), stold(campos[1]), stold(campos[2]));
+				}
+				
 			}
 
 			if (enableNormals == 1) {
 				getline(myfile, line);
 				campos.clear();
 				split(line, campos, ';');
-				fg.addNormal(stof(campos[0]), stof(campos[1]), stof(campos[2]));
+				if (campos.size()==3){
+					fg.addNormal(stof(campos[0]), stof(campos[1]), stof(campos[2]));
+				}
 			}
 
 			if (enableTextures == 1) {
 				getline(myfile, line);
 				campos.clear();
 				split(line, campos, ';');
-				fg.addTextur(stof(campos[0]), stof(campos[1]));
+				if (campos.size()==2) {
+					fg.addTextur(stof(campos[0]), stof(campos[1]));
+				}
 			}
 
 		}
