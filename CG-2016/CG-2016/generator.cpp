@@ -165,6 +165,7 @@ void box(double x, double y, double z, string nome) {
 }
 
 void cone(double raio, double alt, int slices, int stacks, string nome) {
+	//
 	ofstream opfile(nome);
 	double starY = alt / 2.0;
 	double yStep = alt / float(stacks);
@@ -177,6 +178,7 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 	vector<Ponto> ant,antNorm;
 	vector<Ponto> actual,actualNorm;
 	vector<Ponto> textAnt,textActual;
+	vector<Ponto> texturebase;
 	int totpont = (stacks*(slices * 2) + slices) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 													  //depois mais fatias para a base
 													  //cada triangulo sao 3 pontos
@@ -197,12 +199,13 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 
 
 		norm=Ponto::Ponto(aux.getx()*alt/raio,raio/alt,aux.getz()*alt/raio);
-
-		//
-		//p.printFile(opfile,";",true);
 		ant.push_back(p);
 		antNorm.push_back(norm);
-		Ponto textura = Ponto::Ponto(fatia/(slices*1.0),y/(stacks*1.0),0);
+		double textY = y + starY; //meter maior que 0
+		textY = textY / alt;
+		textY = textY*(1 - 0.375); //normaliza ente as dim do triangulo
+		textY += 0.375; // faz offset
+		Ponto textura = Ponto::Ponto(1-(fatia/(slices*1.0)), textY,0);
 		textAnt.push_back(textura);
 	}
 
@@ -210,7 +213,7 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 		//double trigAlt = starY-(yStep*stack); //altura deste triagulozito
 		trigAlt = (yStep*stack);
 		//calsular a base deste pat ser semlante ao real
-		triRaio = (raio*trigAlt) / alt;
+		triRaio = (raio*trigAlt) / alt;//meter ente 0 e 1
 		y = starY - trigAlt; // altura dos postos desta stack é sempre a starY- altura deste triangulo
 		startAngleSL = 0.0;// posicionar a fatia na 1
 		for (int fatia = 0; fatia<slices; fatia++) {
@@ -222,19 +225,44 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 			norm=Ponto::Ponto(aux.getx()*alt/raio,raio/alt,aux.getz()*alt/raio);
 			actual.push_back(p);
 			actualNorm.push_back(norm);
-			Ponto textura = Ponto::Ponto(fatia/(slices*1.0),y/(stacks*1.0),0);
+			double textY = y + starY; //meter maior que 0
+			textY = textY / alt; //meter ente 0 e 1
+			textY = textY*(1 - 0.375); //normaliza ente as dim do triangulo
+			textY += 0.375; // faz offset
+			Ponto textura = Ponto::Ponto(1-(fatia/(slices*1.0)), textY,0);
 			textActual.push_back(textura);
+			
 		}
 
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
-			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] );
-			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat] ,
-			 antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
-			 textAnt[fat], textActual[(fat + 1) % slices], textActual[fat] );
-			//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] );
-			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices],ant[fat] ,
-			 antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices],antNorm[fat],
-			 textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices],textAnt[fat]);
+			if (fat + 1 != slices) {
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					textAnt[fat], textActual[(fat + 1) % slices], textActual[fat]);
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+					antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+					textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices], textAnt[fat]);
+			}
+			else {
+				Ponto autalNext = textActual[(fat + 1) % slices];
+				autalNext.setX(0);
+				Ponto autalThis = textActual[fat % slices];
+				autalThis.setX(1/ (slices*1.0));
+				Ponto antNext = textAnt[(fat + 1) % slices];
+				antNext.setX(0);
+				Ponto antThis = textAnt[fat % slices];
+				antThis.setX(1 / (slices*1.0));
+
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					antThis, autalNext, autalThis);
+
+
+
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+					antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+					antNext, autalThis, antThis);
+			}
 		}
 
 		ant = std::move(actual);
@@ -246,16 +274,18 @@ void cone(double raio, double alt, int slices, int stacks, string nome) {
 
 	}
 
+	for (int slice = 0; slice < slices; slice++) {
+		Ponto texture = Ponto::Ponto((0.375 / 2) * cos(-angleSLStep*slice*AngC) + 0.8125, (0.375 / 2) * sin(-angleSLStep*slice*AngC) + 0.1875, 0);
+		texturebase.push_back(texture);
+	}
+
 	for (int fat = 0; fat<slices; fat++) { //contruir a base
 		double ang = fat*angleSLStep;
 		double ang2 = ang+ angleSLStep;
 
-		Ponto downTampa1 = Ponto::Ponto((0.375/2) * cos(ang*AngC)+0.8125,(0.375 / 2) * sin(ang*AngC)+0.1875,0);
-		Ponto downTampa2 = Ponto::Ponto((0.375/2) * cos(ang2*AngC)+0.8125,(0.375 / 2) * sin(ang2*AngC)+0.1875,0);
-
 		printTriangulo(opfile, ant[fat], ant[(fat + 1) % slices], centro,
 			normalDown,normalDown,normalDown,
-			downTampa1,centroDown,downTampa2);
+			texturebase[fat], texturebase[(fat + 1) % slices], centroDown);
 	}
 	opfile.close();
 
@@ -299,11 +329,11 @@ void cilindro(double h, double r, int slices, string nome) {
 		topN = Ponto::Ponto(cos(startsl*AngC),0,sin(startsl*AngC));
 		downN = Ponto::Ponto(cos(startsl*AngC),0, sin(startsl*AngC));
 		
-		Ponto topTampa = Ponto::Ponto((0.375/2) * cos(startsl*AngC)+0.4375,(0.375 / 2) * sin(startsl*AngC)+0.1875,0);
-		Ponto downTampa = Ponto::Ponto((0.375/2) * cos(startsl*AngC)+0.8125,(0.375 / 2) * sin(startsl*AngC)+0.1875,0); 
+		Ponto topTampa = Ponto::Ponto((0.375/2) * cos(-startsl*AngC)+0.4375,(0.375 / 2) * sin(-startsl*AngC)+0.1875,0);
+		Ponto downTampa = Ponto::Ponto((0.375/2) * cos(-startsl*AngC)+0.8125,(0.375 / 2) * sin(-startsl*AngC)+0.1875,0); 
 
-		Ponto ladocima = Ponto::Ponto((i) / (slices*1.0),1,0);
-		Ponto ladobaixo = Ponto::Ponto((i) / (slices*1.0),0.375,0);
+		Ponto ladocima = Ponto::Ponto((slices-i) / (slices*1.0),1,0);
+		Ponto ladobaixo = Ponto::Ponto((slices-i) / (slices*1.0),0.375,0);
 
 		textTampaC.push_back(topTampa);
 		textTampaB.push_back(downTampa);
@@ -321,12 +351,13 @@ void cilindro(double h, double r, int slices, string nome) {
 	}
 	for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
 		//printTriangulo(opfile, top[fat], down[fat], down[(fat + 1) % slices]);
-		printTriangulo(opfile,down[(fat + 1) % slices], down[fat], top[fat],
-			downNorm[(fat + 1) % slices], downNorm[fat], topNorm[fat],
-			textDown[(fat + 1) % slices], textDown[fat], textTop[fat]);
-		printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices],
-		 downNorm[(fat + 1) % slices], topNorm[fat], topNorm[(fat + 1) % slices],
-		 textDown[(fat + 1) % slices], textTop[fat], textTop[(fat + 1) % slices]);
+			printTriangulo(opfile, down[(fat + 1) % slices], down[fat], top[fat],
+				downNorm[(fat + 1) % slices], downNorm[fat], topNorm[fat],
+				textDown[(fat + 1) % slices], textDown[fat], textTop[fat]);
+			printTriangulo(opfile, down[(fat + 1) % slices], top[fat], top[(fat + 1) % slices],
+				downNorm[(fat + 1) % slices], topNorm[fat], topNorm[(fat + 1) % slices],
+				textDown[(fat + 1) % slices], textTop[fat], textTop[(fat + 1) % slices]);
+
 	}
 
 
@@ -357,13 +388,13 @@ void esfera(double raio, int slices, int stacks, string nome) {
 	vector<Ponto> actualNorm;
 	vector<Ponto> textAnt;
 	vector<Ponto> textActual;
-	Ponto p,pN,text;
+	Ponto p, pN, text;
 
 	angleSl = 0.0;
 	int totpont = (stacks*(slices * 2)) * 3; //tem fatas*flises cada uma tem 2 triangulos 
 											 //pode ser preciso mais uma stack
 											 //cada triangulo sao 3 pontos
-	opfile << "1;1;1"<<endl;
+	opfile << "1;1;1" << endl;
 	opfile << totpont << endl;
 	//angle da st esta a 90 stack do topo 
 	for (int fat = 0; fat <= slices; fat++) { //contruir cada ims das fastias
@@ -371,14 +402,14 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		double y = raio * sin(angleSt*AngC);
 		double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
 
-		double xN =cos(angleSt*AngC) * cos(angleSl*AngC); // estava x
-		double yN =sin(angleSt*AngC);
-		double zN =cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
+		double xN = cos(angleSt*AngC) * cos(angleSl*AngC); // estava x
+		double yN = sin(angleSt*AngC);
+		double zN = cos(angleSt*AngC) * sin(angleSl*AngC); // estava z
 
-		text = Ponto(fat*stepTextSl, 1, 0); //y pode estar trocado com x
+		text = Ponto((slices - fat)*stepTextSl, 1, 0); //y pode estar trocado com x
 		textAnt.push_back(text);
 		p = Ponto::Ponto(x, y, z);
-		pN=Ponto::Ponto(xN, yN, zN);
+		pN = Ponto::Ponto(xN, yN, zN);
 		ant.push_back(p); //mete o ponto da stack anterior no ant
 		antNorm.push_back(normalize(pN));
 		angleSl += angleStepSl; //proxima fatia
@@ -391,7 +422,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 								//char str [80];
 								//printf("Stack nuemro : %d\n angulo com XZ %f",stack, angleSt);
 								//scanf ("%79s",str); 
-		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias
+		for (int fat = 0; fat <= slices; fat++) { //contruir cada ims das fastias
 			double x = raio * cos(angleSt*AngC) * cos(angleSl*AngC);
 			double y = raio * sin(angleSt*AngC);
 			double z = raio * cos(angleSt*AngC) * sin(angleSl*AngC);
@@ -399,8 +430,8 @@ void esfera(double raio, int slices, int stacks, string nome) {
 			double yN = sin(angleSt*AngC);
 			double zN = cos(angleSt*AngC) * sin(angleSl*AngC);
 
-			pN=Ponto::Ponto(xN, yN, zN);
-			text = Ponto(fat*stepTextSl, (stacks -stack)*stepTextSt, 0); //y pode estar trocado com x
+			pN = Ponto::Ponto(xN, yN, zN);
+			text = Ponto((slices - fat)*stepTextSl, (stacks - stack)*stepTextSt, 0); //y pode estar trocado com x
 			textActual.push_back(text);
 			p = Ponto::Ponto(x, y, z);
 			actual.push_back(p);
@@ -410,21 +441,41 @@ void esfera(double raio, int slices, int stacks, string nome) {
 		//ja tenho a camada atual e anterior prontas
 		//associar os pontos e mandar-los para o ficheiro
 		for (int fat = 0; fat<slices; fat++) { //contruir cada ims das fastias;
-			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
-			//printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
-			printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
-				antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
-				textAnt[fat], textActual[(fat + 1) % slices], textActual[fat]);
-			//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
-			printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
-			 antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
-			 textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices], textAnt[fat]);
+											   //printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
+											   //printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat]);
+			if (fat + 1 != slices) {
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					textAnt[fat], textActual[(fat + 1) % slices], textActual[fat]);
+				//printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat]);
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+					antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+					textAnt[(fat + 1) % slices], textActual[(fat + 1) % slices], textAnt[fat]);
+			}
+			else {
+				Ponto autalNext = textActual[(fat + 1) % slices];
+				autalNext.setX(0);
+				Ponto autalThis = textActual[fat % slices];
+				autalThis.setX(stepTextSl);
+				Ponto antNext = textAnt[(fat + 1) % slices];
+				antNext.setX(0);
+				Ponto antThis = textAnt[fat % slices];
+				antThis.setX(stepTextSl);
+
+				printTriangulo(opfile, ant[fat], actual[(fat + 1) % slices], actual[fat],
+					antNorm[fat], actualNorm[(fat + 1) % slices], actualNorm[fat],
+					antThis, autalNext, autalThis);
+
+
+
+				printTriangulo(opfile, ant[(fat + 1) % slices], actual[(fat + 1) % slices], ant[fat],
+					antNorm[(fat + 1) % slices], actualNorm[(fat + 1) % slices], antNorm[fat],
+					antNext, autalThis, antThis);
+			}
 		}
-		//triangulos imprimidos
-		//meter o ant =  atual e limpar o atual
 		ant = std::move(actual);
 		antNorm = std::move(actualNorm);
-		textAnt=std::move(textActual);
+		textAnt = std::move(textActual);
 		actual.clear();
 		actualNorm.clear();
 		textActual.clear();
@@ -433,6 +484,7 @@ void esfera(double raio, int slices, int stacks, string nome) {
 
 	opfile.close();
 }
+
 
 /*
 void updateXML(char* xmlName, char* modeloName) {
@@ -516,11 +568,7 @@ void loadPatch(string source,vector<Patch>& paches, vector<Ponto>& pontos){
 	file.close();
 }
 
-//Funcça que dada uma curva de bezier calcula o ponto da mesma utilizando a formula
-// bt = t^3*P3+
-//	3*t^2*(1-t)*P2
-//	3*(t*(1-t)^2)*P1
-//	((1-t)^3)*P0     
+    
 Ponto bezieCurve(float t, Ponto p0,Ponto p1,Ponto p2,Ponto p3){
 	float x=0,y=0,z=0;
 	float uMent = 1.0-t;
@@ -541,10 +589,8 @@ Ponto bezieCurveD(float t, Ponto p0,Ponto p1,Ponto p2,Ponto p3){
 	float uMent = 1.0-t;
 	float t1,t2,t3,t4;
 	t1=3*t*t;
-	//t2=3*(t*t)*uMent;
 	t2= -3*t*(3*t-2);
 	
-	//t3=3*(t*(uMent*uMent));
 	t3=3*uMent*(3*t-1);
 	t4=-3*uMent*uMent;
 	x = t1*p3.getx()+t2*p2.getx()+t3*p1.getx()+t4*p0.getx();
@@ -575,7 +621,6 @@ Ponto crossProduct(Ponto u, Ponto v){
 	float ny = u.getz()*v.getx()-u.getx()*v.getz();
 	float nz = u.getx()*v.gety()-u.gety()*v.getx();
 	Ponto p = Ponto::Ponto(nx,ny,nz);
-	//p.printStdout(">>",true);
 	return p;
 
 }
@@ -584,7 +629,6 @@ Ponto dUBezier(float u, float v,Patch p, vector<Ponto>& pontos)
 { 
   vector<Ponto> calculados; 
    for (int i = 0; i < 16; i+=4) { 
-       //pontos2[i] = bezieCurve(v,pontos[paches[i]],pontos[paches[i+1]],pontos[paches[i+2]],pontos[paches[i+3]]); 
    		Ponto po = bezieCurveD(u, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
 		calculados.push_back(po);
    } 
@@ -594,10 +638,8 @@ Ponto dUBezier(float u, float v,Patch p, vector<Ponto>& pontos)
  
 Ponto dVBezier(float u, float v,Patch p, vector<Ponto>& pontos)
 { 
-   //Ponto pontos2[4];
     vector<Ponto> calculados;  
    for (int i = 0; i < 16; i+=4) { 
-       //pontos2[i] = bezieCurve(u,pontos[paches[i]],pontos[paches[i+1]],pontos[paches[i+2]],pontos[paches[i+3]]); 
   		Ponto po = bezieCurve(u, pontos[p.getAt(i)],pontos[p.getAt(i+1)],pontos[p.getAt(i+2)],pontos[p.getAt(i+3)]);
 		calculados.push_back(po);
    } 
@@ -609,12 +651,7 @@ Ponto bezieNormal(float u, float v, Patch p,vector<Ponto> pontos){
 	Ponto du,dv;
 
 	du = dUBezier(u,v,p,pontos);
-	dv = dVBezier(u,v,p,pontos);
-	//du.printStdout("->",true);
-	//dv.printStdout(";",true);
-	//normalize(crossProduct(du,dv)).printStdout("_",true);
-	//string st;
-	//cin >> st;
+	dv = dVBezier(u,v,p,pontos);;
 	return normalize(crossProduct(du,dv));
 }
 
