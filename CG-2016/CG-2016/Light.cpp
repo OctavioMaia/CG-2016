@@ -20,7 +20,7 @@ void Light::apply(int light)
 		glLightfv(GL_LIGHT0 + light, GL_DIFFUSE, diff);
 	}
 	if (enableEmis) {
-		glLightfv(GL_LIGHT0 + light, GL_DIFFUSE, emis);
+		glLightfv(GL_LIGHT0 + light, GL_EMISSION, emis);
 	}
 	if (enableEspc) {
 		glLightfv(GL_LIGHT0 + light, GL_DIFFUSE, espc);

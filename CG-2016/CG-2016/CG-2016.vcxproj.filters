@@ -124,10 +124,16 @@
     <Xml Include="scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="teste.xml">
+    <Xml Include="teapot.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="teste2.xml">
+    <Xml Include="cone.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="box.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="esfera.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

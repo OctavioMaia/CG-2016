@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+
+  <lights>
+    <light type="POINT"
+            posX="0.0" posY="0.0" posZ="0.0"
+            ambR="1.0" ambG="1.0" ambB="1.0"
+            diffR="1.0" diffG="1.0" diffB="1.0"/>
+  </lights>
+  
+  <group>
+    <scale X="2.0" Y="2.0" Z="2.0"/>
+    <models>
+      <model file ="Modelos/conev2.3d" diffR="1.0" diffG="0.4" diffB="1.0"/>
+    </models>
+  </group>
+</scene>

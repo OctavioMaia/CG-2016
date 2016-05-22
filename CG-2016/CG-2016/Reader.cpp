@@ -104,7 +104,7 @@ void readModels(TiXmlElement* elem, Referencial* ref) {
 		const char* emisG = elemFunc->Attribute("emisG");
 		const char* emisB = elemFunc->Attribute("emisB");
 		if (emisR && emisG && emisB) {
-			fg.setEmis(atof(diffR), atof(diffG), atof(diffB));
+			fg.setEmis(atof(emisR), atof(emisG), atof(emisB));
 		}
 		//de futuro verificar se podem existir as outras componentes
 		const char* espcR = elemFunc->Attribute("espcR");

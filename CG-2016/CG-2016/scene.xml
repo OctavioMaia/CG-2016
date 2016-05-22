@@ -4,10 +4,8 @@
   <lights>
     <light type="POINT"
             posX="0.0" posY="0.0" posZ="0.0"
-            diffR="1.0" diffG="1.0" diffB="1.0"
-            emisR="1.0" emisG="1.0" emisB="1.0"
             ambR="1.0" ambG="1.0" ambB="1.0"
-            espcR="1.0" espcG="1.0" espcB="1.0"/>
+            diffR="1.0" diffG="1.0" diffB="1.0"/>
   </lights>
 
 
@@ -29,7 +27,7 @@
   <group>
     <scale X="1" Y="1" Z="1"/>
     <models>
-      <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/sol.jpg"/>
+      <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/sol.jpg" emisR="1.0" emisG="1.0" emisB="1.0"/>
     </models>
 	
     <!--MERCURIO-->
@@ -47,7 +45,7 @@
       <scale X="0.028" Y="0.028" Z="0.028"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/mercurio.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/mercurio.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
     </group>
 
@@ -67,7 +65,7 @@
       <scale X="0.0696" Y="0.0696" Z="0.0696"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/asteroides.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/asteroides.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
     </group>
 
@@ -87,7 +85,7 @@
       <scale X="0.0728" Y="0.0728" Z="0.0728"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/terra.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/terra.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
       <!--LUA-->
       <group>
@@ -103,7 +101,7 @@
         </translate>
         <scale X="0.05" Y="0.05" Z="0.05" />
         <models>
-          <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/lua.jpg"/>
+          <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/lua.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
     </group>
@@ -124,7 +122,7 @@
       <scale X="0.0492" Y="0.0492" Z="0.0492"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/marte.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/marte.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
       <!--PHOBOS-->
       <group>
@@ -141,7 +139,7 @@
         <scale X="0.05" Y="0.05" Z="0.05"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2" />
         </models>
 
       </group>
@@ -162,7 +160,7 @@
         <scale X="0.03" Y="0.03" Z="0.03"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
     </group>
@@ -184,7 +182,7 @@
       <scale X="0.6032" Y="0.6032" Z="0.6032"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/jupiter.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/jupiter.jpg"  ambR="1.0" ambG="1.0" ambB="1.0" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
       <!--GANYMEDE-->
       <group>
@@ -202,7 +200,7 @@
         <scale X="0.1" Y="0.1" Z="0.1"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
 
@@ -222,7 +220,7 @@
         <scale X="0.15" Y="0.15" Z="0.15"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
 
@@ -245,7 +243,7 @@
       <scale X="0.5032" Y="0.5032" Z="0.5032"/>
       <rotate time="10" axisX="0" axisY="1" axisZ="0" />
       <models>
-        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/saturno.jpg"/>
+        <model file ="Modelos/esferav2.3d" texture="Texturas/imagens/saturno.jpg" diffR="0.2" diffG="0.2" diffB="0.2"/>
       </models>
       <!--REIA-->
       <group>
@@ -263,7 +261,7 @@
         <scale X="0.1" Y="0.1" Z="0.1"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
       
@@ -283,7 +281,7 @@
         <scale X="0.05" Y="0.05" Z="0.05"/>
         <rotate time="10" axisX="0" axisY="1" axisZ="0" />
         <models>
-          <model file ="Modelos/esferav2.3d" />
+          <model file ="Modelos/esferav2.3d" diffR="0.2" diffG="0.2" diffB="0.2"/>
         </models>
       </group>
 
