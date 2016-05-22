@@ -197,7 +197,6 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
-    <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Translacao.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -217,10 +216,15 @@
     <ClInclude Include="Translacao.h" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="box.xml" />
+    <Xml Include="esfera.xml" />
     <Xml Include="scene.xml">
       <SubType>Designer</SubType>
     </Xml>
-    <Xml Include="teste.xml">
+    <Xml Include="teapot.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+    <Xml Include="cone.xml">
       <SubType>Designer</SubType>
     </Xml>
   </ItemGroup>

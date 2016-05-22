@@ -4,16 +4,16 @@
 #include <vector>
 #include "Transformation.h"
 #include "Light.h"
-#include "Escala.h"
-#include "Translacao.h"
-#include "Rotacao.h"
 #include "Figura.h"
 
+
+#define SIZETRANSF 10 
 
 class Referencial
 {
 private:
-	vector<Transformation> transformations;
+
+	Transformation  transformations[SIZETRANSF];
 	vector<Referencial> filhos;
 	vector<Figura> figuras;
 

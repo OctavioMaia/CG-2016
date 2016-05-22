@@ -15,6 +15,11 @@ Figura::Figura(string fileName, string textF, int n,bool enableTexture) {
 	posNormais = 0;
 	posTexturas = 0;
 
+	this->enableDiff = false;
+	this->enableAmb = false;
+	this->enableEmis = false;
+	this->enableEspc = false;
+
 	listaPontos = (float*)malloc(sizeof(float)* nPontos*3);
 	normais = (float*)malloc(sizeof(float)*nPontos * 3);
 	texturas = (float*)malloc(sizeof(float)*nPontos * 2);
@@ -45,6 +50,34 @@ void Figura::setDiff(float r, float g, float b)
 	this->diff[1] = g;
 	this->diff[2] = b;
 	this->diff[3] = 1.0;
+	this->enableDiff = true;
+}
+
+void Figura::setAmb(float r, float g, float b)
+{
+	this->amb[0] = r;
+	this->amb[1] = g;
+	this->amb[2] = b;
+	this->amb[3] = 1.0;
+	this->enableAmb = true;
+}
+
+void Figura::setEmis(float r, float g, float b)
+{
+	this->emis[0] = r;
+	this->emis[1] = g;
+	this->emis[2] = b;
+	this->emis[3] = 1.0;
+	this->enableEmis = true;
+}
+
+void Figura::setEsp(float r, float g, float b)
+{
+	this->espc[0] = r;
+	this->espc[1] = g;
+	this->espc[2] = b;
+	this->espc[3] = 1.0;
+	this->enableEspc = true;
 }
 
 void Figura::setTextureFile(string file)
@@ -107,10 +140,12 @@ void Figura::drawFigureArrays() {
 		glBindTexture(GL_TEXTURE_2D, textID);
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-	} else {
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
-
-	}
+	} 
+	if (enableAmb)  { glMaterialfv(GL_FRONT, GL_AMBIENT, amb); }
+	if (enableDiff) { glMaterialfv(GL_FRONT, GL_DIFFUSE, diff); }
+	if (enableEmis) { glMaterialfv(GL_FRONT, GL_EMISSION, emis); }
+	if (enableEspc) { glMaterialfv(GL_FRONT, GL_SPECULAR, espc); }
+	
 	
 	glDrawArrays(GL_TRIANGLES, 0, nPontos);
 

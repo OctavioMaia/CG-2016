@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<scene>
+
+  <lights>
+    <light type="POINT"
+            posX="30" posY="20" posZ="-10"
+            diffR="0.3" diffG="0.4" diffB="0.5"
+            emisR="0.4" emisG="0.9" emisB="0.5"
+    />
+  </lights>
+
+
+  <group>
+    <scale X="1" Y="1" Z="1"/>
+    <!-- <rotate time="10" axisX="0" axisY="1" axisZ="0" /> -->
+    <models>
+      <model file ="Modelos/boxv2.3d" texture="Texturas/imagens/texture_sun.jpg"
+             diffR="1.0" diffG="1.0" diffB="1.0"
+             ambR="1.0" ambG="1.0" ambB="1.0"
+             espcR="1.0" espcG="1.0" espcB="1.0"/>
+    </models>
+
+  </group>
+
+
+
+
+</scene>

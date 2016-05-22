@@ -4,7 +4,6 @@
 
 int an = 0;
 Rotacao::Rotacao() {
-	Transformation(2);
 	x = 0.0;
 	y = 1.0;
 	z = 0.0;
@@ -12,7 +11,6 @@ Rotacao::Rotacao() {
 	localAngle = 0.0;
 }
 Rotacao::Rotacao(float x, float y,float z, float t ) {
-	Transformation(2);
 	this->x = x;
 	this->y = y;
 	this->z = z;
@@ -35,11 +33,8 @@ void Rotacao::Apply(int tess, float timePerFrame) {
 		 angle = 0;
 	}
 	else {
-		angle = (360.0*timePerFrame) / (1.0/time);
+		angle = (360.0*timePerFrame) / (time);
 	}
-	
 	this->localAngle += angle;
-
 	glRotatef(localAngle,x,y,z);
-
 }

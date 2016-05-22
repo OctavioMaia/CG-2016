@@ -66,9 +66,6 @@
     <ClCompile Include="Patch.cpp">
       <Filter>Source Files\Generater</Filter>
     </ClCompile>
-    <ClCompile Include="Transformation.cpp">
-      <Filter>Source Files\Engine\Transformations</Filter>
-    </ClCompile>
     <ClCompile Include="Reader.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -127,7 +124,16 @@
     <Xml Include="scene.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-    <Xml Include="teste.xml">
+    <Xml Include="teapot.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="cone.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="box.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="esfera.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

@@ -2,14 +2,18 @@
 #ifndef READER_H
 #define READER_H
 
+#include <string>
+#include <vector>
+#include <math.h>
+
 #include "windows.h" 
 #include "tinyxml.h"
 #include "tinystr.h"
-#include <string>
-#include <vector>
+
+#include "Transformation.h"
 #include "Referencial.h"
-#include <math.h>
 #include "Scene.h"
+
 using namespace std;
 
 Scene readFileXML(const char* file);

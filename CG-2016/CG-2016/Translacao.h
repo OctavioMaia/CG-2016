@@ -6,39 +6,38 @@
 #include <GL\glew.h>
 #pragma comment(lib, "glew32.lib")
 #include <vector>
-#include "Transformation.h"
 
 using namespace std;
 
 
-class Translacao : public Transformation
+class Translacao
 {
 private:
-	float time;
-	vector<Ponto> points;
-	bool flag;
-	float* catmullVertex;
+	bool enableCatmullRom; // verificar aqui se podemos fazer o translate e o catmul rom depois ou apenas um
+	Ponto trans; 
+	int nPontos;
+	Ponto points[100];
 	GLuint buffersTranslate[1];
+	float* catmullVertex;
 	float tpGlobal;
-
+	float time;
+	bool flag;
+	
 	void getCatmullRomPoint(float t, int *indices, float *res);
-	void Translacao::getCatmullDerivatePoint(float t, int* indices, float *res);
+	void getCatmullDerivatePoint(float t, int* indices, float *res);
 
 public:
 	Translacao();
 	Translacao(float t);
 
+
+	void setTrans(Ponto p);
 	void setTime(float x);
-
 	float getTime();
-
 	void addPoint(Ponto p);
-
 	void getGlobalCatmullRomPoint(float gt, float *res);
-
-	void Translacao::getGlobalCatmullDerivatePoint(float gt, float* res);
-
-	virtual void Apply(int tess, float timePerFrame);
+	void getGlobalCatmullDerivatePoint(float gt, float* res);
+	void Apply(int tess, float timePerFrame);
 
 };
 #endif

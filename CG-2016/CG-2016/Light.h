@@ -12,13 +12,20 @@ using namespace std;
 class Light
 {
 private:
-	string type;
-	float posX;
-	float posY;
-	float posZ;
-	GLfloat amb[4] = { 1.0, 1.0, 1.0 };
-	GLfloat diff[4] = { 1.0, 1.0, 1.0 };
-	;
+	GLfloat pos[4] = { 0.0,0.0,0.0,0.0 }; // por defenição a luz é direcional
+	GLfloat spotDir[3];
+	GLfloat amb[4];
+	GLfloat diff[4];
+	GLfloat espc[4];
+	GLfloat emis[4];
+
+	float spotCUTOFF;
+	
+	bool enableSpotLight;
+	bool enableDiff;
+	bool enableEmis;
+	bool enableAmb;
+	bool enableEspc;
 public:
 	Light();
 
@@ -31,6 +38,10 @@ public:
 
 	void setAmb(float r, float g, float b);
 	void setDiff(float r, float g, float b);
+	void setEmis(float r, float g, float b);
+	void setEspc(float r, float g, float b);
+
+	void setSpotDir(float x, float y, float z, float angle);
 };
 
 #endif // LIGHT
